@@ -31,7 +31,12 @@ namespace RemotingTest.Server
             Type[] types = assembly.GetTypes();
             foreach(var type in types)
             {
+                Logger._.Info(type.Name);
+                Logger._.Warn(type.Name);
+                Logger._.Fatal(type.Name);
+                Logger._.Trace(type.Name);
                 Logger._.Debug(type.Name);
+                Logger._.Error(type.Name);
                 RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
             }
             Console.WriteLine("按任意键退出");
