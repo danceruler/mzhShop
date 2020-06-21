@@ -19,17 +19,25 @@ namespace Mzh.Public.Base
         [Obsolete]
         public static DataTable FillDataTable(string connectString, string sql)
         {
-            DataTable dt = new DataTable();
-            using (SqlConnection conn = new SqlConnection(connectString))
+            try
             {
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandTimeout = 120;
-                cmd.CommandText = sql;
-                SqlDataAdapter dadFill = new SqlDataAdapter(cmd);
-                // dadFill.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                dadFill.Fill(dt);
-                return dt;
+                DataTable dt = new DataTable();
+                using (SqlConnection conn = new SqlConnection(connectString))
+                {
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandTimeout = 120;
+                    cmd.CommandText = sql;
+                    SqlDataAdapter dadFill = new SqlDataAdapter(cmd);
+                    // dadFill.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                    dadFill.Fill(dt);
+                    return dt;
+                }
+            }catch(Exception ex)
+            {
+                Logger._.Error(ex.ToString());
+                return null;
             }
+            
         }
 
         [Obsolete]

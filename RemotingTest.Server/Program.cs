@@ -10,6 +10,7 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Text;
 using System.Threading.Tasks;
 using Mzh.Public.Base;
+using Mzh.Public.Model.Cache;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Remoting;
@@ -22,7 +23,6 @@ namespace RemotingTest.Server
         static void Main(string[] args)
         {
             AppConfig.ServerInit();
-
             var tcpChannel = new TcpServerChannel(AppConfig.TcpPort);
             ChannelServices.RegisterChannel(tcpChannel, false);
             var httpChannel = new HttpChannel(AppConfig.HttpPort);
@@ -31,14 +31,10 @@ namespace RemotingTest.Server
             Type[] types = assembly.GetTypes();
             foreach(var type in types)
             {
-                Logger._.Info(type.Name);
-                Logger._.Warn(type.Name);
-                Logger._.Fatal(type.Name);
-                Logger._.Trace(type.Name);
-                Logger._.Debug(type.Name);
-                Logger._.Error(type.Name);
                 RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
             }
+
+            BoxCache.InitBoxes();
             Console.WriteLine("按任意键退出");
             Console.ReadKey();
         }

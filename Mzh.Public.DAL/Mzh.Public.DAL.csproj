@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,11 +53,267 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bsp_adminactions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_admingroups.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_adminoperatelogs.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_adminusers.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_advertpositions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_adverts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_attributegroups.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_attributes.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_attributevalues.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_bannedips.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_banners.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_boxbookes.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_boxes.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_brands.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_browsehistories.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_businesses.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_businessimgs.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_buysendproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_buysendpromotions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_categories.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_couponproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_coupons.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_coupontypes.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_creditlogs.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_eventlogs.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_favorites.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_filterwords.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_friendlinks.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_fullcutproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_fullcutpromotions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_fullsendproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_fullsendpromotions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_giftpromotions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_gifts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_helps.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_loginfaillogs.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_navs.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_news.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_newstypes.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_oauth.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_onlinetime.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_onlineusers.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_orderactions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_orderproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_orderrefunds.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_orderreviews.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_orders.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productattributes.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productconsults.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productconsulttypes.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productimages.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productkeywords.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productreviewquality.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productreviews.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_products.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productskus.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productstats.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_productstocks.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_pvstats.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_regions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_relateproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_searchhistories.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_shipaddresses.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_signproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_singlepromotions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_suitproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_suitpromotions.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_timeproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_topics.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_useraddrs.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_userdetails.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_userranks.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_users.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mzhshop.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mzhshop.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mzhshop.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mzhshop.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mzhshop.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="mzhshop.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>mzhshop.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="mzhshop.edmx.diagram">
+      <DependentUpon>mzhshop.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="mzhshop.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>mzhshop.Context.cs</LastGenOutput>
+      <DependentUpon>mzhshop.edmx</DependentUpon>
+    </Content>
+    <Content Include="mzhshop.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>mzhshop.edmx</DependentUpon>
+      <LastGenOutput>mzhshop.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
