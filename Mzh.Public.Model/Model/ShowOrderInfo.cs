@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mzh.Public.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,10 @@ namespace Mzh.Public.Model.Model
         /// 订单状态
         /// </summary>
         public byte orderstate { get; set; }
+        /// <summary>
+        /// 订单类型1外卖订单2堂食订单
+        /// </summary>
+        public int type { get; set; }
         /// <summary>
         /// 商品总金额
         /// </summary>
@@ -122,6 +127,10 @@ namespace Mzh.Public.Model.Model
         /// 使用的优惠券
         /// </summary>
         public List<ShowCouponInfo> coupons { get; set; }
+        /// <summary>
+        /// 如果是堂食选择包厢的订单，用来存放包厢信息
+        /// </summary>
+        public bsp_boxes box { get; set; }
     }
 
     /// <summary>
@@ -193,12 +202,5 @@ namespace Mzh.Public.Model.Model
         //public int extcode4 { get; set; }
         //public int extcode5 { get; set; }
         public System.DateTime op_addtime { get; set; }
-    }
-
-    /// <summary>
-    /// 用于前端展示的优惠券信息
-    /// </summary>
-    public class ShowCouponInfo {
-
     }
 }

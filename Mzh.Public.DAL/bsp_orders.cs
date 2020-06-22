@@ -51,5 +51,6 @@ namespace Mzh.Public.DAL
         public int weight { get; set; }
         public string buyerremark { get; set; }
         public string ip { get; set; }
+        public int type { get; set; }
     }
 }

@@ -257,6 +257,8 @@
           <Property Name="createoid" Type="int" Nullable="false" />
           <Property Name="createtime" Type="datetime" Nullable="false" />
           <Property Name="createip" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="expiretime" Type="datetime" />
+          <Property Name="isuse" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_coupontypes">
           <Key>
@@ -280,6 +282,11 @@
           <Property Name="useexpiretime" Type="int" Nullable="false" />
           <Property Name="usestarttime" Type="datetime" Nullable="false" />
           <Property Name="useendtime" Type="datetime" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="isstack" Type="int" Nullable="false" />
+          <Property Name="fullmoney" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="cutmoney" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="discount" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_creditlogs">
           <Key>
@@ -618,6 +625,7 @@
           <Property Name="weight" Type="int" Nullable="false" />
           <Property Name="buyerremark" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="ip" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
@@ -751,6 +759,7 @@
           <Property Name="inputvalue" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="price" Type="decimal" Precision="18" Scale="2" />
           <Property Name="isdefaultprice" Type="int" Nullable="false" />
+          <Property Name="inputattr" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productstats">
           <Key>
@@ -1283,6 +1292,8 @@
           <Property Name="createoid" Type="Int32" Nullable="false" />
           <Property Name="createtime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="createip" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="expiretime" Type="DateTime" Precision="3" />
+          <Property Name="isuse" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_coupontypes">
           <Key>
@@ -1306,6 +1317,11 @@
           <Property Name="useexpiretime" Type="Int32" Nullable="false" />
           <Property Name="usestarttime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="useendtime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="isstack" Type="Int32" Nullable="false" />
+          <Property Name="fullmoney" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="cutmoney" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="discount" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_creditlogs">
           <Key>
@@ -1608,6 +1624,7 @@
           <Property Name="weight" Type="Int32" Nullable="false" />
           <Property Name="buyerremark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ip" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
@@ -1741,6 +1758,7 @@
           <Property Name="inputvalue" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="isdefaultprice" Type="Int32" Nullable="false" />
+          <Property Name="inputattr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_productstats">
           <Key>
@@ -2340,6 +2358,8 @@
           <EntitySetMapping Name="bsp_coupons">
             <EntityTypeMapping TypeName="brnshopModel.bsp_coupons">
               <MappingFragment StoreEntitySet="bsp_coupons">
+                <ScalarProperty Name="isuse" ColumnName="isuse" />
+                <ScalarProperty Name="expiretime" ColumnName="expiretime" />
                 <ScalarProperty Name="couponid" ColumnName="couponid" />
                 <ScalarProperty Name="couponsn" ColumnName="couponsn" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
@@ -2360,6 +2380,11 @@
           <EntitySetMapping Name="bsp_coupontypes">
             <EntityTypeMapping TypeName="brnshopModel.bsp_coupontypes">
               <MappingFragment StoreEntitySet="bsp_coupontypes">
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="cutmoney" ColumnName="cutmoney" />
+                <ScalarProperty Name="fullmoney" ColumnName="fullmoney" />
+                <ScalarProperty Name="isstack" ColumnName="isstack" />
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="coupontypeid" ColumnName="coupontypeid" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2664,6 +2689,7 @@
           <EntitySetMapping Name="bsp_orders">
             <EntityTypeMapping TypeName="brnshopModel.bsp_orders">
               <MappingFragment StoreEntitySet="bsp_orders">
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="oid" ColumnName="oid" />
                 <ScalarProperty Name="osn" ColumnName="osn" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
@@ -2835,6 +2861,7 @@
           <EntitySetMapping Name="bsp_productskus">
             <EntityTypeMapping TypeName="brnshopModel.bsp_productskus">
               <MappingFragment StoreEntitySet="bsp_productskus">
+                <ScalarProperty Name="inputattr" ColumnName="inputattr" />
                 <ScalarProperty Name="isdefaultprice" ColumnName="isdefaultprice" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="recordid" ColumnName="recordid" />

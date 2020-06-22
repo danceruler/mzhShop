@@ -28,5 +28,7 @@ namespace Mzh.Public.DAL
         public int createoid { get; set; }
         public System.DateTime createtime { get; set; }
         public string createip { get; set; }
+        public Nullable<System.DateTime> expiretime { get; set; }
+        public int isuse { get; set; }
     }
 }

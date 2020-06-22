@@ -32,5 +32,10 @@ namespace Mzh.Public.DAL
         public int useexpiretime { get; set; }
         public System.DateTime usestarttime { get; set; }
         public System.DateTime useendtime { get; set; }
+        public int type { get; set; }
+        public int isstack { get; set; }
+        public decimal fullmoney { get; set; }
+        public decimal cutmoney { get; set; }
+        public double discount { get; set; }
     }
 }

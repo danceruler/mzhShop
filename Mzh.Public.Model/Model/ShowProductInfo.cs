@@ -26,7 +26,6 @@ namespace Mzh.Public.Model.Model
         public List<ShowProductInfo> productInfos { get; set; }
     }
 
-
     /// <summary>
     /// 用于前端展示的商品信息类
     /// </summary>
@@ -134,36 +133,36 @@ namespace Mzh.Public.Model.Model
         /// <summary>
         /// skuid
         /// </summary>
-        public int recordid { get; set; }
+        public int sku_recordid { get; set; }
         //public int skugid { get; set; }
         /// <summary>
         /// 产品id
         /// </summary>
-        public int pid { get; set; }
+        public int sku_pid { get; set; }
         /// <summary>
         /// 属性id
         /// </summary>
-        public short attrid { get; set; }
+        public short sku_attrid { get; set; }
         /// <summary>
         /// 属性值id
         /// </summary>
-        public int attrvalueid { get; set; }
+        public int sku_attrvalueid { get; set; }
         /// <summary>
         /// 属性值文本
         /// </summary>
-        public string inputvalue { get; set; }
+        public string sku_inputvalue { get; set; }
         /// <summary>
         /// 属性文本
         /// </summary>
-        public string inputattr { get; set; }
+        public string sku_inputattr { get; set; }
         /// <summary>
         /// 价格
         /// </summary>
-        public Nullable<decimal> price { get; set; }
+        public Nullable<decimal> sku_price { get; set; }
         /// <summary>
         /// 是否商品默认价格
         /// </summary>
-        public int isdefaultprice { get; set; }
+        public int sku_isdefaultprice { get; set; }
     }
 
 

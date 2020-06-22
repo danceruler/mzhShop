@@ -79,4 +79,30 @@ namespace Mzh.Public.Model
         CreditCard = 4,
         Other = 5
     }
+
+    public enum OrderType
+    {
+        Ship = 1,
+        InShop = 2
+    }
+
+    public enum CouponType
+    {
+        /// <summary>
+        /// 满减优惠券
+        /// </summary>
+        NormalFullcut = 1,
+        /// <summary>
+        /// 折扣优惠券
+        /// </summary>
+        NormalDiscount = 2,
+        /// <summary>
+        /// 指定商品满减优惠券
+        /// </summary>
+        AppointProductFullcut = 3,
+        /// <summary>
+        /// 指定商品折扣优惠券
+        /// </summary>
+        AppointProductDiscount = 4
+    }
 }

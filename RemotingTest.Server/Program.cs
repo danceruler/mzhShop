@@ -23,6 +23,8 @@ namespace RemotingTest.Server
         static void Main(string[] args)
         {
             AppConfig.ServerInit();
+            ProductCache.InitProductList();
+
             var tcpChannel = new TcpServerChannel(AppConfig.TcpPort);
             ChannelServices.RegisterChannel(tcpChannel, false);
             var httpChannel = new HttpChannel(AppConfig.HttpPort);
