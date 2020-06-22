@@ -30,7 +30,5 @@ namespace Mzh.Public.Model.Cache
             DataTable boxdt = SqlManager.FillDataTable(AppConfig.ConnectionString, sql);
             boxes = boxdt.GetList<bsp_boxes>(null);
         }
-
-        
     }
 }

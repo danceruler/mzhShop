@@ -55,5 +55,28 @@ namespace Mzh.Public.Model
         Reviewed = 8,
     }
 
+    public enum BoxState
+    {
+        /// <summary>
+        /// 空闲
+        /// </summary>
+        Empty = 0,
+        /// <summary>
+        /// 有客
+        /// </summary>
+        Use = 1,
+        /// <summary>
+        /// 预定
+        /// </summary>
+        Book = 2,
+    }
 
+    public enum PayMod
+    {
+        Cash = 1,
+        AliPay = 2,
+        WxPay = 3,
+        CreditCard = 4,
+        Other = 5
+    }
 }

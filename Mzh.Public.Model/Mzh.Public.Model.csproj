@@ -55,6 +55,7 @@
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Cache\ProductCache.cs" />
     <Compile Include="ModelState.cs" />
+    <Compile Include="Model\ShowOrderInfo.cs" />
     <Compile Include="Model\ShowProductInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
