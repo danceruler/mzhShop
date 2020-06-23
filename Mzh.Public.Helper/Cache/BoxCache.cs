@@ -1,4 +1,5 @@
 ﻿using Mzh.Public.Base;
+using Mzh.Public.BLL.Cache;
 using Mzh.Public.DAL;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Remoting
 {
-    public class BoxCache:MarshalByRefObject
+    public class BoxCache:MarshalByRefObject, ICache
     {
         /// <summary>
         /// 包厢信息

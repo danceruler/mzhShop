@@ -9,6 +9,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 用来创建订单的类
     /// </summary>
+    [Serializable]
     public class CreateOrderModel
     {
         #region 订单相关信息

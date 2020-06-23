@@ -33,8 +33,8 @@ namespace RemotingTest.Server
             {
                 RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
             }
+            ProductCache.InitProductList();
 
-            BoxCache.InitBoxes();
             Console.WriteLine("按任意键退出");
             Console.ReadKey();
         }

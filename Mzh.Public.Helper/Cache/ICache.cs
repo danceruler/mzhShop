@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Remoting
+namespace Mzh.Public.BLL.Cache
 {
-    public class PRODUCT:MarshalByRefObject
+    public interface ICache
     {
-        
+        void Init();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Mzh.Public.Base;
+using Mzh.Public.BLL.Cache;
 using Mzh.Public.Model.Model;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,18 @@ using System.Threading.Tasks;
 
 namespace Remoting
 {
-    public class ProductCache : MarshalByRefObject
+    public class ProductCache : MarshalByRefObject, ICache
     {
         public static List<ShowProductList> ProductList = new List<ShowProductList>();
 
         public void Init()
         {
             InitProductList();
+        }
+
+        public List<ShowProductList> GetProductList()
+        {
+            return ProductList;
         }
 
         /// <summary>

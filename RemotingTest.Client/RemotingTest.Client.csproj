@@ -34,9 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,11 +58,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="config.json" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzh.Public.Base\Mzh.Public.Base.csproj">
       <Project>{d1886799-bb6e-459f-90e4-8b2e081d6dd4}</Project>
       <Name>Mzh.Public.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mzh.Public.Model\Mzh.Public.Model.csproj">
+      <Project>{AC560C10-F6FD-4C90-9158-903317D13A29}</Project>
+      <Name>Mzh.Public.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Remoting.Client.Model\Remoting.Client.Model.csproj">
       <Project>{edd46301-c768-4935-82f2-7052b301eb48}</Project>

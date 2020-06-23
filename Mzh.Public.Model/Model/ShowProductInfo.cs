@@ -10,6 +10,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 用于前端展示的商品列表
     /// </summary>
+    [Serializable]
     public class ShowProductList
     {
         /// <summary>
@@ -29,6 +30,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 用于前端展示的商品信息类
     /// </summary>
+    [Serializable]
     public class ShowProductInfo
     {
         /// <summary>
@@ -132,6 +134,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 用于前端展示的商品规格信息
     /// </summary>
+    [Serializable]
     public class ShowSkuInfo
     {
         /// <summary>

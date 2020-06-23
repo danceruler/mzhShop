@@ -11,7 +11,13 @@ namespace Remoting
 {
     public class ProductCache : MarshalByRefObject
     {
+        public static List<ShowProductList> ProductList = new List<ShowProductList>();
         public void Init()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ShowProductList> GetProductList()
         {
             throw new NotImplementedException();
         }

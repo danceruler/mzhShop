@@ -10,6 +10,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 用于前端展示的订单类
     /// </summary>
+    [Serializable]
     public class ShowOrderInfo
     {
         public int oid { get; set; }
@@ -152,6 +153,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 用于前端展示的订单商品类
     /// </summary>
+    [Serializable]
     public class ShowOrderProductInfo
     {
         /// <summary>

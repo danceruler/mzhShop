@@ -9,6 +9,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 用于前端展示的优惠券信息
     /// </summary>
+    [Serializable]
     public class ShowCouponInfo
     {
         public int couponid { get; set; }
@@ -60,6 +61,7 @@ namespace Mzh.Public.Model.Model
         public ShowCouponTypeInfo typeInfo { get; set; }
     }
 
+    [Serializable]
     public class ShowCouponTypeInfo
     {
         public int ct_coupontypeid { get; set; }

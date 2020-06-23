@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Mzh.Public.Model.Model;
+using Remoting;
+using Remoting.Client.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,9 +13,9 @@ namespace WebApplication2.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public List<ShowProductList> Get()
         {
-            return new string[] { "value1", "value2" };
+            return RemotingHelp.GetModelObject<ProductCache>().GetProductList();
         }
 
         // GET api/values/5
