@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mzh.Public.Model.Cache
+namespace Remoting
 {
-    public class BoxCache: ICache
+    public class BoxCache:MarshalByRefObject
     {
         /// <summary>
         /// 包厢信息

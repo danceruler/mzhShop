@@ -41,5 +41,6 @@ namespace Mzh.Public.DAL
         public System.DateTime addtime { get; set; }
         public string description { get; set; }
         public Nullable<int> isfullcut { get; set; }
+        public decimal packprice { get; set; }
     }
 }

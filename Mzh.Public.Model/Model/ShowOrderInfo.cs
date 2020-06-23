@@ -20,9 +20,17 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public byte orderstate { get; set; }
         /// <summary>
+        /// 订单状态文本
+        /// </summary>
+        public string torderstate { get; set; }
+        /// <summary>
         /// 订单类型1外卖订单2堂食订单
         /// </summary>
         public int type { get; set; }
+        /// <summary>
+        /// 订单类型文本
+        /// </summary>
+        public string ttype { get; set; }
         /// <summary>
         /// 商品总金额
         /// </summary>
@@ -64,6 +72,10 @@ namespace Mzh.Public.Model.Model
         /// 支付方式
         /// </summary>
         public byte paymode { get; set; }
+        /// <summary>
+        /// 支付方式文本
+        /// </summary>
+        public string tpaymode { get; set; }
         /// <summary>
         /// 支付时间
         /// </summary>
@@ -128,6 +140,10 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public List<ShowCouponInfo> coupons { get; set; }
         /// <summary>
+        /// 如果是堂食选择包厢的订单,记录预定的包厢id
+        /// </summary>
+        public int boxid { get; set; }
+        /// <summary>
         /// 如果是堂食选择包厢的订单，用来存放包厢信息
         /// </summary>
         public bsp_boxes box { get; set; }
@@ -171,12 +187,12 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public decimal op_discountprice { get; set; }
         /// <summary>
-        /// 订单商品市场价
+        /// 订单商品售价
         /// </summary>
         public decimal op_shopprice { get; set; }
         //public decimal op_costprice { get; set; }
         /// <summary>
-        /// 订单商品售价
+        /// 订单商品市场价
         /// </summary>
         public decimal op_marketprice { get; set; }
         /// <summary>
@@ -202,5 +218,17 @@ namespace Mzh.Public.Model.Model
         //public int extcode4 { get; set; }
         //public int extcode5 { get; set; }
         public System.DateTime op_addtime { get; set; }
+        /// <summary>
+        /// 规格id
+        /// </summary>
+        public int op_skuid { get; set; }
+        /// <summary>
+        /// 规格属性
+        /// </summary>
+        public string op_inputattr { get; set; }
+        /// <summary>
+        /// 规格值
+        /// </summary>
+        public string op_inputvalue { get; set; }
     }
 }

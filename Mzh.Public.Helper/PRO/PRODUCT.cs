@@ -9,9 +9,12 @@ namespace Remoting
 {
     public class PRODUCT:MarshalByRefObject
     {
-        public string GetName(string name)
+        /// <summary>
+        /// 商品添加sku信息
+        /// </summary>
+        public void AddSKU()
         {
-            return "MyName is "+name+": "+DateTime.Now.Millisecond;
+
         }
     }
 }

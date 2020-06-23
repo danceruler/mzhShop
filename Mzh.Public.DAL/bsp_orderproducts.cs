@@ -42,5 +42,8 @@ namespace Mzh.Public.DAL
         public int extcode4 { get; set; }
         public int extcode5 { get; set; }
         public System.DateTime addtime { get; set; }
+        public int skuid { get; set; }
+        public string inputattr { get; set; }
+        public string inputvalue { get; set; }
     }
 }

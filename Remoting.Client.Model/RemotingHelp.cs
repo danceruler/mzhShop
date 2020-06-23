@@ -1,4 +1,5 @@
-﻿using Remoting;
+﻿using Mzh.Public.Base;
+using Remoting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Mzh.Public.Base
+namespace Remoting.Client.Model
 {
     public static class RemotingHelp
     {
@@ -24,8 +25,8 @@ namespace Mzh.Public.Base
             AppConfig.ClientInit();
             TcpChannel = new TcpClientChannel();
             ChannelServices.RegisterChannel(TcpChannel, false);
-            if (!GetModelObject<Hello>().CheckClient(AppConfig.WebApiId,1)) IsConnect = false;
-            if (!GetModelObject<Hello>().CheckClient(AppConfig.WebAdminId,2)) IsConnect = false;
+            if (!GetModelObject<Hello>().CheckClient(AppConfig.WebApiId, 1)) IsConnect = false;
+            if (!GetModelObject<Hello>().CheckClient(AppConfig.WebAdminId, 2)) IsConnect = false;
             //var httpChannel = new HttpChannel();
             //ChannelServices.RegisterChannel(httpChannel, false);
         }

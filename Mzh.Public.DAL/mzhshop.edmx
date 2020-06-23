@@ -552,6 +552,9 @@
           <Property Name="extcode4" Type="int" Nullable="false" />
           <Property Name="extcode5" Type="int" Nullable="false" />
           <Property Name="addtime" Type="datetime" Nullable="false" />
+          <Property Name="skuid" Type="int" Nullable="false" />
+          <Property Name="inputattr" Type="nvarchar" MaxLength="50" />
+          <Property Name="inputvalue" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="bsp_orderrefunds">
           <Key>
@@ -626,6 +629,7 @@
           <Property Name="buyerremark" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="ip" Type="char" MaxLength="15" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="boxid" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
@@ -746,6 +750,7 @@
           <Property Name="addtime" Type="datetime" Nullable="false" />
           <Property Name="description" Type="ntext" Nullable="false" />
           <Property Name="isfullcut" Type="int" />
+          <Property Name="packprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -1551,6 +1556,9 @@
           <Property Name="extcode4" Type="Int32" Nullable="false" />
           <Property Name="extcode5" Type="Int32" Nullable="false" />
           <Property Name="addtime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="skuid" Type="Int32" Nullable="false" />
+          <Property Name="inputattr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="inputvalue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_orderrefunds">
           <Key>
@@ -1625,6 +1633,7 @@
           <Property Name="buyerremark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ip" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="boxid" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
@@ -1745,6 +1754,7 @@
           <Property Name="addtime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isfullcut" Type="Int32" />
+          <Property Name="packprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -2622,6 +2632,9 @@
           <EntitySetMapping Name="bsp_orderproducts">
             <EntityTypeMapping TypeName="brnshopModel.bsp_orderproducts">
               <MappingFragment StoreEntitySet="bsp_orderproducts">
+                <ScalarProperty Name="inputvalue" ColumnName="inputvalue" />
+                <ScalarProperty Name="inputattr" ColumnName="inputattr" />
+                <ScalarProperty Name="skuid" ColumnName="skuid" />
                 <ScalarProperty Name="recordid" ColumnName="recordid" />
                 <ScalarProperty Name="oid" ColumnName="oid" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
@@ -2689,6 +2702,7 @@
           <EntitySetMapping Name="bsp_orders">
             <EntityTypeMapping TypeName="brnshopModel.bsp_orders">
               <MappingFragment StoreEntitySet="bsp_orders">
+                <ScalarProperty Name="boxid" ColumnName="boxid" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="oid" ColumnName="oid" />
                 <ScalarProperty Name="osn" ColumnName="osn" />
@@ -2828,6 +2842,7 @@
           <EntitySetMapping Name="bsp_products">
             <EntityTypeMapping TypeName="brnshopModel.bsp_products">
               <MappingFragment StoreEntitySet="bsp_products">
+                <ScalarProperty Name="packprice" ColumnName="packprice" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="psn" ColumnName="psn" />
                 <ScalarProperty Name="cateid" ColumnName="cateid" />

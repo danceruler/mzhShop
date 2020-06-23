@@ -76,5 +76,24 @@ namespace Mzh.Public.Base
             }
             return t;
         }
+
+        public static T TransObjFromTable<T>(this DataRow dr) where T : new()
+        {
+            Type target = typeof(T);
+            var model = new T();
+            foreach (var pp in target.GetProperties())
+            {
+                try
+                {
+                    pp.SetValue(model, dr.Field<object>(pp.Name));
+                }
+                catch
+                {
+                    continue;
+                    //Log.Exception(ex.Message, ex);
+                }
+            }
+            return model;
+        }
     }
 }

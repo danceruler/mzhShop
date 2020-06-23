@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Remoting
 {
-    public class BOX : MarshalByRefObject
+    public class SKU : MarshalByRefObject
     {
-
     }
 }

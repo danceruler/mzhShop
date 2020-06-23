@@ -1,5 +1,6 @@
 ﻿using Mzh.Public.Base;
 using Remoting;
+using Remoting.Client.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace RemotingTest.Client
         {
             Hello hello = RemotingHelp.GetModelObject<Hello>();
             hello.Test();
+            RemotingHelp.GetModelObject<BoxCache>().Init();
             Console.ReadKey();
         }
     }

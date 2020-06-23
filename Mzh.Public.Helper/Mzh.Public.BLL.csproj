@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,10 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BOX\BOX.cs" />
+    <Compile Include="Cache\BannerCache.cs" />
+    <Compile Include="Cache\BoxCache.cs" />
+    <Compile Include="Cache\ProductCache.cs" />
+    <Compile Include="COUPON\COUPON.cs" />
     <Compile Include="Hello.cs" />
     <Compile Include="ORDER\ORDER.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PRO\PRODUCT.cs" />
+    <Compile Include="PRO\SKU.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mzh.Public.Base\Mzh.Public.Base.csproj">

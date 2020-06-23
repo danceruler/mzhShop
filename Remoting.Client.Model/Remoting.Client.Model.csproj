@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,9 +45,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BOX\BOX.cs" />
+    <Compile Include="Cache\BannerCache.cs" />
+    <Compile Include="Cache\BoxCache.cs" />
+    <Compile Include="Cache\ProductCache.cs" />
+    <Compile Include="COUPON\COUPON.cs" />
     <Compile Include="Hello.cs" />
+    <Compile Include="ORDER\ORDER.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PRO\PRODUCT.cs" />
+    <Compile Include="PRO\SKU.cs" />
+    <Compile Include="RemotingHelp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mzh.Public.Base\Mzh.Public.Base.csproj">
+      <Project>{d1886799-bb6e-459f-90e4-8b2e081d6dd4}</Project>
+      <Name>Mzh.Public.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mzh.Public.DAL\Mzh.Public.DAL.csproj">
+      <Project>{1224c59e-a951-43c5-b80a-d56a947e696d}</Project>
+      <Name>Mzh.Public.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mzh.Public.Model\Mzh.Public.Model.csproj">
+      <Project>{ac560c10-f6fd-4c90-9158-903317d13a29}</Project>
+      <Name>Mzh.Public.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

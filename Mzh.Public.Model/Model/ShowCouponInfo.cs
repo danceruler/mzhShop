@@ -13,27 +13,63 @@ namespace Mzh.Public.Model.Model
     {
         public int couponid { get; set; }
         //public string couponsn { get; set; }
+        /// <summary>
+        /// 用户id
+        /// </summary>
         public int uid { get; set; }
+        /// <summary>
+        /// 优惠券类型id
+        /// </summary>
         public int coupontypeid { get; set; }
+        /// <summary>
+        /// 订单id（已使用的情况下才有）
+        /// </summary>
         public int oid { get; set; }
+        /// <summary>
+        /// 使用时间
+        /// </summary>
         public System.DateTime usetime { get; set; }
+        /// <summary>
+        /// 使用ip
+        /// </summary>
         public string useip { get; set; }
-        public int money { get; set; }
+        //public int money { get; set; }
+        /// <summary>
+        /// 有效开始时间
+        /// </summary>
         public System.DateTime activatetime { get; set; }
-        public string activateip { get; set; }
+        //public string activateip { get; set; }
         //public int createuid { get; set; }
         //public int createoid { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
         public System.DateTime createtime { get; set; }
         public string createip { get; set; }
+        /// <summary>
+        /// 过期时间
+        /// </summary>
         public Nullable<System.DateTime> expiretime { get; set; }
+        /// <summary>
+        /// 是否已经使用
+        /// </summary>
         public int isuse { get; set; }
+        /// <summary>
+        /// 优惠券类型信息
+        /// </summary>
         public ShowCouponTypeInfo typeInfo { get; set; }
     }
 
     public class ShowCouponTypeInfo
     {
         public int ct_coupontypeid { get; set; }
+        /// <summary>
+        /// 优惠券类型状态
+        /// </summary>
         public byte ct_state { get; set; }
+        /// <summary>
+        /// 优惠券名称
+        /// </summary>
         public string ct_name { get; set; }
         //public int money { get; set; }
         //public int count { get; set; }
@@ -84,7 +120,7 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public decimal ct_fullmoney { get; set; }
         /// <summary>
-        /// 为满减时的兼价
+        /// 为满减时的减价
         /// </summary>
         public decimal ct_cutmoney { get; set; }
         /// <summary>

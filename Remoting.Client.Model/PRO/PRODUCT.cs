@@ -9,10 +9,12 @@ namespace Remoting
 {
     public class PRODUCT:MarshalByRefObject
     {
-        [SoapMethod(XmlNamespace = "Remoting", SoapAction = "Remoting#GetName")]
-        public string GetName(string name)
+        /// <summary>
+        /// 商品添加sku信息
+        /// </summary>
+        public void AddSKU()
         {
-            throw new  NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

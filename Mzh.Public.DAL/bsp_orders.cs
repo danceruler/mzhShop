@@ -52,5 +52,6 @@ namespace Mzh.Public.DAL
         public string buyerremark { get; set; }
         public string ip { get; set; }
         public int type { get; set; }
+        public int boxid { get; set; }
     }
 }

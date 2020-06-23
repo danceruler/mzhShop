@@ -59,6 +59,10 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public decimal costprice { get; set; }
         /// <summary>
+        /// 包装费
+        /// </summary>
+        public decimal packprice { get; set; }
+        /// <summary>
         /// 商品状态（1上架0下架）
         /// </summary>
         public byte state { get; set; }

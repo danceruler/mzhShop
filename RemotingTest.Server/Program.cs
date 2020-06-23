@@ -10,7 +10,6 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Text;
 using System.Threading.Tasks;
 using Mzh.Public.Base;
-using Mzh.Public.Model.Cache;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Remoting;
@@ -23,7 +22,6 @@ namespace RemotingTest.Server
         static void Main(string[] args)
         {
             AppConfig.ServerInit();
-            ProductCache.InitProductList();
 
             var tcpChannel = new TcpServerChannel(AppConfig.TcpPort);
             ChannelServices.RegisterChannel(tcpChannel, false);

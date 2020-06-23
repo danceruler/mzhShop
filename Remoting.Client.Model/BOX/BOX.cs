@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mzh.Public.Model.Cache
+namespace Remoting
 {
-    public interface ICache
+    public class BOX : MarshalByRefObject
     {
-        void Init();
+
     }
 }
