@@ -231,6 +231,16 @@
           <Property Name="haschild" Type="tinyint" Nullable="false" />
           <Property Name="path" Type="char" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="bsp_cateproducts">
+          <Key>
+            <PropertyRef Name="catepid" />
+          </Key>
+          <Property Name="catepid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cateid" Type="int" Nullable="false" />
+          <Property Name="catename" Type="nvarchar" MaxLength="50" />
+          <Property Name="pid" Type="int" Nullable="false" />
+          <Property Name="pname" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="bsp_couponproducts">
           <Key>
             <PropertyRef Name="recordid" />
@@ -1015,6 +1025,7 @@
           <EntitySet Name="bsp_buysendproducts" EntityType="Self.bsp_buysendproducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_buysendpromotions" EntityType="Self.bsp_buysendpromotions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_categories" EntityType="Self.bsp_categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bsp_cateproducts" EntityType="Self.bsp_cateproducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_couponproducts" EntityType="Self.bsp_couponproducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_coupons" EntityType="Self.bsp_coupons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_coupontypes" EntityType="Self.bsp_coupontypes" Schema="dbo" store:Type="Tables" />
@@ -2070,6 +2081,7 @@
           <EntitySet Name="bsp_boxes" EntityType="brnshopModel.bsp_boxes" />
           <EntitySet Name="bsp_friendlinks" EntityType="brnshopModel.bsp_friendlinks" />
           <EntitySet Name="bsp_helps" EntityType="brnshopModel.bsp_helps" />
+          <EntitySet Name="bsp_cateproducts" EntityType="brnshopModel.bsp_cateproducts" />
         </EntityContainer>
         <EntityType Name="bsp_navs">
           <Key>
@@ -2140,6 +2152,16 @@
           <Property Name="url" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="displayorder" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bsp_cateproducts">
+          <Key>
+            <PropertyRef Name="catepid" />
+          </Key>
+          <Property Name="catepid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cateid" Type="Int32" Nullable="false" />
+          <Property Name="catename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pid" Type="Int32" Nullable="false" />
+          <Property Name="pname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3202,6 +3224,17 @@
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bsp_cateproducts">
+            <EntityTypeMapping TypeName="brnshopModel.bsp_cateproducts">
+              <MappingFragment StoreEntitySet="bsp_cateproducts">
+                <ScalarProperty Name="pname" ColumnName="pname" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="catename" ColumnName="catename" />
+                <ScalarProperty Name="cateid" ColumnName="cateid" />
+                <ScalarProperty Name="catepid" ColumnName="catepid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -98,5 +98,6 @@ namespace Mzh.Public.DAL
         public virtual DbSet<bsp_boxes> bsp_boxes { get; set; }
         public virtual DbSet<bsp_friendlinks> bsp_friendlinks { get; set; }
         public virtual DbSet<bsp_helps> bsp_helps { get; set; }
+        public virtual DbSet<bsp_cateproducts> bsp_cateproducts { get; set; }
     }
 }

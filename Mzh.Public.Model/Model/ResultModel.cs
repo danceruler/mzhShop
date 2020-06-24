@@ -52,4 +52,14 @@ namespace Mzh.Public.Model.Model
             };
         }
     }
+
+    [Serializable]
+    public class LayuiApiResult
+    {
+        public int code { get; set; }
+        public string msg { get; set; }
+        public int count { get; set; }
+        public object data { get; set; }
+
+    }
 }

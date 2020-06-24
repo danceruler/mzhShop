@@ -55,7 +55,7 @@
             },
             {
               "title": "商品信息管理",
-              "href": "/product/product",
+              "href": "/Product/Product",
               "icon": "fa fa-window-maximize",
               "target": "_self"
             }

@@ -3,6 +3,8 @@ using Mzh.Public.DAL;
 using Mzh.Public.Model.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Remoting.Metadata;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
@@ -13,6 +15,31 @@ namespace Remoting
 {
     public class PRODUCT:MarshalByRefObject
     {
+        /// <summary>
+        /// 获取分类列表
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowCatecory> GetCategories()
+        {
+            string sql = $@"select bsp_categories.cateid,bsp_categories.name,bsp_categories.displayorder,T.productCount
+                        from bsp_categories
+                        join ((select bsp_categories.cateid,0 productCount
+                        from bsp_categories
+                        left join bsp_cateproducts on bsp_cateproducts.cateid = bsp_categories.cateid
+                        where bsp_cateproducts.catepid is null
+                        group by bsp_categories.cateid)
+                        union
+                        (select bsp_categories.cateid,COUNT(bsp_categories.cateid) productCount
+                        from bsp_categories
+                        left join bsp_cateproducts on bsp_cateproducts.cateid = bsp_categories.cateid
+                        where bsp_cateproducts.catepid is not null
+                        group by bsp_categories.cateid)) T ON T.cateid = bsp_categories.cateid
+                        order by bsp_categories.displayorder desc";
+            SqlCommand cmd = new SqlCommand(sql);
+            DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, cmd);
+            return dt.GetList<ShowCatecory>("");
+        }
+
         /// <summary>
         /// 添加分类
         /// </summary>

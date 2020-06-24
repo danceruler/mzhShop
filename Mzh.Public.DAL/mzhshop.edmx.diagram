@@ -78,6 +78,7 @@
         <EntityTypeShape EntityType="brnshopModel.bsp_boxes" Width="1.5" PointX="23.75" PointY="18.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_friendlinks" Width="1.5" PointX="19.75" PointY="23.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_helps" Width="1.5" PointX="21.75" PointY="23.75" />
+        <EntityTypeShape EntityType="brnshopModel.bsp_cateproducts" Width="1.5" PointX="24.375" PointY="22.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

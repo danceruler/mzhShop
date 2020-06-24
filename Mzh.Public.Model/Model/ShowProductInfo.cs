@@ -191,5 +191,16 @@ namespace Mzh.Public.Model.Model
         public int displayorder { get; set; }
     }
 
+    /// <summary>
+    /// 用于展示的商品分类信息
+    /// </summary>
+    [Serializable]
+    public class ShowCatecory
+    {
+        public int cateid { get; set; }
+        public string name { get; set; }
+        public int displayorder { get; set; }
+        public int productCount { get; set; }
+    }
 
 }

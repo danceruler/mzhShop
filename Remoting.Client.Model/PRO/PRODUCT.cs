@@ -11,6 +11,15 @@ namespace Remoting
     public class PRODUCT:MarshalByRefObject
     {
         /// <summary>
+        /// 获取分类列表
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowCatecory> GetCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 添加分类
         /// </summary>
         /// <returns></returns>

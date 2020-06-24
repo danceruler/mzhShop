@@ -113,6 +113,9 @@
     <Compile Include="bsp_categories.cs">
       <DependentUpon>mzhshop.tt</DependentUpon>
     </Compile>
+    <Compile Include="bsp_cateproducts.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
     <Compile Include="bsp_couponproducts.cs">
       <DependentUpon>mzhshop.tt</DependentUpon>
     </Compile>

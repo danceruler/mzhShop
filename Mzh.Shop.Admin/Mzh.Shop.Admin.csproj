@@ -354,6 +354,7 @@
     <Content Include="wwwroot\api\upload.json" />
     <Content Include="Views\Product\ProductType.cshtml" />
     <Content Include="Views\Product\ProductTypeAdd.cshtml" />
+    <Content Include="Views\Product\Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
