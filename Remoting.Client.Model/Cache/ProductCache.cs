@@ -17,7 +17,22 @@ namespace Remoting
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 获取商品列表
+        /// </summary>
+        /// <returns></returns>
         public List<ShowProductList> GetProductList()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取商品图片
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="ismain"></param>
+        /// <returns></returns>
+        public List<ShowProductImg> GetProductImgs(int pid, int ismain)
         {
             throw new NotImplementedException();
         }

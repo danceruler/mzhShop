@@ -22,6 +22,11 @@ namespace Remoting
             InitBoxes();
         }
 
+        public List<bsp_boxes> GetBoxes()
+        {
+            return boxes;
+        }
+
         /// <summary>
         /// 加载包厢信息
         /// </summary>

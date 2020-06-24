@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mzh.Public.Model.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Metadata;
@@ -10,9 +11,30 @@ namespace Remoting
     public class PRODUCT:MarshalByRefObject
     {
         /// <summary>
-        /// 商品添加sku信息
+        /// 添加分类
         /// </summary>
-        public void AddSKU()
+        /// <returns></returns>
+        public ResultModel AddCateGory(string name, int displayorder = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 删除分类
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        public ResultModel DeleteCateGory(int cateid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 添加商品
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ResultModel AddProduct(AddProductModel model)
         {
             throw new NotImplementedException();
         }

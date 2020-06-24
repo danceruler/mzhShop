@@ -119,6 +119,21 @@ namespace Mzh.Public.Model
         AppointProductDiscount = 4
     }
 
+    /// <summary>
+    /// 轮播图类型
+    /// </summary>
+    public enum BannerType
+    {
+        /// <summary>
+        /// 前往指定商品详情页
+        /// </summary>
+        ToProduct = 1,
+        /// <summary>
+        /// 前往指定网页链接
+        /// </summary>
+        ToLinkUrl = 2
+    }
+
     public static class EnumToText
     {
         public static string ToText(this ProductState enumModel)

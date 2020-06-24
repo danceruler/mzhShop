@@ -1,0 +1,10 @@
+{
+  "remotingConfig": {
+    "tcpport": 8088,
+    "httpport": 8089
+  },
+  "clientIDs": {
+    "WebApi": "rBtEzEKB+4MV/ZW73guTLg==",
+    "WebAdmin": "3DlFwS8VgBbbiIzOdEXF5g=="
+  }
+}

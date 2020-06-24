@@ -129,6 +129,14 @@ namespace Mzh.Public.Model.Model
         /// 规格信息
         /// </summary>
         public List<ShowSkuInfo> skuInfos { get; set; }
+        /// <summary>
+        /// 商品主要图
+        /// </summary>
+        public List<ShowProductImg> mainImgs { get; set; }
+        /// <summary>
+        /// 商品详情图
+        /// </summary>
+        public List<ShowProductImg> detailImgs { get; set; }
     }
 
     /// <summary>
@@ -170,6 +178,17 @@ namespace Mzh.Public.Model.Model
         /// 是否商品默认价格
         /// </summary>
         public int sku_isdefaultprice { get; set; }
+    }
+
+
+    /// <summary>
+    /// 创建商品时的商品图片类
+    /// </summary>
+    [Serializable]
+    public class ShowProductImg
+    {
+        public string showimg { get; set; }
+        public int displayorder { get; set; }
     }
 
 

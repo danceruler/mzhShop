@@ -1,4 +1,5 @@
 ﻿using Mzh.Public.Model.Model;
+using Newtonsoft.Json;
 using Remoting;
 using Remoting.Client.Model;
 using System;
@@ -12,31 +13,12 @@ namespace WebApplication2.Controllers
 {
     public class ValuesController : ApiController
     {
-        // GET api/values
-        public List<ShowProductList> Get()
+        [HttpGet]
+        public object Menus()
         {
-            return RemotingHelp.GetModelObject<ProductCache>().GetProductList();
-        }
-
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var jsontext = System.IO.File.ReadAllText($"{baseDir}\\json\\init.json");
+            return JsonConvert.DeserializeObject(jsontext);
         }
     }
 }

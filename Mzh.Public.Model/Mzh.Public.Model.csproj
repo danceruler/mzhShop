@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelState.cs" />
-    <Compile Include="Model\CreateOrderModel.cs" />
+    <Compile Include="Model\CreateModel.cs" />
     <Compile Include="Model\DistinctModel.cs" />
     <Compile Include="Model\ResultModel.cs" />
     <Compile Include="Model\ShowCouponInfo.cs" />

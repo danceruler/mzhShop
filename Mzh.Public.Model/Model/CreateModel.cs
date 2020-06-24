@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mzh.Public.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -84,6 +85,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 购物车模型
     /// </summary>
+    [Serializable]
     public class CartModel
     {
         public List<CartItem> items { get; set; }
@@ -96,6 +98,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 购物车内的购买模型
     /// </summary>
+    [Serializable]
     public class CartItem
     {
         public ShowProductInfo productinfo { get; set; }
@@ -111,5 +114,39 @@ namespace Mzh.Public.Model.Model
         public int skuid { get; set; }
         public string inputattr { get; set; }
         public string inputvalue { get; set; }
+    }
+
+    /// <summary>
+    /// 用来创建商品的类
+    /// </summary>
+    [Serializable]
+    public class AddProductModel
+    {
+        public short cateid { get; set; }
+        public string name { get; set; }
+        public decimal shopprice { get; set; }
+        public decimal marketprice { get; set; }
+        public decimal costprice { get; set; }
+        public byte isbest { get; set; }
+        public byte ishot { get; set; }
+        public byte isnew { get; set; }
+        public int displayorder { get; set; }
+        public int weight { get; set; }
+        public string showimg { get; set; }
+        public string description { get; set; }
+        public Nullable<int> isfullcut { get; set; }
+        public decimal packprice { get; set; }
+        public List<ProductImgModel> mainImgs { get; set; }
+        public List<ProductImgModel> detailImgs { get; set; }
+    }
+
+    /// <summary>
+    /// 创建商品时的商品图片类
+    /// </summary>
+    [Serializable]
+    public class ProductImgModel
+    {
+        public string showimg { get; set; }
+        public int displayorder { get; set; }
     }
 }

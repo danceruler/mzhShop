@@ -37,5 +37,14 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 商品删除SKU信息
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel DeleteSKU(int pid, int valueid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

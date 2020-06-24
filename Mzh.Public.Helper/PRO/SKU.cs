@@ -100,7 +100,36 @@ namespace Remoting
                     newsku.price = price;
                     context.bsp_productskus.Add(newsku);
                     context.SaveChanges();
+                    ProductCache.InitProductList();
                     return ResultModel.Success("", newsku.recordid);
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 商品删除SKU信息
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel DeleteSKU(int pid, int valueid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                try
+                {
+                    var sku = context.bsp_productskus.SingleOrDefault(t => t.pid == pid && t.attrvalueid == valueid);
+                    if (sku == null)
+                    {
+                        return ResultModel.Fail("该规格SKU已经删除");
+                    }
+                    context.bsp_productskus.Remove(sku);
+                    context.SaveChanges();
+                    ProductCache.InitProductList();
+                    return ResultModel.Success();
                 }
                 catch (Exception ex)
                 {

@@ -33,7 +33,7 @@ namespace RemotingTest.Server
             {
                 RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
             }
-            ProductCache.InitProductList();
+            ProductCache.InitProductImgDic();
 
             Console.WriteLine("按任意键退出");
             Console.ReadKey();

@@ -1,4 +1,5 @@
 ﻿using Mzh.Public.Base;
+using Mzh.Public.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,11 @@ namespace Remoting
     public class BoxCache:MarshalByRefObject
     {
         public void Init()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<bsp_boxes> GetBoxes()
         {
             throw new NotImplementedException();
         }

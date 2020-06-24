@@ -17,12 +17,6 @@ namespace RemotingTest.Client
     {
         static void Main(string[] args)
         {
-            
-            SKU sku = RemotingHelp.GetModelObject<SKU>();
-            for (int i = 24; i <= 53; i++)
-            {
-                sku.AddSKU(i, 164, 0, 100);
-            }
             RemotingHelp.GetModelObject<ProductCache>().Init();
             Console.ReadKey();
         }
