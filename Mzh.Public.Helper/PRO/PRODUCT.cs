@@ -58,12 +58,55 @@ namespace Remoting
                     bsp_categories newcate = new bsp_categories();
                     newcate.name = name;
                     newcate.displayorder = displayorder;
+                    newcate.pricerange = "";
+                    newcate.path = "";
                     context.bsp_categories.Add(newcate);
                     context.SaveChanges();
-                    return ResultModel.Success("", newcate.cateid);
+                    return ResultModel.Success("添加成功", newcate.cateid);
                 }
                 catch(Exception ex)
                 {
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 批量删除分类
+        /// </summary>
+        /// <param name="cateids"></param>
+        /// <returns></returns>
+        public ResultModel DeleteCateGories(int[] cateids)
+        {
+            using (brnshopEntities context = new brnshopEntities()) 
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    foreach (var cateid in cateids)
+                    {
+                        var cateproCount = context.bsp_products.Where(t => t.cateid == cateid).Count();
+                        var cate = context.bsp_categories.SingleOrDefault(t => t.cateid == cateid);
+                        if (cate == null)
+                        {
+                            tran.Rollback();
+                            return ResultModel.Fail($"ID为{cateid}的分类已经删除，请刷新");
+                        }
+                        if (cateproCount > 0)
+                        {
+                            tran.Rollback();
+                            return ResultModel.Fail($"{cate.name}分类下存在商品，不允许删除");
+                        }
+                        context.bsp_categories.Remove(cate);
+                        context.SaveChanges();
+                    }
+                    tran.Commit();
+                    return ResultModel.Success("删除成功");
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
                     Logger._.Error(ex.ToString());
                     return ResultModel.Error(ex.ToString());
                 }
@@ -89,7 +132,7 @@ namespace Remoting
                         return ResultModel.Fail("该分类已经删除，请刷新");
                     context.bsp_categories.Remove(cate);
                     context.SaveChanges();
-                    return ResultModel.Success();
+                    return ResultModel.Success("删除成功");
                 }
                 catch (Exception ex)
                 {

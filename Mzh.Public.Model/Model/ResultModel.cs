@@ -54,7 +54,7 @@ namespace Mzh.Public.Model.Model
     }
 
     [Serializable]
-    public class LayuiApiResult
+    public class LayuiTableApiResult
     {
         public int code { get; set; }
         public string msg { get; set; }

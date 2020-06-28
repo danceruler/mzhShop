@@ -60,7 +60,6 @@
             <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
             <script type="text/html" id="currentTableBar">
-                <a class="layui-btn layui-btn-xs layui-btn-danger data-count-products" lay-event="products">查看商品</a>
                 <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
             </script>
@@ -68,12 +67,14 @@
         </div>
     </div>
 
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/wwwroot/js/lay-config.js"></script>
     <script src="~/wwwroot/js/lay-module/layuimini/miniTab.js" charset="utf-8"></script>
+    <script src="~/Scripts/mzhconfig.js"></script>
 
     <script>
-
         layui.use(['form', 'table', 'miniTab'], function () {
             var $ = layui.jquery,
                 form = layui.form,
@@ -83,7 +84,7 @@
             table.render({
                 elem: '#currentTableId',
                 //url: '../../wwwroot/api/table.json',
-                url: 'http://localhost:44332/Product/GetCategories',
+                url: domain + '/Product/GetCategories',
                 toolbar: '#toolbarDemo',
                 defaultToolbar: ['filter', 'exports', 'print', {
                     title: '提示',
@@ -94,7 +95,7 @@
                     { type: "checkbox", width: 50 },
                     { field: 'cateid', width: 100, title: 'ID', sort: true },
                     { field: 'name', width: 200, title: '分类名称', sort: true },
-                    { field: 'productCount', width: 120, title: '商品数量', event: 'showproducts', style: 'cursor: pointer;', sort: true },
+                    { field: 'productCount', width: 120, title: '商品数量', event: 'showproducts', style: 'cursor: pointer;color:orange', sort: true },
                     { field: 'displayorder', width: 100, title: '排序号', sort: false },
                     //{ field: 'id', width: 80, title: 'ID', sort: true },
                     //{ field: 'username', width: 80, title: '用户名' },
@@ -139,12 +140,12 @@
             table.on('toolbar(currentTableFilter)', function (obj) {
                 if (obj.event === 'add') {  // 监听添加操作
                     var index = layer.open({
-                        title: '添加用户',
+                        title: '添加商品类型',
                         type: 2,
                         shade: 0.2,
                         maxmin: true,
                         shadeClose: true,
-                        area: ['100%', '100%'],
+                        area: ['50%', '50%'],
                         content: '/Product/ProductTypeAdd',
                     });
                     $(window).on("resize", function () {
@@ -153,7 +154,42 @@
                 } else if (obj.event === 'delete') {  // 监听删除操作
                     var checkStatus = table.checkStatus('currentTableId')
                         , data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
+                    if (data.length == 0) {
+                        var index = layer.alert('没有选择要删除的分类信息', {
+                            title: '提示'
+                        }, function () {
+                            // 关闭弹出层
+                            layer.close(index);
+                        });
+                    } else {
+                        layer.confirm('确认删除吗？', function (index) {
+                            var cateids = [];
+                            for (var i = 0; i < data.length; i++) {
+                                cateids.push(data[i].cateid);
+                            }
+                            $.ajax({
+                                type: 'post',
+                                url: domain + '/Product/DeleteCateGories',
+                                data: { cateids: cateids },
+                                beforeSend: function () {
+                                    showloading(true);
+                                },
+                                success: function (res) {
+                                    showloading(false);
+                                    if (res.state == 1) {
+                                        window.location.reload();
+                                    } else {
+                                        var index = layer.alert(res.msg, {
+                                            title: '提示'
+                                        }, function () {
+                                            // 关闭弹出层
+                                            layer.close(index);
+                                        });
+                                    }
+                                }
+                            })
+                        });
+                    }
                 }
             });
 
@@ -166,12 +202,12 @@
                 var data = obj.data;
                 if (obj.event === 'edit') {
                     var index = layer.open({
-                        title: '编辑用户',
+                        title: '编辑商品类型',
                         type: 2,
                         shade: 0.2,
                         maxmin: true,
                         shadeClose: true,
-                        area: ['100%', '100%'],
+                        area: ['50%', '50%'],
                         content: '/Product/ProductTypeAdd',
                     });
                     $(window).on("resize", function () {
@@ -180,13 +216,33 @@
                     return false;
                 } else if (obj.event === 'delete') {
                     layer.confirm('真的删除行么', function (index) {
-                        obj.del();
-                        layer.close(index);
+                        $.ajax({
+                            type: 'post',
+                            url: domain + '/Product/DeleteCateGory?cateid=' + data.cateid,
+                            beforeSend: function () {
+                                showloading(true);
+                            },
+                            success: function (res) {
+                                showloading(false);
+                                if (res.state == 1) {
+                                    obj.del();
+                                    layer.close(index);
+                                } else {
+                                    var index = layer.alert(res.msg, {
+                                        title: '提示'
+                                    }, function () {
+                                        // 关闭弹出层
+                                        layer.close(index);
+                                    });
+                                }
+                            }
+                        })
                     });
-                } else if (obj.event === 'products') {
+                }
+                else if (obj.event === 'showproducts') {
                     miniTab.openNewTabByIframe({
                         href: "/Product/Product?cateid=" + data.cateid,
-                        title: "按钮示例",
+                        title: "商品信息管理",
                     });
                     //layer.prompt({
                     //  formType: 2
@@ -205,31 +261,6 @@
                 }
             });
 
-            table.on('field(productCount)', function (obj) {
-                var data = obj.data;
-                console.log(data);
-                if (obj.event === 'showproducts') {
-                    miniTab.openNewTabByIframe({
-                        href: "/Product/Product?cateid=" + data.cateid,
-                        title: "按钮示例",
-                    });
-                    //layer.prompt({
-                    //  formType: 2
-                    //  ,title: '修改 ID 为 ['+ data.id +'] 的用户签名'
-                    //  ,value: data.sign
-                    //}, function(value, index){
-                    //  layer.close(index);
-
-                    //  //这里一般是发送修改的Ajax请求
-
-                    //  //同步更新表格和缓存对应的值
-                    //  obj.update({
-                    //    sign: value
-                    //  });
-                    //});
-                }
-
-            });
 
         });
     </script>

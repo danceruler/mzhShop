@@ -12,43 +12,49 @@
 <body>
     <div class="layui-form layuimini-form">
         <div class="layui-form-item">
-            <label class="layui-form-label required">用户名</label>
+            <label class="layui-form-label required">分类名称</label>
             <div class="layui-input-block">
-                <input type="text" name="username" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名" value="" class="layui-input">
-                <tip>填写自己管理账号的名称。</tip>
+                <input type="text" name="username" lay-verify="required" lay-reqtext="分类名称不能为空" placeholder="请输入分类名称" value="" class="layui-input">
+                <tip>不能与其他分类名称重复。</tip>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">性别</label>
-            <div class="layui-input-block">
-                <input type="radio" name="sex" value="男" title="男" checked="">
-                <input type="radio" name="sex" value="女" title="女">
+        @*<div class="layui-form-item">
+                <label class="layui-form-label required">性别</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <input type="radio" name="sex" value="女" title="女">
+                </div>
+            </div>*@
+        @*<div class="layui-form-item">
+                <label class="layui-form-label required">手机</label>
+                <div class="layui-input-block">
+                    <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机" value="" class="layui-input">
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">手机</label>
-            <div class="layui-input-block">
-                <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机" value="" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">邮箱</label>
-            <div class="layui-input-block">
-                <input type="email" name="email" placeholder="请输入邮箱" value="" class="layui-input">
-            </div>
-        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="email" name="email" placeholder="请输入邮箱" value="" class="layui-input">
+                </div>
+            </div>*@
+        @*<div class="layui-form-item">
+                <label class="layui-form-label">职业</label>
+                <div class="layui-input-block">
+                    <input type="text" name="work" placeholder="请输入职业" value="" class="layui-input">
+                </div>
+            </div>*@
         <div class="layui-form-item">
             <label class="layui-form-label">职业</label>
             <div class="layui-input-block">
-                <input type="text" name="work" placeholder="请输入职业" value="" class="layui-input">
+                <input type="number" name="displayorder" placeholder="请输入排序号，不填默认为0" value="0" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">备注信息</label>
-            <div class="layui-input-block">
-                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
-            </div>
-        </div>
+        @*<div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注信息</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+                </div>
+            </div>*@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
@@ -56,7 +62,9 @@
             </div>
         </div>
     </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="~/Scripts/mzhconfig.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
         layui.use(['form'], function () {
@@ -66,17 +74,35 @@
 
             //监听提交
             form.on('submit(saveBtn)', function (data) {
-                var index = layer.alert(JSON.stringify(data.field), {
-                    title: '最终的提交信息'
-                }, function () {
+                var data = data.field;
+                var username = data.username;
+                var displayorder = data.displayorder == '' ? 0 : data.displayorder;
+                $.ajax({
+                    url: domain + '/Product/AddCateGory?name=' + username + (data.displayorder == '' ? '' : ('&displayorder=' + displayorder)),
+                    data: {},
+                    dataType: 'json',
+                    async: false,
+                    type: 'post',
+                    beforeSend: function () {
+                        showloading(true);
+                    },
+                    success: function (res) {
+                        showloading(false);
+                        console.log(res);
 
-                    // 关闭弹出层
-                    layer.close(index);
+                        var index = layer.alert(res.msg, {
+                            title: '结果'
+                        }, function () {
+                            // 关闭弹出层
+                            layer.close(index);
 
-                    var iframeIndex = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(iframeIndex);
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                            parent.location.reload(); //刷新父页面
+                        });
+                    }
+                })
 
-                });
 
                 return false;
             });

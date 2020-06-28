@@ -133,6 +133,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\mzhstyle.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -141,6 +142,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="config.json" />
     <Content Include="NLog.config" />
+    <Content Include="Scripts\mzhconfig.js" />
     <Content Include="wwwroot\css\layuimini.css" />
     <Content Include="wwwroot\css\public.css" />
     <Content Include="wwwroot\css\themes\default.css" />

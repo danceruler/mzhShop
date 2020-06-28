@@ -82,8 +82,8 @@ namespace Remoting
                     var dtSku = dtProduct.Select($"pid = {productInfo.pid}").CopyToDataTable();
                     productInfo.skuCount = dtSku.Rows.Count;
                     productInfo.skuInfos = dtSku.GetList<ShowSkuInfo>("").Distinct(new DistinctModel<ShowSkuInfo>()).ToList();
-                    productInfo.mainImgs = ProductMainImgDic[productInfo.pid];
-                    productInfo.detailImgs = ProductDetailImgDic[productInfo.pid];
+                    productInfo.mainImgs = ProductMainImgDic.Keys.Contains(productInfo.pid)?ProductMainImgDic[productInfo.pid]:new List<ShowProductImg>();
+                    productInfo.detailImgs = ProductDetailImgDic.Keys.Contains(productInfo.pid)?ProductDetailImgDic[productInfo.pid]:new List<ShowProductImg>();
                 }
                 _ProductList.Add(showProductList);
             }

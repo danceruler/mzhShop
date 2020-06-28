@@ -29,6 +29,17 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 批量删除分类
+        /// </summary>
+        /// <param name="cateids"></param>
+        /// <returns></returns>
+        public ResultModel DeleteCateGories(int[] cateids)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /// <summary>
         /// 删除分类
         /// </summary>
         /// <param name="cateid"></param>

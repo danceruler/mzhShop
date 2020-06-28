@@ -34,5 +34,15 @@ namespace Remoting
         {
             var temp = AppConfig.ConnectionString;
         }
+
+        public static void InitAll()
+        {
+            ProductCache productCache = new ProductCache();
+            productCache.Init();
+            BoxCache boxCache = new BoxCache();
+            boxCache.Init();
+            BannerCache bannerCache = new BannerCache();
+            bannerCache.Init();
+        }
     }
 }

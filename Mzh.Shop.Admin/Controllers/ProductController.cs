@@ -23,6 +23,8 @@ namespace Mzh.Shop.Admin.Controllers
 
         public ActionResult Product(int cateid = 0)
         {
+            ProductCache pcache = RemotingHelp.GetModelObject<ProductCache>();
+            ViewBag.productList = pcache.GetProductList();
             ViewBag.cateid = cateid;
             return View();
         }
@@ -33,7 +35,7 @@ namespace Mzh.Shop.Admin.Controllers
             PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
             var list = product.GetCategories();
             return Json(
-                new LayuiApiResult() { 
+                new LayuiTableApiResult() { 
                     code = 0,
                     msg = "",
                     count = list.Count,
@@ -41,5 +43,47 @@ namespace Mzh.Shop.Admin.Controllers
                 }, 
                 JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        /// <summary>
+        /// 添加分类
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddCateGory(string name, int displayorder = 0)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+               product.AddCateGory(name,displayorder),
+               JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        /// <summary>
+        /// 删除分类
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        public ActionResult DeleteCateGory(int cateid)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+               product.DeleteCateGory(cateid),
+               JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        /// <summary>
+        /// 批量删除分类
+        /// </summary>
+        /// <param name="cateids"></param>
+        /// <returns></returns>
+        public ActionResult DeleteCateGories(int[] cateids)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+               product.DeleteCateGories(cateids),
+               JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
