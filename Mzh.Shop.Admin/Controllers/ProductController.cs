@@ -16,8 +16,15 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
-        public ActionResult ProductTypeAdd()
+        public ActionResult ProductTypeAdd(int cateid = 0)
         {
+            ViewBag.cateid = cateid;
+            ViewBag.cate = null;
+            if(cateid > 0)
+            {
+                PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+                ViewBag.cate = product.GetCategories().Where(t => t.cateid == cateid).SingleOrDefault();
+            }
             return View();
         }
 
@@ -26,6 +33,11 @@ namespace Mzh.Shop.Admin.Controllers
             ProductCache pcache = RemotingHelp.GetModelObject<ProductCache>();
             ViewBag.productList = pcache.GetProductList();
             ViewBag.cateid = cateid;
+            return View();
+        }
+
+        public ActionResult ProductAdd()
+        {
             return View();
         }
 
@@ -84,6 +96,23 @@ namespace Mzh.Shop.Admin.Controllers
                product.DeleteCateGories(cateids),
                JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        /// <summary>
+        /// 修改商品分类信息
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <param name="name"></param>
+        /// <param name="displayorder"></param>
+        /// <returns></returns>
+        public ActionResult UpdateCateGory(int cateid, string name, int displayorder)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+                product.UpdateCateGory(cateid,name,displayorder),
+                JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }

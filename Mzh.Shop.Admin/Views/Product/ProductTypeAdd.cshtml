@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Mzh.Public.Model.Model;
+@{
+    int cateid = ViewBag.cateid;
+    ShowCatecory cate = ViewBag.cate as ShowCatecory;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,13 +16,20 @@
 </head>
 <body>
     <div class="layui-form layuimini-form">
+        <div class="layui-form-item" style="display:none">
+            <label class="layui-form-label required">分类id</label>
+            <div class="layui-input-block">
+                <input type="text" name="cateid" value="@cateid" class="layui-input">
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label required">分类名称</label>
             <div class="layui-input-block">
-                <input type="text" name="username" lay-verify="required" lay-reqtext="分类名称不能为空" placeholder="请输入分类名称" value="" class="layui-input">
+                <input type="text" name="username" lay-verify="required" lay-reqtext="分类名称不能为空" placeholder="请输入分类名称" value="@(cateid>0?cate.name.TrimEnd():"")" class="layui-input">
                 <tip>不能与其他分类名称重复。</tip>
             </div>
         </div>
+
         @*<div class="layui-form-item">
                 <label class="layui-form-label required">性别</label>
                 <div class="layui-input-block">
@@ -44,9 +56,9 @@
                 </div>
             </div>*@
         <div class="layui-form-item">
-            <label class="layui-form-label">职业</label>
+            <label class="layui-form-label">排序号</label>
             <div class="layui-input-block">
-                <input type="number" name="displayorder" placeholder="请输入排序号，不填默认为0" value="0" class="layui-input">
+                <input type="number" name="displayorder" placeholder="请输入排序号，不填默认为0" value="@(cateid>0?cate.displayorder:0)" class="layui-input">
             </div>
         </div>
         @*<div class="layui-form-item layui-form-text">
@@ -77,32 +89,63 @@
                 var data = data.field;
                 var username = data.username;
                 var displayorder = data.displayorder == '' ? 0 : data.displayorder;
-                $.ajax({
-                    url: domain + '/Product/AddCateGory?name=' + username + (data.displayorder == '' ? '' : ('&displayorder=' + displayorder)),
-                    data: {},
-                    dataType: 'json',
-                    async: false,
-                    type: 'post',
-                    beforeSend: function () {
-                        showloading(true);
-                    },
-                    success: function (res) {
-                        showloading(false);
-                        console.log(res);
+                var cateid = data.cateid;
+                if (cateid == 0) {
+                    //新增
+                    $.ajax({
+                        url: domain + '/Product/AddCateGory?name=' + username + (data.displayorder == '' ? '' : ('&displayorder=' + displayorder)),
+                        data: {},
+                        dataType: 'json',
+                        async: false,
+                        type: 'post',
+                        beforeSend: function () {
+                            showloading(true);
+                        },
+                        success: function (res) {
+                            showloading(false);
+                            var index = layer.alert(res.msg, {
+                                title: '结果'
+                            }, function () {
+                                // 关闭弹出层
+                                layer.close(index);
+                                if (res.state == 1) {
+                                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(iframeIndex);
+                                    parent.location.reload(); //刷新父页面
+                                }
 
-                        var index = layer.alert(res.msg, {
-                            title: '结果'
-                        }, function () {
-                            // 关闭弹出层
-                            layer.close(index);
+                            });
+                        }
+                    })
+                } else {
+                    //编辑=
+                    $.ajax({
+                        url: domain + '/Product/UpdateCateGory?name=' + username + (data.displayorder == '' ? '' : ('&displayorder=' + displayorder)) + '&cateid=' + cateid,
+                        data: {},
+                        dataType: 'json',
+                        async: false,
+                        type: 'post',
+                        beforeSend: function () {
+                            showloading(true);
+                        },
+                        success: function (res) {
+                            showloading(false);
+                            console.log(res);
 
-                            var iframeIndex = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(iframeIndex);
-                            parent.location.reload(); //刷新父页面
-                        });
-                    }
-                })
-
+                            var index = layer.alert(res.msg, {
+                                title: '结果'
+                            }, function () {
+                                // 关闭弹出层
+                                layer.close(index);
+                                if (res.state == 1) {
+                                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(iframeIndex);
+                                    parent.location.reload(); //刷新父页面
+                                }
+                            });
+                        }
+                    })
+                }
 
                 return false;
             });

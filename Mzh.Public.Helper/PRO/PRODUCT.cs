@@ -143,6 +143,33 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 修改商品分类信息
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <param name="name"></param>
+        /// <param name="displayorder"></param>
+        /// <returns></returns>
+        public ResultModel UpdateCateGory(int cateid,string name,int displayorder)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                try
+                {
+                    var cate = context.bsp_categories.SingleOrDefault(t => t.cateid == cateid);
+                    cate.name = name;
+                    cate.displayorder = displayorder;
+                    context.SaveChanges();
+                    return ResultModel.Success("修改成功");
+                }
+                catch(Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
         /// 添加商品
         /// </summary>
         /// <param name="model"></param>
@@ -197,7 +224,7 @@ namespace Remoting
                     }
 
                     tran.Commit();
-                    ProductCache.InitProductList();
+                    new ProductCache().Init();
                     return ResultModel.Success("", newpro.pid);
 
                 }

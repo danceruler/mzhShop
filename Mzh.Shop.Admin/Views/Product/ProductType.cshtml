@@ -208,7 +208,7 @@
                         maxmin: true,
                         shadeClose: true,
                         area: ['50%', '50%'],
-                        content: '/Product/ProductTypeAdd',
+                        content: '/Product/ProductTypeAdd?cateid=' + data.cateid,
                     });
                     $(window).on("resize", function () {
                         layer.full(index);

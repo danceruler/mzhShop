@@ -50,6 +50,19 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 修改商品分类信息
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <param name="name"></param>
+        /// <param name="displayorder"></param>
+        /// <returns></returns>
+        public ResultModel UpdateCateGory(int cateid, string name, int displayorder)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /// <summary>
         /// 添加商品
         /// </summary>
         /// <param name="model"></param>
