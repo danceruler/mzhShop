@@ -1,4 +1,6 @@
 ﻿using Aliyun.OSS;
+using Aliyun.OSS.Util;
+using Mzh.Public.DAL;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,28 +12,65 @@ namespace Mzh.Public.Base
 {
     public class OSSHelper
     {
-        public void test()
+        private string endpoint = "oss-cn-beijing.aliyuncs.com";
+        private string accessKeyId = "LTAI4FzST8rehSkwn5R1zUsF";
+        private string accessKeySecret = "Es7IBIbHQbDPl4dFBJ00AYvnnQGjZq";
+        private string bucketName = "boiledchicken";
+        private static Dictionary<string, string> SuffixContentType = new Dictionary<string, string>()
         {
-            var endpoint = "<yourEndpoint>";
-            var accessKeyId = "<yourAccessKeyId>";
-            var accessKeySecret = "<yourAccessKeySecret>";
-            var bucketName = "<yourBucketName>";
-            var objectName = "<yourObjectName>";
-            var objectContent = "More than just cloud.";
+            { "png","image/png" },
+            { "jpeg","image/jpeg" },
+            { "jpg","image/jpeg" },
+            { "jpe","image/jpeg" },
+            { "gif","image/gif" },
+        };
+
+        public bool Upload(byte[] content,string filename,string objectName,string contentType)
+        {
+            var objectContent = content;
             // 创建OssClient实例。
             var client = new OssClient(endpoint, accessKeyId, accessKeySecret);
             try
             {
-                byte[] binaryData = Encoding.ASCII.GetBytes(objectContent);
-                MemoryStream requestContent = new MemoryStream(binaryData);
+                StreamFileHelper streamFileHelper = new StreamFileHelper();
                 // 上传文件。
-                client.PutObject(bucketName, objectName, requestContent);
-                Console.WriteLine("Put object succeeded");
+                var metadata = new ObjectMetadata()
+                {
+                    // 指定文件类型。
+                    ContentType = contentType,
+                    // 设置缓存过期时间，格式是格林威治时间（GMT）。
+                    ExpirationTime = DateTime.Parse("2025-10-12T00:00:00.000Z"),
+                };
+                metadata.CacheControl = "No-Cache";
+                var saveAsFilename = filename;
+                var contentDisposition = string.Format("attachment;filename*=utf-8''{0}", HttpUtils.EncodeUri(saveAsFilename, "utf-8"));
+                metadata.ContentDisposition = contentDisposition;
+                PutObjectRequest request = new PutObjectRequest(bucketName, objectName, streamFileHelper.BytesToStream(objectContent));
+                request.Metadata = metadata;
+                var putResult = client.PutObject(request);
+                return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Put object failed, {0}", ex.Message);
+                Logger._.Error(ex.ToString());
+                return false;
             }
+        }
+
+        public string GetFilePath(string objectname,DateTime expirationTime)
+        {
+            var client = new OssClient(endpoint, accessKeyId, accessKeySecret);
+            var uri = client.GeneratePresignedUri(bucketName, objectname, expirationTime);
+            var url = uri.AbsoluteUri;
+            return url;
+        }
+
+        public static string GetContentTypeBySuffix(string suffixname)
+        {
+            if (SuffixContentType.Keys.Contains(suffixname))
+                return SuffixContentType[suffixname];
+            else
+                return "application/octet-stream";
         }
     }
 }

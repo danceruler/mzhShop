@@ -296,6 +296,7 @@
     <Content Include="wwwroot\lib\layui-v2.5.5\lay\modules\tree.js" />
     <Content Include="wwwroot\lib\layui-v2.5.5\lay\modules\upload.js" />
     <Content Include="wwwroot\lib\layui-v2.5.5\lay\modules\util.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -1,4 +1,7 @@
-﻿using Mzh.Public.Model.Model;
+﻿using Mzh.Public.Base;
+using Mzh.Public.BLL.HELP;
+using Mzh.Public.Model.Model;
+using Remoting.Client.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,16 +17,13 @@ namespace Mzh.Shop.Admin.Controllers
         [HttpPost]
         public ActionResult File()
         {
-            var files = Request.Files;
-            foreach (HttpPostedFileBase file in files)
-            {
-                var name = file.FileName;
-                var stream = file.InputStream;
-                stream.Position = 0;
-                StreamReader reader = new StreamReader(stream);
-                string text = reader.ReadToEnd();
-            }
-            return Json(ResultModel.Success(),JsonRequestBehavior.AllowGet);
+            var file = Request.Files["file"];
+            var name = file.FileName;
+            var stream = file.InputStream;
+            StreamFileHelper streamFileHelper = new StreamFileHelper();
+            UPLOAD upload = RemotingHelp.GetModelObject<UPLOAD>();
+            return Json(upload.Upload(streamFileHelper.StreamToBytes(stream), name, "webadmin"),
+                JsonRequestBehavior.AllowGet);
         }
     }
 }

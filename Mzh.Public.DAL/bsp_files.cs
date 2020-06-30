@@ -22,5 +22,7 @@ namespace Mzh.Public.DAL
         public string name { get; set; }
         public string timestamp { get; set; }
         public string suffixname { get; set; }
+        public string objectname { get; set; }
+        public int requestcount { get; set; }
     }
 }

@@ -344,6 +344,8 @@
           <Property Name="name" Type="nvarchar(max)" />
           <Property Name="timestamp" Type="nvarchar" MaxLength="200" />
           <Property Name="suffixname" Type="nvarchar" MaxLength="20" />
+          <Property Name="objectname" Type="nvarchar(max)" />
+          <Property Name="requestcount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_filterwords">
           <Key>
@@ -2190,6 +2192,8 @@
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="timestamp" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="suffixname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="objectname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="requestcount" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3269,6 +3273,8 @@
           <EntitySetMapping Name="bsp_files">
             <EntityTypeMapping TypeName="brnshopModel.bsp_files">
               <MappingFragment StoreEntitySet="bsp_files">
+                <ScalarProperty Name="requestcount" ColumnName="requestcount" />
+                <ScalarProperty Name="objectname" ColumnName="objectname" />
                 <ScalarProperty Name="suffixname" ColumnName="suffixname" />
                 <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="name" ColumnName="name" />
