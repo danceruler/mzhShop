@@ -19,16 +19,36 @@
             </blockquote>
 
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>表单集合演示</legend>
+                <legend>添加商品</legend>
             </fieldset>
 
             <form class="layui-form" action="">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">单行输入框</label>
+                    <label class="layui-form-label">商品类别</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                        <select name="producttype" lay-filter="producttype">
+                            <option value=""></option>
+                            <option value="0">写作</option>
+                            <option value="1" selected="">阅读</option>
+                            <option value="2">游戏</option>
+                            <option value="3">音乐</option>
+                            <option value="4">旅行</option>
+                        </select>
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="productname" lay-verify="productname" autocomplete="required" placeholder="请输入商品名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">商品描述</label>
+                    <div class="layui-input-block">
+                        <textarea name="productdescription" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">验证必填项</label>
                     <div class="layui-input-block">
@@ -236,11 +256,11 @@
                     </div>
                 </div>
                 <!--<div class="layui-form-item layui-form-text">
-                  <label class="layui-form-label">编辑器</label>
-                  <div class="layui-input-block">
-                    <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-                  </div>
-                </div>-->
+      <label class="layui-form-label">编辑器</label>
+      <div class="layui-input-block">
+        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+      </div>
+    </div>-->
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>

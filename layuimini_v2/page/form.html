@@ -37,18 +37,34 @@
 
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">验证手机</label>
+                    <label class="layui-form-label">原价</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                        <input type="number" name="macketprice" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">验证邮箱</label>
+                    <label class="layui-form-label">现价</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                        <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否支持外卖</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="isbest" value="1" title="是" checked="">
+                    <input type="radio" name="isbest" value="0" title="否">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">单选框</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+                </div>
+            </div>
+
 
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -235,11 +251,11 @@
                 </div>
             </div>
             <!--<div class="layui-form-item layui-form-text">
-              <label class="layui-form-label">编辑器</label>
-              <div class="layui-input-block">
-                <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-              </div>
-            </div>-->
+      <label class="layui-form-label">编辑器</label>
+      <div class="layui-input-block">
+        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+      </div>
+    </div>-->
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
