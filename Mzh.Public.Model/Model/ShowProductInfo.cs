@@ -118,7 +118,10 @@ namespace Mzh.Public.Model.Model
         /// 是否满减商品
         /// </summary>
         public Nullable<int> isfullcut { get; set; }
-
+        /// <summary>
+        /// 库存
+        /// </summary>
+        public int stock { get; set; }
 
 
         /// <summary>
@@ -178,6 +181,10 @@ namespace Mzh.Public.Model.Model
         /// 是否商品默认价格
         /// </summary>
         public int sku_isdefaultprice { get; set; }
+        /// <summary>
+        /// 库存
+        /// </summary>
+        public int stock { get; set; }
     }
 
 

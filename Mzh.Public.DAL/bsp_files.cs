@@ -24,5 +24,6 @@ namespace Mzh.Public.DAL
         public string suffixname { get; set; }
         public string objectname { get; set; }
         public int requestcount { get; set; }
+        public string domain { get; set; }
     }
 }

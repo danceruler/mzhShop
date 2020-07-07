@@ -23,5 +23,6 @@ namespace Mzh.Public.DAL
         public Nullable<decimal> price { get; set; }
         public int isdefaultprice { get; set; }
         public string inputattr { get; set; }
+        public int stock { get; set; }
     }
 }

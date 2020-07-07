@@ -346,6 +346,7 @@
           <Property Name="suffixname" Type="nvarchar" MaxLength="20" />
           <Property Name="objectname" Type="nvarchar(max)" />
           <Property Name="requestcount" Type="int" Nullable="false" />
+          <Property Name="domain" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="bsp_filterwords">
           <Key>
@@ -776,6 +777,7 @@
           <Property Name="description" Type="ntext" Nullable="false" />
           <Property Name="isfullcut" Type="int" />
           <Property Name="packprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -790,6 +792,7 @@
           <Property Name="price" Type="decimal" Precision="18" Scale="2" />
           <Property Name="isdefaultprice" Type="int" Nullable="false" />
           <Property Name="inputattr" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="stock" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productstats">
           <Key>
@@ -1782,6 +1785,7 @@
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isfullcut" Type="Int32" />
           <Property Name="packprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -1796,6 +1800,7 @@
           <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="isdefaultprice" Type="Int32" Nullable="false" />
           <Property Name="inputattr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productstats">
           <Key>
@@ -2194,6 +2199,7 @@
           <Property Name="suffixname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="objectname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="requestcount" Type="Int32" Nullable="false" />
+          <Property Name="domain" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2896,6 +2902,7 @@
           <EntitySetMapping Name="bsp_products">
             <EntityTypeMapping TypeName="brnshopModel.bsp_products">
               <MappingFragment StoreEntitySet="bsp_products">
+                <ScalarProperty Name="stock" ColumnName="stock" />
                 <ScalarProperty Name="packprice" ColumnName="packprice" />
                 <ScalarProperty Name="pid" ColumnName="pid" />
                 <ScalarProperty Name="psn" ColumnName="psn" />
@@ -2930,6 +2937,7 @@
           <EntitySetMapping Name="bsp_productskus">
             <EntityTypeMapping TypeName="brnshopModel.bsp_productskus">
               <MappingFragment StoreEntitySet="bsp_productskus">
+                <ScalarProperty Name="stock" ColumnName="stock" />
                 <ScalarProperty Name="inputattr" ColumnName="inputattr" />
                 <ScalarProperty Name="isdefaultprice" ColumnName="isdefaultprice" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -3273,6 +3281,7 @@
           <EntitySetMapping Name="bsp_files">
             <EntityTypeMapping TypeName="brnshopModel.bsp_files">
               <MappingFragment StoreEntitySet="bsp_files">
+                <ScalarProperty Name="domain" ColumnName="domain" />
                 <ScalarProperty Name="requestcount" ColumnName="requestcount" />
                 <ScalarProperty Name="objectname" ColumnName="objectname" />
                 <ScalarProperty Name="suffixname" ColumnName="suffixname" />
