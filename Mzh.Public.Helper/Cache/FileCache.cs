@@ -40,7 +40,6 @@ namespace Mzh.Public.BLL.Cache
                     {
                         var bsp_file = context.bsp_files.SingleOrDefault(t => t.objectname == objectname);
                         bsp_file.ossurl = ossurl;
-                        context.SaveChanges();
                         if(filecache == null)
                         {
                             FileCacheModel newfilecache = new FileCacheModel();
@@ -60,10 +59,14 @@ namespace Mzh.Public.BLL.Cache
                             filecache.ossurl = ossurl;
                             filecache.expiretime = expireTime;
                             filecache.requestcount++;
+                            bsp_file.requestcount += filecache.requestcount;
+                            filecache.requestcount = 0;
                         }
+                        context.SaveChanges();
                     }
+                    Logger._.Info(files.Count.ToString());
                     return ossurl;
-                }//缓存中没有就请求oss获取地址存入缓存和数据库
+                }//缓存中没有或三分钟内要过期就请求oss获取地址存入缓存和数据库
                 else
                 {
                     filecache.requestcount++;

@@ -10,7 +10,7 @@ namespace WebApplication2.Controllers
 {
     public class FileController : Controller
     {
-        // GET: File
+        [HttpGet]
         public ActionResult GetUrl(string objectname)
         {
             UPLOAD upload = RemotingHelp.GetModelObject<UPLOAD>();

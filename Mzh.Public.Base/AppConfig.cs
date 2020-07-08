@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Common;
 using System.IO;
 using System.Linq;
@@ -45,5 +46,6 @@ namespace Mzh.Public.Base
             TcpPort = tcpport;
             HttpPort = httpport;
         }
+
     }
 }

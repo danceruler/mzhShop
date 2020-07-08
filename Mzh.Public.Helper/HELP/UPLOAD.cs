@@ -4,6 +4,7 @@ using Mzh.Public.DAL;
 using Mzh.Public.Model.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,11 +36,13 @@ namespace Mzh.Public.BLL.HELP
                     newfile.uploadtime = DateTime.Now;
                     newfile.objectname = objectName;
                     newfile.requestcount = 0;
+                    newfile.domain = ConfigurationManager.AppSettings["filedomain"];
                     context.bsp_files.Add(newfile);
                     context.SaveChanges();
 
-                    DateTime expirationTime = DateTime.Now.AddMinutes(30);
-                    return GetFilePath(objectName);
+                    //DateTime expirationTime = DateTime.Now.AddMinutes(30);
+                    //return GetFilePath(objectName);
+                    return ResultModel.Success(newfile.domain+newfile.objectname);
                 }
                 catch(Exception ex)
                 {
