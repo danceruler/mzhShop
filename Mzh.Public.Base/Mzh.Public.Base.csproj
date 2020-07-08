@@ -61,6 +61,7 @@
     <Compile Include="EncryptHelp.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="OSSHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlManager.cs" />
     <Compile Include="StreamFileHelper.cs" />
