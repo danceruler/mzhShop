@@ -3,6 +3,7 @@ using Aliyun.OSS.Util;
 using Mzh.Public.DAL;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,10 @@ namespace Mzh.Public.Base
 {
     public class OSSHelper
     {
-        private string endpoint = "oss-cn-beijing.aliyuncs.com";
-        private string accessKeyId = "LTAI4FzST8rehSkwn5R1zUsF";
-        private string accessKeySecret = "Es7IBIbHQbDPl4dFBJ00AYvnnQGjZq";
-        private string bucketName = "boiledchicken";
+        private string endpoint = ConfigurationManager.AppSettings["ossendpoint"];
+        private string accessKeyId = ConfigurationManager.AppSettings["ossaccessKeyId"];
+        private string accessKeySecret = ConfigurationManager.AppSettings["ossaccessKeySecret"];
+        private string bucketName = ConfigurationManager.AppSettings["ossbucketName"];
         private static Dictionary<string, string> SuffixContentType = new Dictionary<string, string>()
         {
             { "png","image/png" },
