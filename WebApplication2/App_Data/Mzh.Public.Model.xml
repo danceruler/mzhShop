@@ -1,0 +1,828 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mzh.Public.Model</name>
+    </assembly>
+    <members>
+        <member name="T:Mzh.Public.Model.ProductState">
+            <summary>
+            商品状态
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.OrderState">
+            <summary>
+            订单状态
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.WaitPay">
+            <summary>
+            待付款
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.WaitSend">
+            <summary>
+            外卖订单待发货
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.Sending">
+            <summary>
+            外卖订单派送中
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.Booking">
+            <summary>
+            堂食订单待使用
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.WaitReview">
+            <summary>
+            待评价
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.ApplyRefund">
+            <summary>
+            申请退款中
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.Refunded">
+            <summary>
+            退款完成
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.OrderState.Reviewed">
+            <summary>
+            评价完成
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.BoxState">
+            <summary>
+            包厢状态
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.BoxState.Empty">
+            <summary>
+            空闲
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.BoxState.Use">
+            <summary>
+            有客
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.BoxState.Book">
+            <summary>
+            预定
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.PayMod">
+            <summary>
+            支付方式
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.OrderType">
+            <summary>
+            订单类型
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.CouponType">
+            <summary>
+            优惠券类型
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.CouponType.NormalFullcut">
+            <summary>
+            满减优惠券
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.CouponType.NormalDiscount">
+            <summary>
+            折扣优惠券
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.CouponType.AppointProductFullcut">
+            <summary>
+            指定商品满减优惠券
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.CouponType.AppointProductDiscount">
+            <summary>
+            指定商品折扣优惠券
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.BannerType">
+            <summary>
+            轮播图类型
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.BannerType.ToProduct">
+            <summary>
+            前往指定商品详情页
+            </summary>
+        </member>
+        <member name="F:Mzh.Public.Model.BannerType.ToLinkUrl">
+            <summary>
+            前往指定网页链接
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.CreateOrderModel">
+            <summary>
+            用来创建订单的类
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.type">
+            <summary>
+            订单类型1外卖订单2堂食订单
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.orderamount">
+            <summary>
+            订单总金额
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.regionid">
+            <summary>
+            地区id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.consignee">
+            <summary>
+            收货人
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.mobile">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.besttime">
+            <summary>
+            预约配送时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.shipfee">
+            <summary>
+            配送费
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.fullcut">
+            <summary>
+            是否满减
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.discount">
+            <summary>
+            折扣
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.couponmoney">
+            <summary>
+            优惠金额
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.buyerremark">
+            <summary>
+            用户备注
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.boxid">
+            <summary>
+            如果是堂食选择包厢的订单,记录预定的包厢id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.uid">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.cart">
+            <summary>
+            购物车信息
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CreateOrderModel.coupons">
+            <summary>
+            使用的优惠券id
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.CartModel">
+            <summary>
+            购物车模型
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CartModel.productamount">
+            <summary>
+            商品总金额（包括包装费）
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.CartItem">
+            <summary>
+            购物车内的购买模型
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CartItem.shopprice">
+            <summary>
+            实际总价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.CartItem.marketprice">
+            <summary>
+            总原价
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.AddProductModel">
+            <summary>
+            用来创建商品的类
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ProductImgModel">
+            <summary>
+            创建商品时的商品图片类
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ResultModel.state">
+            <summary>
+            1成功2失败3异常
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ResultModel.msg">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ResultModel.obj">
+            <summary>
+            携带对象
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowCouponInfo">
+            <summary>
+            用于前端展示的优惠券信息
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.uid">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.coupontypeid">
+            <summary>
+            优惠券类型id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.oid">
+            <summary>
+            订单id（已使用的情况下才有）
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.usetime">
+            <summary>
+            使用时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.useip">
+            <summary>
+            使用ip
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.activatetime">
+            <summary>
+            有效开始时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.createtime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.expiretime">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.isuse">
+            <summary>
+            是否已经使用
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponInfo.typeInfo">
+            <summary>
+            优惠券类型信息
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_state">
+            <summary>
+            优惠券类型状态
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_name">
+            <summary>
+            优惠券名称
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_getmode">
+            <summary>
+            获取方式
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_usemode">
+            <summary>
+            使用方式
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_sendstarttime">
+            <summary>
+            优惠券开始发放时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_sendendtime">
+            <summary>
+            优惠券结束发放时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_useexpiretime">
+            <summary>
+            优惠券是否指定过期时间（为1为指定时间，否则表示过期的秒数）
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_usestarttime">
+            <summary>
+            useexpiretime为1时有效，开始时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_useendtime">
+            <summary>
+            useexpiretime为1时有效，结束时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_type">
+            <summary>
+            优惠券类型
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_isstack">
+            <summary>
+            是否可以和其他优惠券叠加（多张优惠券最多只能存在一张不可叠加的优惠券）
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_fullmoney">
+            <summary>
+            为满减时的满价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_cutmoney">
+            <summary>
+            为满减时的减价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowCouponTypeInfo.ct_discount">
+            <summary>
+            为折扣时的折扣
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowOrderInfo">
+            <summary>
+            用于前端展示的订单类
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.orderstate">
+            <summary>
+            订单状态
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.torderstate">
+            <summary>
+            订单状态文本
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.type">
+            <summary>
+            订单类型1外卖订单2堂食订单
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.ttype">
+            <summary>
+            订单类型文本
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.productamount">
+            <summary>
+            商品总金额
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.orderamount">
+            <summary>
+            订单总金额
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.surplusmoney">
+            <summary>
+            支付金额
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.isreview">
+            <summary>
+            是否评价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.addtime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.shipsn">
+            <summary>
+            配送单号
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.shiptime">
+            <summary>
+            配送时间（开始时间）
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.paysn">
+            <summary>
+            支付单号
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.paymode">
+            <summary>
+            支付方式
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.tpaymode">
+            <summary>
+            支付方式文本
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.paytime">
+            <summary>
+            支付时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.regionid">
+            <summary>
+            地区id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.consignee">
+            <summary>
+            收货人
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.mobile">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.address">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.besttime">
+            <summary>
+            预约配送时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.shipfee">
+            <summary>
+            配送费
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.payfee">
+            <summary>
+            支付金额
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.fullcut">
+            <summary>
+            是否满减
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.discount">
+            <summary>
+            折扣
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.couponmoney">
+            <summary>
+            优惠金额
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.buyerremark">
+            <summary>
+            用户备注
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.orderProducts">
+            <summary>
+            订单商品
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.coupons">
+            <summary>
+            使用的优惠券
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.boxid">
+            <summary>
+            如果是堂食选择包厢的订单,记录预定的包厢id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderInfo.box">
+            <summary>
+            如果是堂食选择包厢的订单，用来存放包厢信息
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowOrderProductInfo">
+            <summary>
+            用于前端展示的订单商品类
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_recordid">
+            <summary>
+            订单商品id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_pid">
+            <summary>
+            订单商品商品id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_cateid">
+            <summary>
+            订单商品分类id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_brandid">
+            <summary>
+            订单商品品牌id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_name">
+            <summary>
+            订单商品名称
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_showimg">
+            <summary>
+            订单商品展示图片
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_discountprice">
+            <summary>
+            订单商品折扣价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_shopprice">
+            <summary>
+            订单商品售价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_marketprice">
+            <summary>
+            订单商品市场价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_weight">
+            <summary>
+            订单商品重量
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_buycount">
+            <summary>
+            订单商品购买数量
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_type">
+            <summary>
+            订单商品类型
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_skuid">
+            <summary>
+            规格id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_inputattr">
+            <summary>
+            规格属性
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowOrderProductInfo.op_inputvalue">
+            <summary>
+            规格值
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowProductList">
+            <summary>
+            用于前端展示的商品列表
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductList.cateid">
+            <summary>
+            分类id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductList.catecategoryName">
+            <summary>
+            分类名称
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductList.productInfos">
+            <summary>
+            商品列表
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowProductInfo">
+            <summary>
+            用于前端展示的商品信息类
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.pid">
+            <summary>
+            商品id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.cateid">
+            <summary>
+            分类id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.name">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.shopprice">
+            <summary>
+            商城价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.marketprice">
+            <summary>
+            市场价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.costprice">
+            <summary>
+            成本价
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.packprice">
+            <summary>
+            包装费
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.state">
+            <summary>
+            商品状态（1上架0下架）
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.ishot">
+            <summary>
+            是否热销
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.isnew">
+            <summary>
+            是否新上商品
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.displayorder">
+            <summary>
+            排序号
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.weight">
+            <summary>
+            重量
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.showimg">
+            <summary>
+            商品展示图片
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.salecount">
+            <summary>
+            销售量
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.visitcount">
+            <summary>
+            浏览量
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.reviewcount">
+            <summary>
+            评价量
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.addtime">
+            <summary>
+            上架时间
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.description">
+            <summary>
+            商品描述
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.isfullcut">
+            <summary>
+            是否满减商品
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.stock">
+            <summary>
+            库存
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.skuCount">
+            <summary>
+            规格数量（为1时不需要选规格）
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.skuInfos">
+            <summary>
+            规格信息
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.mainImgs">
+            <summary>
+            商品主要图
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowProductInfo.detailImgs">
+            <summary>
+            商品详情图
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowSkuInfo">
+            <summary>
+            用于前端展示的商品规格信息
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_recordid">
+            <summary>
+            skuid
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_pid">
+            <summary>
+            产品id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_attrid">
+            <summary>
+            属性id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_attrvalueid">
+            <summary>
+            属性值id
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_inputvalue">
+            <summary>
+            属性值文本
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_inputattr">
+            <summary>
+            属性文本
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_price">
+            <summary>
+            价格
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.sku_isdefaultprice">
+            <summary>
+            是否商品默认价格
+            </summary>
+        </member>
+        <member name="P:Mzh.Public.Model.Model.ShowSkuInfo.stock">
+            <summary>
+            库存
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowProductImg">
+            <summary>
+            创建商品时的商品图片类
+            </summary>
+        </member>
+        <member name="T:Mzh.Public.Model.Model.ShowCatecory">
+            <summary>
+            用于展示的商品分类信息
+            </summary>
+        </member>
+    </members>
+</doc>
