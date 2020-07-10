@@ -18,6 +18,7 @@ namespace Mzh.Public.Base
         public static string WebAdminId { get; set; }
         public static int TcpPort { get; set; }
         public static int HttpPort { get; set; }
+        public static string Client { get; set; } = "";
 
         public static void ClientInit()
         {
@@ -26,7 +27,9 @@ namespace Mzh.Public.Base
             var tcpport = int.Parse(configJson["remotingConfig"]["tcpport"].ToString());
             var httpport = int.Parse(configJson["remotingConfig"]["httpport"].ToString());
             WebApiId = configJson["clientIDs"]["WebApi"].ToString();
+            if (!string.IsNullOrWhiteSpace(WebApiId)) Client = "WebApi";
             WebAdminId = configJson["clientIDs"]["WebAdmin"].ToString();
+            if (!string.IsNullOrWhiteSpace(WebAdminId)) Client = "WebAdmin";
             TcpPort = tcpport;
             HttpPort = httpport;
         }

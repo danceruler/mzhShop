@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Remoting.Client.Model
 {
-    public static class RemotingHelp
+    public class RemotingHelp
     {
         private static TcpClientChannel TcpChannel;
 
@@ -25,8 +25,9 @@ namespace Remoting.Client.Model
             AppConfig.ClientInit();
             TcpChannel = new TcpClientChannel();
             ChannelServices.RegisterChannel(TcpChannel, false);
-            if (!GetModelObject<Hello>().CheckClient(AppConfig.WebApiId, 1)) IsConnect = false;
-            if (!GetModelObject<Hello>().CheckClient(AppConfig.WebAdminId, 2)) IsConnect = false;
+            if(AppConfig.Client == "WebApi"&& !GetModelObject<Hello>().CheckClient(AppConfig.WebApiId, 1)) IsConnect = false;
+            if (AppConfig.Client == "WebAdmin"&& !GetModelObject<Hello>().CheckClient(AppConfig.WebAdminId, 2)) IsConnect = false;
+            if (string.IsNullOrWhiteSpace(AppConfig.Client)) IsConnect = false;
             //var httpChannel = new HttpChannel();
             //ChannelServices.RegisterChannel(httpChannel, false);
         }
@@ -34,7 +35,7 @@ namespace Remoting.Client.Model
         public static TModel GetModelObject<TModel>() where TModel : class
         {
             if (!IsConnect) return null;
-            return (TModel)Activator.GetObject(typeof(TModel), "tcp://localhost:8088/"+ typeof(TModel).Name);
+            return (TModel)Activator.GetObject(typeof(TModel), $"tcp://localhost:{AppConfig.TcpPort}/"+ typeof(TModel).Name);
             //Assembly assembly = Assembly.LoadFile(AppDomain.CurrentDomain.BaseDirectory.Trim() + "\\Remoting.Client.Model.dll");
             ////获取对象
             //object obj1 = assembly.CreateInstance(typeof(TModel).Name);
