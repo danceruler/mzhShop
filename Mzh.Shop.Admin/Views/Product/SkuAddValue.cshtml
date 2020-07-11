@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/wwwroot/css/public.css" media="all">
+</head>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <input style="display:none" id="isedit" value="@(ViewBag.value == ""?0:1)"/>
+
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="attribute" id="attribute" value="@ViewBag.attributename" disabled placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性值</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="value" id="value" placeholder="" value="@ViewBag.value" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">价格</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="price" id="price" placeholder="不填为商品默认价格" value="@(ViewBag.price == -1?"":ViewBag.price)" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">库存</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="stock" id="stock" placeholder="不填默认为商品库存" value="@(ViewBag.stock == -1?"":ViewBag.stock)" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn query">确认</button>
+                        <button class="layui-btn layui-btn-danger delete">删除</button>
+                        <button class="layui-btn layui-btn-primary cancel">取消</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <script src="~/wwwroot/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="~/wwwroot/js/lay-config.js"></script>
+    <script src="~/Scripts/mzhconfig.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+        var isedit = $("#isedit").val() == 1 ? true : false;
+        if (!isedit) {
+            $(".delete").hide();
+        }
+
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.form
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+            //自定义验证规则
+            form.verify({
+                title: function (value) {
+                    if (value.length < 5) {
+                        return '标题至少得5个字符啊';
+                    }
+                }
+                , pass: [
+                    /^[\S]{6,12}$/
+                    , '密码必须6到12位，且不能出现空格'
+                ]
+                , content: function (value) {
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //监听指定开关
+            form.on('switch(switchTest)', function (data) {
+                layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                    offset: '6px'
+                });
+                layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            });
+
+            //监听提交
+            form.on('submit(demo1)', function (data) {
+                layer.alert(JSON.stringify(data.field), {
+                    title: '最终的提交信息'
+                })
+                return false;
+            });
+
+            //表单初始赋值
+            form.val('example', {
+                "username": "贤心" // "name": "value"
+                , "password": "123456"
+                , "interest": 1
+                , "like[write]": true //复选框选中状态
+                , "close": true //开关状态
+                , "sex": "女"
+                , "desc": "我爱 layui"
+            })
+
+        });
+        $(".cancel").click(function () {
+            var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);
+            return false;
+        })
+        $(".query").click(function () {
+            if (checkForm()) {
+                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(iframeIndex);
+                if (isedit) {
+                    parent.UpdateAttributeValue($("#value").val(), $("#price").val() ?? -1, $("#stock").val() ?? -1);
+                } else {
+                    parent.AddAttributeValue($("#attribute").val(), $("#value").val(), $("#price").val() ?? -1, $("#stock").val() ?? -1);
+                }
+            }
+            return false;
+        })
+        $(".delete").click(function () {
+            layer.confirm('确认删除吗？', {
+                btn: ['确认', '取消'] //按钮
+            }, function () {
+                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(iframeIndex);
+                    parent.DeleteAttributeValue();
+            }, function () {
+            });
+            return false;
+        })
+
+        function checkForm() {
+            if ($("#value").val() == '') {
+                var index = layer.alert("属性值不能为空", {
+                    title: "请你注意"
+                }, function () {
+                    // 关闭弹出层
+                    layer.close(index);
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+</body>
+</html>

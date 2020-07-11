@@ -19,25 +19,28 @@ namespace Remoting
         /// 获取分类列表
         /// </summary>
         /// <returns></returns>
-        public List<ShowCatecory> GetCategories()
+        public List<ShowCatecory> GetCategories(int pid = 0)
         {
+            string sqlwhere = pid == 0 ? "" : $" and bsp_cateproducts.pid = {pid}";
             string sql = $@"select bsp_categories.cateid,bsp_categories.name,bsp_categories.displayorder,T.productCount
                         from bsp_categories
                         join ((select bsp_categories.cateid,0 productCount
                         from bsp_categories
                         left join bsp_cateproducts on bsp_cateproducts.cateid = bsp_categories.cateid
-                        where bsp_cateproducts.catepid is null
+                        where bsp_cateproducts.catepid is null {sqlwhere}
                         group by bsp_categories.cateid)
                         union
                         (select bsp_categories.cateid,COUNT(bsp_categories.cateid) productCount
                         from bsp_categories
                         left join bsp_cateproducts on bsp_cateproducts.cateid = bsp_categories.cateid
-                        where bsp_cateproducts.catepid is not null
+                        where bsp_cateproducts.catepid is not null {sqlwhere}
                         group by bsp_categories.cateid)) T ON T.cateid = bsp_categories.cateid
                         order by bsp_categories.displayorder desc";
             SqlCommand cmd = new SqlCommand(sql);
             DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, cmd);
-            return dt.GetList<ShowCatecory>("");
+            var result = dt.GetList<ShowCatecory>("");
+            result.ForEach(c => c.name = c.name.Trim());
+            return result;
         }
 
         /// <summary>

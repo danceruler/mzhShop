@@ -41,11 +41,29 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
+        public ActionResult SkuAddAttribute()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 添加编辑属性值
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SkuAddValue(string attributename,string value = "", int price = - 1, int stock = -1)
+        {
+            ViewBag.attributename = attributename;
+            ViewBag.value = value;
+            ViewBag.price = price;
+            ViewBag.stock = stock;
+            return View();
+        }
+
         [HttpGet]
-        public ActionResult GetCategories()
+        public ActionResult GetCategories(int pid = 0)
         {
             PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
-            var list = product.GetCategories();
+            var list = product.GetCategories(pid);
             return Json(
                 new LayuiTableApiResult() { 
                     code = 0,
@@ -111,6 +129,21 @@ namespace Mzh.Shop.Admin.Controllers
             return Json(
                 product.UpdateCateGory(cateid,name,displayorder),
                 JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 新增编辑商品
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddProduct(AddProductModel model)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+                product.AddProduct(model),
+                JsonRequestBehavior.AllowGet);
+
         }
 
 

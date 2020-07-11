@@ -9,31 +9,45 @@
     <link rel="stylesheet" href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" media="all">
     <link rel="stylesheet" href="~/wwwroot/lib/jq-module/zyupload/zyupload-1.0.0.min.css" media="all">
     <link rel="stylesheet" href="~/wwwroot/css/public.css" media="all">
+    <style>
+        .valuebtn{
+            width:80%;
+            margin-top:5px;
+            margin-left:10%;
+        }
+    </style>
 </head>
 <body>
     <div class="layuimini-container">
         <div class="layuimini-main">
 
-            <blockquote class="layui-elem-quote layui-text">
-                鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
-            </blockquote>
+            @*<blockquote class="layui-elem-quote layui-text">
+            鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
+        </blockquote>*@
 
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>添加商品</legend>
             </fieldset>
 
             <form class="layui-form" action="">
+                @*<div class="layui-form-item">
+                <label class="layui-form-label">商品类别</label>
+                <div class="layui-input-block">
+                    <select name="producttype" lay-filter="producttype">
+                        <option value=""></option>
+                        <option value="0">写作</option>
+                        <option value="1" selected="">阅读</option>
+                        <option value="2">游戏</option>
+                        <option value="3">音乐</option>
+                        <option value="4">旅行</option>
+                    </select>
+                </div>
+            </div>*@
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品类别</label>
-                    <div class="layui-input-block">
-                        <select name="producttype" lay-filter="producttype">
-                            <option value=""></option>
-                            <option value="0">写作</option>
-                            <option value="1" selected="">阅读</option>
-                            <option value="2">游戏</option>
-                            <option value="3">音乐</option>
-                            <option value="4">旅行</option>
-                        </select>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" placeholder="" autocomplete="off" class="layui-input" id="demo" data-tag="" value="手机" ts-selected="71">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -62,217 +76,108 @@
                         </div>
                     </div>
                 </div>
-
-            </form>
-
-            <!-- 示例-970 -->
-            <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-                <legend>初始赋值演示</legend>
-            </fieldset>
-
-            <form class="layui-form" action="" lay-filter="example">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">输入框</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">密码框</label>
-                    <div class="layui-input-block">
-                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">选择框</label>
-                    <div class="layui-input-block">
-                        <select name="interest" lay-filter="aihao">
-                            <option value=""></option>
-                            <option value="0">写作</option>
-                            <option value="1">阅读</option>
-                            <option value="2">游戏</option>
-                            <option value="3">音乐</option>
-                            <option value="4">旅行</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">复选框</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="like[write]" title="写作">
-                        <input type="checkbox" name="like[read]" title="阅读">
-                        <input type="checkbox" name="like[daze]" title="发呆">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">开关</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">单选框</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="sex" value="男" title="男" checked="">
-                        <input type="radio" name="sex" value="女" title="女">
-                    </div>
-                </div>
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">文本域</label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                    </div>
-                </div>
-            </form>
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-                <legend>方框风格的表单集合</legend>
-            </fieldset>
-            <form class="layui-form layui-form-pane" action="">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">长输入框</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">短输入框</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">日期选择</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">行内表单</label>
+                        <label class="layui-form-label">库存</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="number" autocomplete="off" class="layui-input">
+                            <input type="number" name="stock" lay-verify="required" value="99999" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-inline">
-                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <label class="layui-form-label">是否支持外卖</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="isbest" value="1" title="是" checked="">
+                        <input type="radio" name="isbest" value="0" title="否">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否热销商品</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="ishot" value="1" title="是">
+                        <input type="radio" name="ishot" value="0" title="否" checked="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否新上商品</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="isnew" value="1" title="是" checked="">
+                        <input type="radio" name="isnew" value="0" title="否">
+                    </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">范围</label>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+                    <label class="layui-form-label">商品规格</label>
+                    <div class="layui-input-block">
+                        <a class="layui-btn add-attribute">添加属性</a>
+                    </div>
+                </div>
+                <div id="sku-div" style="width:82%;margin-left:9%">
+                    @*<div class="layui-card attribute-div-0" style="width:100%" data-id="">
+                    <div class="layui-card-header" style="background-color:lightgray;width:100%;">
+                        属性1
+                        <button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="0" onclick="DeleteAttribute(this); return false;">删除</button>
+                        <button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="" data-name="属性1"onclick="AddValue(this); return false;">添加值</button>
+                    </div>
+                    <div class="layui-card-body" style="background-color:whitesmoke">
+                        <div class="layui-input-block layui-row values-div">
+                            <div class="layui-col-md2 value-div" data-name="" data-id="" data-value="" data-price="" data-stock=""  onclick="EditValue(this); return false;">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
+                            <div class="layui-col-md2">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
+                            <div class="layui-col-md2">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
+                            <div class="layui-col-md2">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
+                            <div class="layui-col-md2">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
+                            <div class="layui-col-md2">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
+                            <div class="layui-col-md2">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
+                            <div class="layui-col-md2">
+                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                            </div>
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                        </div>
                     </div>
+                </div>*@
                 </div>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">单行选择框</label>
+                <div class="layui-form-item" style="margin-top:300px">
                     <div class="layui-input-block">
-                        <select name="interest" lay-filter="aihao">
-                            <option value=""></option>
-                            <option value="0">写作</option>
-                            <option value="1" selected="">阅读</option>
-                            <option value="2">游戏</option>
-                            <option value="3">音乐</option>
-                            <option value="4">旅行</option>
-                        </select>
+                        <button class="layui-btn addproduct">添加</button>
+                        <button class="layui-btn layui-btn-primary cancel">取消</button>
                     </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">行内选择框</label>
-                    <div class="layui-input-inline">
-                        <select name="quiz1">
-                            <option value="">请选择省</option>
-                            <option value="浙江" selected="">浙江省</option>
-                            <option value="你的工号">江西省</option>
-                            <option value="你最喜欢的老师">福建省</option>
-                        </select>
-                    </div>
-                    <div class="layui-input-inline">
-                        <select name="quiz2">
-                            <option value="">请选择市</option>
-                            <option value="杭州">杭州</option>
-                            <option value="宁波" disabled="">宁波</option>
-                            <option value="温州">温州</option>
-                            <option value="温州">台州</option>
-                            <option value="温州">绍兴</option>
-                        </select>
-                    </div>
-                    <div class="layui-input-inline">
-                        <select name="quiz3">
-                            <option value="">请选择县/区</option>
-                            <option value="西湖区">西湖区</option>
-                            <option value="余杭区">余杭区</option>
-                            <option value="拱墅区">临安市</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item" pane="">
-                    <label class="layui-form-label">开关-开</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
-                    </div>
-                </div>
-                <div class="layui-form-item" pane="">
-                    <label class="layui-form-label">单选框</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="sex" value="男" title="男" checked="">
-                        <input type="radio" name="sex" value="女" title="女">
-                        <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-                    </div>
-                </div>
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">文本域</label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
-                </div>
-
-                <div class="layui-form-item">
-                    <div id="zyupload" class="zyupload"></div>
                 </div>
             </form>
+
         </div>
     </div>
     <script src="~/wwwroot/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
     <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="~/wwwroot/js/lay-config.js"></script>
     <script src="~/wwwroot/lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>
     <script src="~/Scripts/mzhconfig.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
-        layui.use(['form', 'layedit', 'laydate'], function () {
+        //每次打开新增属性界面，记录当前的attributediv
+        var addvalueDiv;
+        //每次编辑属性值，记录当前的属性值div
+        var editvalueDiv;
+
+        layui.use(['form', 'layedit', 'laydate', 'tableSelect','element'], function () {
             var form = layui.form
                 , layer = layui.layer
                 , layedit = layui.layedit
-                , laydate = layui.laydate;
-
+                , laydate = layui.laydate
+                , tableSelect = layui.tableSelect;
             //日期
             laydate.render({
                 elem: '#date'
@@ -327,50 +232,259 @@
                 , "desc": "我爱 layui"
             })
 
+            tableSelect.render({
+                elem: '#demo',
+                searchKey: 'name',
+                checkedKey: 'cateid',
+                searchPlaceholder: '请选择商品类别',
+                table: {
+                    url: domain +'/Product/GetCategories',
+                    //url: '../../wwwroot/api/tableSelect.json',
+                    cols: [[
+                        { type: 'checkbox' },
+                        { field: 'cateid', title: 'ID', width: 100 },
+                        { field: 'name', title: '名称', width: 300 }
+                    ]]
+                },
+                done: function (elem, data) {
+                    var NEWJSON = []
+                    var IDJSON = []
+                    layui.each(data.data, function (index, item) {
+                        NEWJSON.push(item.name)
+                        IDJSON.push(item.cateid)
+                    })
+                    elem.val(NEWJSON.join(","))
+                    elem.data("tag", IDJSON.join(",")) 
+                    console.log(elem.data("tag"))
+                }
+            })
 
         });
         $(function () {
-            // 初始化插件
-            $("#zyupload").zyUpload({
-                width: "650px",                 // 宽度
-                height: "400px",                 // 宽度
-                itemWidth: "140px",                 // 文件项的宽度
-                itemHeight: "115px",                 // 文件项的高度
-                url: domain +"/Upload/File",  // 上传文件的路径
-                fileType: ["jpg", "png", "txt", "js", "exe"],// 上传文件的类型
-                fileSize: 51200000,                // 上传文件的大小
-                multiple: true,                    // 是否可以多个文件上传
-                dragDrop: true,                    // 是否可以拖动上传文件
-                tailor: true,                    // 是否可以裁剪图片
-                del: true,                    // 是否可以删除文件
-                finishDel: false,  				  // 是否在上传文件完成后删除预览
-                /* 外部获得的回调接口 */
-                onSelect: function (selectFiles, allFiles) {    // 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
-                    console.info("当前选择了以下文件：");
-                    console.info(selectFiles);
-                },
-                onDelete: function (file, files) {              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
-                    console.info("当前删除了此文件：");
-                    console.info(file.name);
-                },
-                onSuccess: function (file, response) {          // 文件上传成功的回调方法
-                    console.info("此文件上传成功：");
-                    console.info(file.name);
-                    console.info("此文件上传到服务器地址：");
-                    console.info(response);
-                    $("#uploadInf").append("<p>上传成功，文件地址是：" + response + "</p>");
-                },
-                onFailure: function (file, response) {          // 文件上传失败的回调方法
-                    console.info("此文件上传失败：");
-                    console.info(file.name);
-                },
-                onComplete: function (response) {           	  // 上传完成的回调方法
-                    console.info("文件上传完成");
-                    console.info(response);
-                }
-            });
-
+            $(".add-attribute").click(function () {
+                var index = layer.open({
+                    title: '添加属性',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['50%', '50%'],
+                    content: '/Product/SkuAddAttribute',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+                return false;
+            })
         });
+
+        
+        //提供给弹出层调用的方法,新增属性
+        function AddAttribute(name) {
+            var newdiv = '<div class="layui-card attribute-div" style="width:100%" data-id="0">'
+                + '<div class="layui-card-header" style="background-color:lightgray;width:100%;">'
+                + name
+                + '<button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="0" onclick="DeleteAttribute(this); return false;">删除</button>'
+                + '<button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="0" data-name="' + name+'" onclick="AddValue(this); return false;">添加值</button>'
+                + '</div>'
+                +'<div class="layui-card-body" style="background-color:whitesmoke">'
+                + '<div class="layui-input-block layui-row">'
+                + '</div></div></div></div>';
+            $("#sku-div").append(newdiv);
+            $("#sku-div").load();
+        }
+
+        //提供给弹出层调用的方法,新增属性值
+        function AddAttributeValue(name,value, price, stock) {
+            var newdiv = '<div class="layui-col-md2 value-div" data-id="0" data-name="' + name+'" data-value="' + value + '" data-price="' + price + '" data-stock="' + stock + '" onclick="EditValue(this); return false;">'
+                + '<a class="layui-btn layui-btn-normal valuebtn">' + value + '</a>'
+                +'</div>';
+            $(addvalueDiv).append(newdiv);
+            $(addvalueDiv).load();
+        }
+
+        //提供给弹出层调用的方法,编辑属性值
+        function UpdateAttributeValue(value, price, stock) {
+            $(editvalueDiv).data("value", value);
+            $(editvalueDiv).data("price", price);
+            $(editvalueDiv).data("stock", stock);
+            $($(editvalueDiv).children()[0]).html(value);
+        }
+
+        //提供给弹出层调用的方法,删除属性值
+        function DeleteAttributeValue() {
+            $(editvalueDiv).remove();
+        }
+
+        function DeleteAttribute(obj) {
+            var alert = layer.confirm('确认删除吗？' + $(obj).data("id") == 0?'':'(删除已存在的属性将不需要保存就会删除)', {
+                btn: ['确认', '取消'] //按钮
+            }, function () {
+                    if ($(obj).data("id") == 0) {
+                        console.log($(obj).parent().parent());
+                        $(obj).parent().parent().remove();
+                    }//表示还未添加到数据库的数据直接删除
+                    else {
+
+                    }//调用接口删除
+                    layer.close(alert);
+            }, function () {
+                    layer.close(alert);
+            });
+            return false;
+        }
+
+        function AddValue(obj) {
+            addvalueDiv = $($(obj).parent().parent().children()[1]).children()[0];
+            console.log(addvalueDiv);
+            var index = layer.open({
+                title: '添加属性值',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['50%', '50%'],
+                content: '/Product/SkuAddValue?attributename=' + $(obj).data("name"),
+            });
+            $(window).on("resize", function () {
+                layer.full(index);
+            });
+            return false;
+        }
+
+        function EditValue(obj) {
+            editvalueDiv = obj;
+            var name = $(obj).data("name");
+            var value = $(obj).data("value");
+            var price = $(obj).data("price");
+            var stock = $(obj).data("stock");
+
+            var index = layer.open({
+                title: '编辑属性值',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['50%', '50%'],
+                content: '/Product/SkuAddValue?attributename=' + name + '&value=' + value + '&price=' + price + '&stock=' + stock,
+            });
+            $(window).on("resize", function () {
+                layer.full(index);
+            });
+            return false;
+        }
+
+        function GetSkuJson() {
+            var result = [];
+            var attributedivs = $("#sku-div").children();
+            for (var index in attributedivs) {
+                var skuinfo = {
+                    "attrid": 0,
+                    "name": "",
+                    "attributevalues": []
+                }
+                skuinfo.attrid = $(attributedivs[index]).data("id");
+                var paneldivs = $(attributedivs[index]).children();
+                var skudivs = $($(paneldivs[1]).children()[0]).children();
+                console.log(skudivs);
+                console.log(skudivs.length);
+                if (skudivs.length == 0) return false;
+                else {
+                    for (var index2 in skudivs) {
+                        skuinfo.name = $(skudivs[index2]).data("name");
+                        var skuvalueinfo = {
+                            "attrvalueid": 0,
+                            "attrvalue": "",
+                            "attrname": ""
+                        }
+                        skuvalueinfo.attrvalueid = $(skudivs[index2]).data("id");
+                        skuvalueinfo.attrvalue = $(skudivs[index2]).data("value");
+                        skuvalueinfo.attrname = skuinfo.name;
+                        
+                        skuinfo.attributevalues.push(skuvalueinfo);
+                    }
+                    result.push(skuinfo);
+                }
+
+            }
+            return result;
+        }
+
+        var submitdata = {
+            "cateid": 1,
+            "name": "sample string 2",
+            "shopprice": 3.0,
+            "marketprice": 4.0,
+            "costprice": 5.0,
+            "isbest": 64,
+            "ishot": 64,
+            "isnew": 64,
+            "displayorder": 9,
+            "weight": 10,
+            "showimg": "sample string 11",
+            "description": "sample string 12",
+            "isfullcut": 1,
+            "packprice": 13.0,
+            "mainImgs": [
+                {
+                    "showimg": "sample string 1",
+                    "displayorder": 2
+                },
+                {
+                    "showimg": "sample string 1",
+                    "displayorder": 2
+                }
+            ],
+            "detailImgs": [
+                {
+                    "showimg": "sample string 1",
+                    "displayorder": 2
+                },
+                {
+                    "showimg": "sample string 1",
+                    "displayorder": 2
+                }
+            ],
+            "skuInfos": [
+                {
+                    "attrid": 1,
+                    "name": "sample string 2",
+                    "attributevalues": [
+                        {
+                            "attrvalueid": 1,
+                            "attrvalue": "sample string 2",
+                            "attrname": "sample string 3"
+                        },
+                        {
+                            "attrvalueid": 1,
+                            "attrvalue": "sample string 2",
+                            "attrname": "sample string 3"
+                        }
+                    ]
+                },
+                {
+                    "attrid": 1,
+                    "name": "sample string 2",
+                    "attributevalues": [
+                        {
+                            "attrvalueid": 1,
+                            "attrvalue": "sample string 2",
+                            "attrname": "sample string 3"
+                        },
+                        {
+                            "attrvalueid": 1,
+                            "attrvalue": "sample string 2",
+                            "attrname": "sample string 3"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        $(".addproduct").click(function () {
+            console.log(GetSkuJson());
+            return false;
+        })
     </script>
 
 </body>

@@ -68,7 +68,10 @@ namespace Mzh.Public.Model.Model
         /// 商品状态（1上架0下架）
         /// </summary>
         public byte state { get; set; }
-        //public byte isbest { get; set; }
+        /// <summary>
+        /// 是否支持外卖
+        /// </summary>
+        public byte isbest { get; set; }
         /// <summary>
         /// 是否热销
         /// </summary>
@@ -174,7 +177,7 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public string sku_inputattr { get; set; }
         /// <summary>
-        /// 价格
+        /// 价格(为-1取商品默认价格)
         /// </summary>
         public Nullable<decimal> sku_price { get; set; }
         /// <summary>
@@ -182,7 +185,7 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public int sku_isdefaultprice { get; set; }
         /// <summary>
-        /// 库存
+        /// 库存(为-1取商品库存)
         /// </summary>
         public int stock { get; set; }
     }

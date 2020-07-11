@@ -14,7 +14,7 @@ namespace Remoting
         /// 获取分类列表
         /// </summary>
         /// <returns></returns>
-        public List<ShowCatecory> GetCategories()
+        public List<ShowCatecory> GetCategories(int pid = 0)
         {
             throw new NotImplementedException();
         }

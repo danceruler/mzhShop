@@ -226,15 +226,13 @@
                                 showloading(false);
                                 if (res.state == 1) {
                                     obj.del();
-                                    layer.close(index);
-                                } else {
-                                    var index = layer.alert(res.msg, {
-                                        title: '提示'
-                                    }, function () {
-                                        // 关闭弹出层
-                                        layer.close(index);
-                                    });
                                 }
+                                var index = layer.alert(res.msg, {
+                                    title: '提示'
+                                }, function () {
+                                    // 关闭弹出层
+                                    layer.close(index);
+                                });
                             }
                         })
                     });

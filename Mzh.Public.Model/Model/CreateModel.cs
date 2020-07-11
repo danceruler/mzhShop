@@ -138,6 +138,7 @@ namespace Mzh.Public.Model.Model
         public decimal packprice { get; set; }
         public List<ProductImgModel> mainImgs { get; set; }
         public List<ProductImgModel> detailImgs { get; set; }
+        public List<AttributeInfo> skuInfos { get; set; }
     }
 
     /// <summary>
@@ -148,5 +149,29 @@ namespace Mzh.Public.Model.Model
     {
         public string showimg { get; set; }
         public int displayorder { get; set; }
+    }
+
+
+
+    /// <summary>
+    /// 属性
+    /// </summary>
+    [Serializable]
+    public class AttributeInfo
+    {
+        public int attrid { get; set; }
+        public string name { get; set; }
+        public List<AttributeValueInfo> attributevalues { get; set; }
+    }
+
+    /// <summary>
+    /// 属性值
+    /// </summary>
+    [Serializable]
+    public partial class AttributeValueInfo
+    {
+        public int attrvalueid { get; set; }
+        public string attrvalue { get; set; }
+        public string attrname { get; set; }
     }
 }
