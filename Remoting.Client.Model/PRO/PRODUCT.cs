@@ -92,5 +92,15 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 删除商品
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public ResultModel Deleteproduct(int pid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

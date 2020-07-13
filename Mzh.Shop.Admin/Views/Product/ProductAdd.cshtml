@@ -232,7 +232,7 @@
         var cuploadpromainimgs = new Cupload({
             ele: '#cupload-promainimgs',
             num: 20,
-            data: ["http://shopapi.boiledchicken.top/File/GetUrl?objectname=1594660806.png"],
+            //data: ["http://shopapi.boiledchicken.top/File/GetUrl?objectname=1594660806.png"],
         });
         var cuploadprodetailimgs = new Cupload({
             ele: '#cupload-prodetailimgs',
@@ -385,6 +385,7 @@
                     "pid": pid,
                     "cateids": $("#demo").data("tag").split(','),
                     "name": data.field.productname,
+                    "state": data.field.state,
                     "shopprice": data.field.shopprice,
                     "marketprice": data.field.macketprice,
                     "costprice": 0,
@@ -401,7 +402,17 @@
                     "detailImgs": detailimgs,
                     "skuInfos": skuinfos
                 }
-                console.log(submitdata);
+
+                showloading(true)
+                $.ajax({
+                    type: 'post',
+                    url: domain + '/Product/AddProduct',
+                    data: { model: submitdata },
+                    success: function (res) {
+                        showloading(false);
+                        layer.alert(res.msg);
+                    }
+                })
                 return false;
             });
 

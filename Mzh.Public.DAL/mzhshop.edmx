@@ -779,6 +779,7 @@
           <Property Name="isfullcut" Type="int" />
           <Property Name="packprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="stock" Type="int" Nullable="false" />
+          <Property Name="isdelete" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -1788,6 +1789,7 @@
           <Property Name="isfullcut" Type="Int32" />
           <Property Name="packprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="stock" Type="Int32" Nullable="false" />
+          <Property Name="isdelete" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -2905,6 +2907,7 @@
           <EntitySetMapping Name="bsp_products">
             <EntityTypeMapping TypeName="brnshopModel.bsp_products">
               <MappingFragment StoreEntitySet="bsp_products">
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
                 <ScalarProperty Name="stock" ColumnName="stock" />
                 <ScalarProperty Name="packprice" ColumnName="packprice" />
                 <ScalarProperty Name="pid" ColumnName="pid" />

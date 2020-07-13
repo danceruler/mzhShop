@@ -21,7 +21,7 @@ namespace Remoting
         /// 获取商品列表
         /// </summary>
         /// <returns></returns>
-        public List<ShowProductList> GetProductList()
+        public List<ShowProductList> GetProductList(int cateid = 0, int isonsale = -1)
         {
             throw new NotImplementedException();
         }

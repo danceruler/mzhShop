@@ -28,11 +28,14 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
-        public ActionResult Product(int cateid = 0)
+        public ActionResult Product(int cateid = 0,int isonsale = -1)
         {
             ProductCache pcache = RemotingHelp.GetModelObject<ProductCache>();
-            ViewBag.productList = pcache.GetProductList();
+            ViewBag.productList = pcache.GetProductList(cateid, isonsale);
             ViewBag.cateid = cateid;
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            ViewBag.cates = product.GetCategories();
+            ViewBag.isonsale = isonsale;
             return View();
         }
 
@@ -189,6 +192,19 @@ namespace Mzh.Shop.Admin.Controllers
             PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
             return Json(
                 product.DeleteProductSku(pid,type,id),
+                JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 删除商品
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public ActionResult Deleteproduct(int pid)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+                product.Deleteproduct(pid),
                 JsonRequestBehavior.AllowGet);
         }
         #endregion

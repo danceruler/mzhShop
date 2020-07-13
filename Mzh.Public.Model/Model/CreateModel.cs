@@ -125,6 +125,7 @@ namespace Mzh.Public.Model.Model
     {
         public int pid { get; set; }
         public List<int> cateids { get; set; }
+        public int state { get; set; }
         public string name { get; set; }
         public decimal shopprice { get; set; }
         public decimal marketprice { get; set; }

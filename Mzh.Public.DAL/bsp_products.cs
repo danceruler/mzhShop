@@ -43,5 +43,6 @@ namespace Mzh.Public.DAL
         public Nullable<int> isfullcut { get; set; }
         public decimal packprice { get; set; }
         public int stock { get; set; }
+        public int isdelete { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace WebApplication2.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public List<ShowProductList> GetProductList()
+        public List<ShowProductList> GetProductList(int cateid = 0, int isonsale = -1)
         {
             ProductCache productCache = RemotingHelp.GetModelObject<ProductCache>();
             return productCache.GetProductList();

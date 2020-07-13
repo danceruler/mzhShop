@@ -30,10 +30,11 @@ namespace Remoting
                         where bsp_cateproducts.catepid is null {sqlwhere}
                         group by bsp_categories.cateid)
                         union
-                        (select bsp_categories.cateid,COUNT(bsp_categories.cateid) productCount
+                        (select bsp_categories.cateid,SUM(CASE WHEN bsp_products.isdelete = 1 THEN 0 ELSE 1 END) productCount
                         from bsp_categories
                         left join bsp_cateproducts on bsp_cateproducts.cateid = bsp_categories.cateid
-                        where bsp_cateproducts.catepid is not null {sqlwhere}
+                        left join bsp_products on bsp_products.pid = bsp_cateproducts.pid
+                        where bsp_cateproducts.catepid is not null  {sqlwhere}
                         group by bsp_categories.cateid)) T ON T.cateid = bsp_categories.cateid
                         order by bsp_categories.displayorder desc";
             SqlCommand cmd = new SqlCommand(sql);
@@ -96,10 +97,18 @@ namespace Remoting
                             tran.Rollback();
                             return ResultModel.Fail($"ID为{cateid}的分类已经删除，请刷新");
                         }
-                        if (cateproCount > 0)
+                        var sql = $@"select COUNT(bsp_cateproducts.catepid)
+						    from bsp_cateproducts
+						    left join bsp_products on bsp_products.pid = bsp_cateproducts.pid
+						    where bsp_products.isdelete = 0 and bsp_cateproducts.cateid = {cateid}";
+                        var dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                        if (dt != null && dt.Rows.Count > 0)
                         {
-                            tran.Rollback();
-                            return ResultModel.Fail($"{cate.name}分类下存在商品，不允许删除");
+                            if (int.Parse(dt.Rows[0][0].ToString()) > 0)
+                            {
+                                tran.Rollback();
+                                return ResultModel.Fail("分类下存在商品，不允许删除");
+                            }
                         }
                         context.bsp_categories.Remove(cate);
                         context.SaveChanges();
@@ -127,11 +136,20 @@ namespace Remoting
             {
                 try
                 {
-                    var cateproCount = context.bsp_products.Where(t => t.cateid == cateid).Count();
-                    if (cateproCount > 0) 
-                        return ResultModel.Fail("该分类下存在商品，不允许删除");
+                    var sql = $@"select COUNT(bsp_cateproducts.catepid)
+						    from bsp_cateproducts
+						    left join bsp_products on bsp_products.pid = bsp_cateproducts.pid
+						    where bsp_products.isdelete = 0 and bsp_cateproducts.cateid = {cateid}";
+                    var dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                    if(dt != null && dt.Rows.Count > 0)
+                    {
+                        if(int.Parse(dt.Rows[0][0].ToString()) > 0)
+                        {
+                            return ResultModel.Fail("该分类下存在商品，不允许删除");
+                        }
+                    }
                     var cate = context.bsp_categories.SingleOrDefault(t => t.cateid == cateid);
-                    if(cate == null) 
+                    if(cate == null)
                         return ResultModel.Fail("该分类已经删除，请刷新");
                     context.bsp_categories.Remove(cate);
                     context.SaveChanges();
@@ -197,9 +215,12 @@ namespace Remoting
                     newpro.marketprice = model.marketprice;
                     newpro.name = model.name;
                     newpro.packprice = model.packprice;
+                    newpro.state = (byte)model.state;
                     newpro.showimg = model.showimg;
                     newpro.shopprice = model.shopprice;
                     newpro.weight = model.weight;
+                    newpro.psn = "";
+                    newpro.isdelete = 0;
                     context.bsp_products.Add(newpro);
                     context.SaveChanges();
 
@@ -209,7 +230,7 @@ namespace Remoting
                         bsp_categories cate = context.bsp_categories.SingleOrDefault(t => t.cateid == cateid);
                         bsp_cateproducts newcateproduct = new bsp_cateproducts();
                         newcateproduct.cateid = cateid;
-                        newcateproduct.catename = cate.name;
+                        newcateproduct.catename = cate.name.Trim();
                         newcateproduct.pid = newpro.pid;
                         newcateproduct.pname = newpro.name;
                         context.bsp_cateproducts.Add(newcateproduct);
@@ -245,6 +266,13 @@ namespace Remoting
                                 newvalue.attrid = newattribute.attrid;
                                 newvalue.attrname = newattribute.name;
                                 newvalue.attrvalue = value.attrvalue;
+                                newvalue.attrgroupname = "";
+                                newvalue.isinput = 0;
+                                newvalue.attrdisplayorder = 0;
+                                newvalue.attrshowtype = 0;
+                                newvalue.attrvaluedisplayorder = 0;
+                                newvalue.attrgroupid = 0;
+                                newvalue.attrgroupdisplayorder = 0;
                                 context.bsp_attributevalues.Add(newvalue);
                             }//新增值和sku
                             else
@@ -266,6 +294,8 @@ namespace Remoting
                                 newsku.isdefaultprice = value.price == -1 ? 1 : 0;
                                 newsku.price = value.price;
                                 newsku.stock = value.stock;
+                                newsku.pid = newpro.pid;
+                                newsku.skugid = 0;
                                 context.bsp_productskus.Add(newsku);
                             }
                             else
@@ -307,7 +337,7 @@ namespace Remoting
 
                     tran.Commit();
                     new ProductCache().Init();
-                    return ResultModel.Success("", newpro.pid);
+                    return ResultModel.Success("添加成功", newpro.pid);
 
                 }
                 catch(Exception ex)
@@ -518,6 +548,34 @@ namespace Remoting
                     new ProductCache().Init();
                     return ResultModel.Success("");
 
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除商品
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public ResultModel Deleteproduct(int pid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    var pro = context.bsp_products.SingleOrDefault(t => t.pid == pid);
+                    pro.isdelete = 1;
+                    context.SaveChanges();
+                    tran.Commit();
+                    new ProductCache().Init();
+                    return ResultModel.Success("删除成功");
                 }
                 catch (Exception ex)
                 {

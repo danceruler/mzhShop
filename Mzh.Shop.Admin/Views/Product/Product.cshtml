@@ -2,6 +2,7 @@
 @{
     var productList = ViewBag.productList as List<ShowProductList>;
     int cateid = ViewBag.cateid;
+    var cates = ViewBag.cates as List<ShowCatecory>;
 }
 <!DOCTYPE html>
 <html>
@@ -18,28 +19,63 @@
 <body>
     <div class="layuimini-container">
         <div class="layuimini-main">
-            @if (cateid == 0)
-            {
-                <form class="layui-form" action="">
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <a class="layui-btn layui-btn-warm product-add">添加商品</a>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">选择分类</label>
-                            <div class="layui-input-block" style="width:200px">
-                                <select name="interest" lay-filter="ptype">
-                                    <option value="0" selected="">全部</option>
-                                    @foreach (var item in productList)
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-warm product-add">添加商品</a>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">选择分类</label>
+                        <div class="layui-input-block" style="width:200px">
+                            <select name="interest" id="producttypeselect" lay-filter="ptype">
+                                <option value="0" selected="">全部</option>
+                                @foreach (var item in cates)
+                                {
+                                    if (item.cateid == cateid)
                                     {
-                                        <option value="@item.cateid">@item.catecategoryName</option>
+                                        <option value="@item.cateid" selected="">@item.name</option>
                                     }
-                                </select>
-                            </div>
+                                    else
+                                    {
+                                        <option value="@item.cateid">@item.name</option>
+                                    }
+
+                                }
+                            </select>
                         </div>
                     </div>
-                </form>
-            }
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否在售</label>
+                        <div class="layui-input-block" style="width:200px">
+                            <select id="isonsale" lay-filter="ptype">
+
+                                <option value="-1" selected="">全部</option>
+                                @if (ViewBag.isonsale == 1)
+                                {
+                                    <option value="1" selected="">是</option>
+                                }
+                                else
+                                {
+                                    <option value="1">是</option>
+                                }
+                                @if (ViewBag.isonsale == 0)
+                                {
+                                    <option value="0" selected="">否</option>
+                                }
+                                else
+                                {
+                                    <option value="0">否</option>
+                                }
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-primary query">查询</a>
+                    </div>
+                </div>
+            </form>
 
             @foreach (var plist in productList)
             {
@@ -55,15 +91,15 @@
                                         <div class="layui-row">
                                             <div class="mzh-col" style="height:120px">
                                                 <div style="width:200px;height:100%;margin-right:5px">
-                                                    <img style="width:100%;height:100%" src="http://shopapi.boiledchicken.top/File/GetUrl?objectname=1594249387.jpg" />
+                                                    <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
                                                     @*<img src="@plist.productInfos[i].showimg"/>*@
                                                 </div>
                                                 <div class="layui-row" style="height:100%">
                                                     <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
-                                                        @(plist.productInfos[i].name.Length>=25?plist.productInfos[i].name.Substring(0, 25)+"..." : plist.productInfos[i].name)
+                                                        @(plist.productInfos[i].name.Length >= 25 ? plist.productInfos[i].name.Substring(0, 25) + "..." : plist.productInfos[i].name)
                                                     </div>
                                                     <div style="height:33%;align-content:center">
-                                                        @(plist.productInfos[i].description.Length>=25?plist.productInfos[i].name.Substring(0, 25)+"..." : plist.productInfos[i].description)
+                                                        @(plist.productInfos[i].description.Length >= 25 ? plist.productInfos[i].name.Substring(0, 25) + "..." : plist.productInfos[i].description)
                                                     </div>
                                                     <div class="mzh-col" style="height:33%;align-content:center">
                                                         <div>
@@ -109,15 +145,15 @@
                                         <div class="layui-row">
                                             <div class="mzh-col" style="height:120px">
                                                 <div style="width:200px;height:100%;margin-right:5px">
-                                                    <img style="width:100%;height:100%" src="http://shopapi.boiledchicken.top/File/GetUrl?objectname=1594249387.jpg" />
+                                                    <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
                                                     @*<img src="@plist.productInfos[i].showimg"/>*@
                                                 </div>
                                                 <div class="layui-row" style="height:100%">
                                                     <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
-                                                        @(plist.productInfos[i].name.Length>=25?plist.productInfos[i].name.Substring(0, 25)+"..." : plist.productInfos[i].name)
+                                                        @(plist.productInfos[i].name.Length >= 25 ? plist.productInfos[i].name.Substring(0, 25) + "..." : plist.productInfos[i].name)
                                                     </div>
                                                     <div style="height:33%;align-content:center">
-                                                        @(plist.productInfos[i].description.Length>=25?plist.productInfos[i].name.Substring(0, 25)+"..." : plist.productInfos[i].description)
+                                                        @(plist.productInfos[i].description.Length >= 25 ? plist.productInfos[i].name.Substring(0, 25) + "..." : plist.productInfos[i].description)
                                                     </div>
                                                     <div class="mzh-col" style="height:33%;align-content:center">
                                                         <div>
@@ -167,11 +203,11 @@
                 form = layui.form,
                 miniTab = layui.miniTab,
                 layer = layui.layer;
-            form.on('select(ptype)', function (data) {
-                console.log(data);
-                changePtype(data.value);
-                return false;
-            });
+            //form.on('select(ptype)', function (data) {
+            //    console.log(data);
+            //    changePtype(data.value);
+            //    return false;
+            //});
 
             $(".product-add").click(function () {
                 var index = layer.open({
@@ -189,22 +225,41 @@
             })
 
             $(".product-edit").click(function () {
-                var index = layer.open({
-                    title: '编辑商品信息',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin: true,
-                    shadeClose: true,
-                    area: ['50%', '50%'],
-                    content: '/Product/ProductTypeAdd',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
+                //var index = layer.open({
+                //    title: '编辑商品信息',
+                //    type: 2,
+                //    shade: 0.2,
+                //    maxmin: true,
+                //    shadeClose: true,
+                //    area: ['50%', '50%'],
+                //    content: '/Product/ProductTypeAdd',
+                //});
+                //$(window).on("resize", function () {
+                //    layer.full(index);
+                //});
             })
 
             $(".product-delete").click(function () {
-                $("#prow-" + $(this).data('cateid') + "-" + $(this).data('pid')).hide();
+                var obj = $("#prow-" + $(this).data('cateid') + "-" + $(this).data('pid'));
+                $.ajax({
+                    type: 'post',
+                    url: domain + '/Product/Deleteproduct',
+                    data: { pid: $(this).data('pid') },
+                    success: function (res) {
+                        if (res.state == 1) {
+                            obj.hide();
+                        }
+                        layer.alert(res.msg);
+                    }
+                })
+                return false;
+            })
+
+            $(".query").click(function () {
+                var ptype = $("#producttypeselect").val();
+                var isonsale = $("#isonsale").val();
+                window.location.href = window.location.href.split('?')[0] + '?cateid=' + ptype + '&isonsale=' + isonsale;
+                console.log(window.location.href.split('?')[0] + '?cateid=' + ptype + '&isonsale=' + isonsale)
             })
         });
 
@@ -224,8 +279,8 @@
                     }
                 }
             }
-            
-            
+
+
             //for (var card in cards) {
             //    if ($(card).id != 'cate-'+cateid) {
             //        $(card).hide();

@@ -41,7 +41,7 @@ namespace Mzh.Public.BLL.HELP
                     context.SaveChanges();
 
                     //DateTime expirationTime = DateTime.Now.AddMinutes(30);
-                    //return GetFilePath(objectName);
+                    //GetFilePath(objectName);
                     return ResultModel.Success(newfile.domain+newfile.objectname);
                 }
                 catch(Exception ex)
