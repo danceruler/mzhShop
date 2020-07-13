@@ -97,6 +97,7 @@
           <Property Name="showtype" Type="tinyint" Nullable="false" />
           <Property Name="isfilter" Type="tinyint" Nullable="false" />
           <Property Name="displayorder" Type="int" Nullable="false" />
+          <Property Name="remark" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="bsp_attributevalues">
           <Key>
@@ -1191,6 +1192,7 @@
           <Property Name="showtype" Type="Byte" Nullable="false" />
           <Property Name="isfilter" Type="Byte" Nullable="false" />
           <Property Name="displayorder" Type="Int32" Nullable="false" />
+          <Property Name="remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_attributevalues">
           <Key>
@@ -2287,6 +2289,7 @@
           <EntitySetMapping Name="bsp_attributes">
             <EntityTypeMapping TypeName="brnshopModel.bsp_attributes">
               <MappingFragment StoreEntitySet="bsp_attributes">
+                <ScalarProperty Name="remark" ColumnName="remark" />
                 <ScalarProperty Name="attrid" ColumnName="attrid" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="cateid" ColumnName="cateid" />

@@ -57,7 +57,7 @@ namespace Remoting
 	                           bsp_products.ishot,bsp_products.isnew,bsp_products.displayorder,bsp_products.weight,bsp_products.showimg,bsp_products.salecount,
 	                           bsp_products.visitcount,bsp_products.reviewcount,bsp_products.addtime,bsp_products.description,bsp_products.isfullcut,
 	                           bsp_productskus.recordid sku_recordid,bsp_productskus.pid sku_pid,bsp_productskus.attrid sku_attrid,bsp_attributevalues.attrvalueid sku_attrvalueid,
-	                           bsp_attributevalues.attrvalue sku_inputvalue,bsp_attributes.name sku_inputattr,bsp_productskus.price sku_price,bsp_productskus.isdefaultprice sku_isdefaultprice
+	                           bsp_attributevalues.attrvalue sku_inputvalue,bsp_attributes.name sku_inputattr,bsp_productskus.price sku_price,bsp_productskus.isdefaultprice sku_isdefaultprice,bsp_productskus.stock sku_stock
                         FROM bsp_cateproducts 
 						JOIN bsp_products ON bsp_products.pid = bsp_cateproducts.pid
                         JOIN bsp_categories ON bsp_categories.cateid = bsp_cateproducts.cateid

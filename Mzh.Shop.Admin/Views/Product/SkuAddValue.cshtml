@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Mzh.Public.Model.Model;
+@{
+    var values = ViewBag.values as List<AttributeValueInfo>;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,8 +16,29 @@
 <body>
     <div class="layuimini-container">
         <div class="layuimini-main">
-            <input style="display:none" id="isedit" value="@(ViewBag.value == ""?0:1)"/>
+            <input style="display:none" id="isedit" value="@(ViewBag.value == ""?0:1)" />
+            <input style="display:none" id="attrid" value="@ViewBag.attrid" />
+            <input style="display:none" id="valueid" value="@ViewBag.valueid" />
 
+            <div class="layui-form-item" id="isuseoldvalue-div">
+                <label class="layui-form-label">是否选择已有属性值</label>
+                <div class="layui-input-inline" style="top:15px">
+                    <input type="radio" name="isuseoldvalue" value="1">是
+                    <input type="radio" name="isuseoldvalue" checked="checked" value="0">否
+                </div>
+            </div>
+            <div class="layui-form-item" id="existvalue-div" style="display:none">
+                <label class="layui-form-label">属性名</label>
+                <div class="layui-input-block">
+                    <select class="layui-select" name="existvalue" id="existvalue">
+                        <option value=""></option>
+                        @foreach (var value in values)
+                        {
+                            <option value="@(value.attrname.Trim()+"&"+value.attrvalue.Trim()+"&"+value.attrvalueid)">@(value.attrname.Trim()+"-"+ value.attrvalue.Trim())</option>
+                        }
+                    </select>
+                </div>
+            </div>
             <form class="layui-form" action="">
                 <div class="layui-form-item">
                     <label class="layui-form-label">属性名</label>
@@ -56,11 +81,42 @@
     <script src="~/Scripts/mzhconfig.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
-        var isedit = $("#isedit").val() == 1 ? true : false;
-        if (!isedit) {
-            $(".delete").hide();
-        }
 
+        var isuseoldvalue = 0;
+        var isedit = $("#isedit").val() == 1 ? true : false;
+        $(document).ready(function () {
+            $("#attribute").attr("disabled", "disabled");
+            if (!isedit) {
+                $(".delete").hide();
+            } else {
+                $("#isuseoldvalue-div").hide();
+            }
+            $('input[type=radio][name=isuseoldvalue]').change(function () {
+                if (this.value == '1') {
+                    isuseoldvalue = 1;
+                    $("#existvalue-div").show();
+                    $("#value").attr("disabled", "disabled");
+                    $("#value").val('');
+                    $("#existvalue").val('');
+                }
+                else if (this.value == '0') {
+                    isuseoldvalue = 0;
+                    $("#existvalue-div").hide();
+                    $("#value").removeAttr("disabled");
+                    $("#value").val('');
+                }
+            });
+
+            $("#existvalue").on("change", function () {
+                console.log(this.value)
+                var attrname = $(this).val().split('&')[0];
+                var attrvalue = $(this).val().split('&')[1];
+                var attrvalueid = $(this).val().split('&')[2];
+                //$("#attribute").val(attrname);
+                $("#value").val(attrvalue);
+
+            });
+        });
         layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
                 , layer = layui.layer
@@ -126,18 +182,41 @@
                 if (isedit) {
                     parent.UpdateAttributeValue($("#value").val(), $("#price").val() ?? -1, $("#stock").val() ?? -1);
                 } else {
-                    parent.AddAttributeValue($("#attribute").val(), $("#value").val(), $("#price").val() ?? -1, $("#stock").val() ?? -1);
+                    if (isuseoldvalue == 1 && $("#existvalue").val() == '') {
+                        
+        ("没有选择属性值");
+                        return false;
+                    }
+                    parent.AddAttributeValue($("#attrid").val(), isuseoldvalue == 1 ? $("#existvalue").val().split('&')[2] : 0, $("#attribute").val(), $("#value").val(), $("#price").val() ?? -1, $("#stock").val() ?? -1);
                 }
             }
             return false;
         })
         $(".delete").click(function () {
-            layer.confirm('确认删除吗？', {
+            layer.confirm('确认删除吗？(不需要保存就会删除)', {
                 btn: ['确认', '取消'] //按钮
             }, function () {
-                    var iframeIndex = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(iframeIndex);
-                    parent.DeleteAttributeValue();
+                    if ($("#valueid").val() > 0 && parent.pid != 0) {
+                    $.ajax({
+                        url: domain + '/Product/DeleteProductSku',
+                        type: 'post',
+                        data: {
+                            pid: parent.pid,
+                            type: 2,
+                            id: $("#valueid").val()
+                        },
+                        async: false,
+                        success: function (res) {
+                            if (res.state != 1) {
+                                layer.alert(res.msg);
+                                return;
+                            }
+                        }
+                    });
+                }
+                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(iframeIndex);
+                parent.DeleteAttributeValue();
             }, function () {
             });
             return false;

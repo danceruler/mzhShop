@@ -187,7 +187,7 @@ namespace Mzh.Public.Model.Model
         /// <summary>
         /// 库存(为-1取商品库存)
         /// </summary>
-        public int stock { get; set; }
+        public int sku_stock { get; set; }
     }
 
 

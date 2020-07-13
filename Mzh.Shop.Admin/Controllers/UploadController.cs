@@ -25,5 +25,15 @@ namespace Mzh.Shop.Admin.Controllers
             return Json(upload.Upload(streamFileHelper.StreamToBytes(stream), name, "webadmin"),
                 JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult Base64Str(string base64str)
+        {
+            MemoryStream stream = new MemoryStream(Convert.FromBase64String(base64str.Split(',')[1]));
+            StreamFileHelper streamFileHelper = new StreamFileHelper();
+            UPLOAD upload = RemotingHelp.GetModelObject<UPLOAD>();
+            return Json(upload.Upload(streamFileHelper.StreamToBytes(stream),DateTime.Now.Millisecond.ToString()+ ".png", "webadmin"),
+                JsonRequestBehavior.AllowGet);
+        }
     }
 }

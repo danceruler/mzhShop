@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -122,7 +123,8 @@ namespace Mzh.Public.Model.Model
     [Serializable]
     public class AddProductModel
     {
-        public short cateid { get; set; }
+        public int pid { get; set; }
+        public List<int> cateids { get; set; }
         public string name { get; set; }
         public decimal shopprice { get; set; }
         public decimal marketprice { get; set; }
@@ -161,6 +163,7 @@ namespace Mzh.Public.Model.Model
     {
         public int attrid { get; set; }
         public string name { get; set; }
+        public string remark { get; set; }
         public List<AttributeValueInfo> attributevalues { get; set; }
     }
 
@@ -173,5 +176,7 @@ namespace Mzh.Public.Model.Model
         public int attrvalueid { get; set; }
         public string attrvalue { get; set; }
         public string attrname { get; set; }
+        public int price { get; set; }
+        public int stock { get; set; }
     }
 }

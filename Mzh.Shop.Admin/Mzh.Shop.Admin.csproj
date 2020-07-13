@@ -163,6 +163,7 @@
     <Content Include="wwwroot\images\favicon.ico" />
     <Content Include="wwwroot\images\home.png" />
     <Content Include="wwwroot\images\logo.png" />
+    <Content Include="wwwroot\js\cupload.js" />
     <Content Include="wwwroot\js\lay-config.js" />
     <Content Include="wwwroot\js\lay-module\echarts\echarts.js" />
     <Content Include="wwwroot\js\lay-module\echarts\echartsTheme.js" />

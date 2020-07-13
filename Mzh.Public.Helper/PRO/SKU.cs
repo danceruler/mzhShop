@@ -16,6 +16,7 @@ namespace Remoting
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+        [Obsolete]
         public ResultModel AddAttribute(string name)
         {
             using (brnshopEntities context = new brnshopEntities())
@@ -47,6 +48,7 @@ namespace Remoting
         /// <param name="attrid"></param>
         /// <param name="name"></param>
         /// <returns></returns>
+        [Obsolete]
         public ResultModel AddAttributeValue(short attrid,string value)
         {
             using (brnshopEntities context = new brnshopEntities())
@@ -78,6 +80,7 @@ namespace Remoting
         /// <summary>
         /// 商品添加sku信息
         /// </summary>
+        [Obsolete]
         public ResultModel AddSKU(int pid,int valueid,int isdefaultprice,decimal price)
         {
             using (brnshopEntities context = new brnshopEntities())
@@ -115,6 +118,7 @@ namespace Remoting
         /// 商品删除SKU信息
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         public ResultModel DeleteSKU(int pid, int valueid)
         {
             using (brnshopEntities context = new brnshopEntities())
@@ -135,6 +139,69 @@ namespace Remoting
                 {
                     Logger._.Error(ex.ToString());
                     return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取已经存在的属性列表
+        /// </summary>
+        /// <returns></returns>
+        public List<AttributeInfo> GetAttributeInfos()
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                try
+                {
+                    List<AttributeInfo> result = new List<AttributeInfo>();
+                    var attributes = context.bsp_attributes.ToList();
+                    foreach(var attribute in attributes)
+                    {
+                        AttributeInfo newattr = new AttributeInfo()
+                        {
+                            attrid = attribute.attrid,
+                            name = attribute.name,
+                            remark = attribute.remark
+                        };
+                        result.Add(newattr);
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    return new List<AttributeInfo>();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取当前属性下的属性值列表
+        /// </summary>
+        public List<AttributeValueInfo> GetAttributeValueInfos(int attrid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                try
+                {
+                    List<AttributeValueInfo> result = new List<AttributeValueInfo>();
+                    var attributevaluess = context.bsp_attributevalues.Where(t => t.attrid == attrid).ToList();
+                    foreach (var attrvalue in attributevaluess)
+                    {
+                        AttributeValueInfo newattrvalue = new AttributeValueInfo()
+                        {
+                            attrvalueid = attrvalue.attrvalueid,
+                            attrvalue = attrvalue.attrvalue,
+                            attrname = attrvalue.attrname,
+                        };
+                        result.Add(newattrvalue);
+                    }
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    return null;
                 }
             }
         }

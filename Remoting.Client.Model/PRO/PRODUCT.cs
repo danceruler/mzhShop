@@ -71,5 +71,26 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+
+        /// <summary>
+        /// 删除商品的规格信息
+        /// </summary>
+        /// <param name="type">1表示删除某个属性的规格，2为删除某个属性值的规格</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ResultModel DeleteProductSku(int pid, int type, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 编辑商品信息
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel UpdatePorduct(AddProductModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

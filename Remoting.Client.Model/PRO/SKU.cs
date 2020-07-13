@@ -46,5 +46,22 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 获取已经存在的属性列表
+        /// </summary>
+        /// <returns></returns>
+        public List<AttributeInfo> GetAttributeInfos()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取当前属性下的属性值列表
+        /// </summary>
+        public List<AttributeValueInfo> GetAttributeValueInfos(int attrid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Mzh.Public.Model.Model;
+@{ 
+    var attributes = ViewBag.Attributes as List<AttributeInfo>;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,24 +16,27 @@
 <body>
     <div class="layuimini-container">
         <div class="layuimini-main">
-
-
-            <form class="layui-form" action="">
-                @*<div class="layui-form-item">
-            <label class="layui-form-label">商品类别</label>
-            <div class="layui-input-block">
-                <select name="producttype" lay-filter="producttype">
-                    <option value=""></option>
-                    <option value="0">写作</option>
-                    <option value="1" selected="">阅读</option>
-                    <option value="2">游戏</option>
-                    <option value="3">音乐</option>
-                    <option value="4">旅行</option>
-                </select>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否选择已有属性</label>
+                <div class="layui-input-inline" style="top:15px">
+                    <input type="radio" name="isuseoldattr" checked="checked" value="1">是
+                    <input type="radio" name="isuseoldattr" checked="checked" value="0">否
+                </div>
             </div>
-        </div>*@
-
-                <div class="layui-form-item">
+            <form class="layui-form" action="">
+                <div class="layui-form-item" id="existattribute-div" style="display:none">
+                    <label class="layui-form-label">属性名</label>
+                    <div class="layui-input-block">
+                        <select name="existattribute" id="existattribute">
+                            @*<option value=""></option>*@
+                            @foreach (var attr in attributes)
+                            {
+                                <option value="@(attr.attrid+"&"+attr.name)">@(attr.name.Trim()+"("+attr.remark+")")</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
                     <label class="layui-form-label">属性名</label>
                     <div class="layui-input-inline">
                         <input type="text" name="attribute" id="attribute" placeholder="" class="layui-input">
@@ -37,7 +44,7 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn query" >确认</button>
+                        <button class="layui-btn query">确认</button>
                         <button class="layui-btn layui-btn-primary cancel">取消</button>
                     </div>
                 </div>
@@ -52,6 +59,21 @@
     <script src="~/Scripts/mzhconfig.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
+        var isuseoldattr = 0;
+        $(document).ready(function () {
+            $('input[type=radio][name=isuseoldattr]').change(function () {
+                if (this.value == '1') {
+                    isuseoldattr = 1;
+                    $("#existattribute-div").show();
+                    $("#attribute-div").hide();
+                }
+                else if (this.value == '0') {
+                    isuseoldattr = 0;
+                    $("#existattribute-div").hide();
+                    $("#attribute-div").show();
+                }
+            });
+        });
         layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
                 , layer = layui.layer
@@ -112,8 +134,16 @@
         $(".query").click(function () {
             var iframeIndex = parent.layer.getFrameIndex(window.name);
             parent.layer.close(iframeIndex);
-            parent.AddAttribute($("#attribute").val());
+            if (isuseoldattr == 1) {
+                var id = $("#existattribute").val().split('&')[0];
+                var name = $("#existattribute").val().split('&')[1];
+                parent.AddAttribute(id, name);
+            } else {
+                parent.AddAttribute(0,$("#attribute").val());
+            }
+            
         })
+
     </script>
 
 </body>

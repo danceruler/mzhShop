@@ -7,13 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="~/wwwroot/lib/jq-module/zyupload/zyupload-1.0.0.min.css" media="all">
     <link rel="stylesheet" href="~/wwwroot/css/public.css" media="all">
     <style>
-        .valuebtn{
-            width:80%;
-            margin-top:5px;
-            margin-left:10%;
+        .valuebtn {
+            width: 80%;
+            margin-top: 5px;
+            margin-left: 10%;
         }
     </style>
 </head>
@@ -22,38 +21,45 @@
         <div class="layuimini-main">
 
             @*<blockquote class="layui-elem-quote layui-text">
-            鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
-        </blockquote>*@
-
+                    鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
+                </blockquote>*@
+            <img style="width:100%;height:auto" id="testimg"/>
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>添加商品</legend>
             </fieldset>
 
             <form class="layui-form" action="">
                 @*<div class="layui-form-item">
-                <label class="layui-form-label">商品类别</label>
-                <div class="layui-input-block">
-                    <select name="producttype" lay-filter="producttype">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-                        <option value="1" selected="">阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>
-                </div>
-            </div>*@
+            <label class="layui-form-label">商品类别</label>
+            <div class="layui-input-block">
+                <select name="producttype" lay-filter="producttype">
+                    <option value=""></option>
+                    <option value="0">写作</option>
+                    <option value="1" selected="">阅读</option>
+                    <option value="2">游戏</option>
+                    <option value="3">音乐</option>
+                    <option value="4">旅行</option>
+                </select>
+            </div>
+        </div>*@
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品类别</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="" placeholder="" autocomplete="off" class="layui-input" id="demo" data-tag="" value="手机" ts-selected="71">
+                        <input type="text" name="cateids" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" id="demo" data-tag="" value="" ts-selected="">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="productname" lay-verify="productname" autocomplete="required" placeholder="请输入商品名称" class="layui-input">
+                        <input type="text" name="productname" lay-verify="required" autocomplete="required" placeholder="请输入商品名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="state" value="1" title="上架" checked="">
+                        <input type="radio" name="state" value="0" title="下架">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
@@ -64,7 +70,15 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">优惠价</label>
+                        <label class="layui-form-label">排序号</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="displayorder" lay-verify="required" value="0" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">现价</label>
                         <div class="layui-input-inline">
                             <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
@@ -75,6 +89,20 @@
                             <input type="number" name="macketprice" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">包装费</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="packprice" lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">重量(kg)</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="weight" lay-verify="required" value="0" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
@@ -82,6 +110,13 @@
                         <div class="layui-input-inline">
                             <input type="number" name="stock" lay-verify="required" value="99999" autocomplete="off" class="layui-input">
                         </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否满减</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="isfullcut" value="1" title="是" checked="">
+                        <input type="radio" name="isfullcut" value="0" title="否">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -114,65 +149,97 @@
                 </div>
                 <div id="sku-div" style="width:82%;margin-left:9%">
                     @*<div class="layui-card attribute-div-0" style="width:100%" data-id="">
-                    <div class="layui-card-header" style="background-color:lightgray;width:100%;">
-                        属性1
-                        <button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="0" onclick="DeleteAttribute(this); return false;">删除</button>
-                        <button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="" data-name="属性1"onclick="AddValue(this); return false;">添加值</button>
-                    </div>
-                    <div class="layui-card-body" style="background-color:whitesmoke">
-                        <div class="layui-input-block layui-row values-div">
-                            <div class="layui-col-md2 value-div" data-name="" data-id="" data-value="" data-price="" data-stock=""  onclick="EditValue(this); return false;">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
-                            <div class="layui-col-md2">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
-                            <div class="layui-col-md2">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
-                            <div class="layui-col-md2">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
-                            <div class="layui-col-md2">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
-                            <div class="layui-col-md2">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
-                            <div class="layui-col-md2">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
-                            <div class="layui-col-md2">
-                                <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                            </div>
+                <div class="layui-card-header" style="background-color:lightgray;width:100%;">
+                    属性1
+                    <button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="0" onclick="DeleteAttribute(this); return false;">删除</button>
+                    <button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="" data-name="属性1"onclick="AddValue(this); return false;">添加值</button>
+                </div>
+                <div class="layui-card-body" style="background-color:whitesmoke">
+                    <div class="layui-input-block layui-row values-div">
+                        <div class="layui-col-md2 value-div" data-name="" data-id="" data-value="" data-price="" data-stock=""  onclick="EditValue(this); return false;">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                        </div>
+                        <div class="layui-col-md2">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                        </div>
+                        <div class="layui-col-md2">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                        </div>
+                        <div class="layui-col-md2">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                        </div>
+                        <div class="layui-col-md2">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                        </div>
+                        <div class="layui-col-md2">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                        </div>
+                        <div class="layui-col-md2">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
+                        </div>
+                        <div class="layui-col-md2">
+                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
                         </div>
                     </div>
-                </div>*@
+                </div>
+            </div>*@
+                </div>
+                <div class="layui-form-item" style="margin-top:20px">
+                    <label class="layui-form-label">商品主图</label>
+                    <div class="layui-input-block">
+                        <div id="cupload-proshowimg"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品详情图</label>
+                    <div class="layui-input-block">
+                        <div id="cupload-promainimgs"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品介绍图</label>
+                    <div class="layui-input-block">
+                        <div id="cupload-prodetailimgs"></div>
+                    </div>
                 </div>
 
-                <div class="layui-form-item" style="margin-top:300px">
+                <div class="layui-form-item" style="margin-top:20px">
                     <div class="layui-input-block">
-                        <button class="layui-btn addproduct">添加</button>
+                        <button class="layui-btn addproduct" lay-submit="" lay-filter="demo1">添加</button>
                         <button class="layui-btn layui-btn-primary cancel">取消</button>
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
     <script src="~/wwwroot/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
     <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/wwwroot/js/lay-config.js"></script>
-    <script src="~/wwwroot/lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>
     <script src="~/Scripts/mzhconfig.js"></script>
+    <script src="~/wwwroot/js/cupload.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
         //每次打开新增属性界面，记录当前的attributediv
         var addvalueDiv;
         //每次编辑属性值，记录当前的属性值div
         var editvalueDiv;
+        //当前的产品id
+        var pid = 0;
+        var cuploadproshowimg = new Cupload({
+            ele: '#cupload-proshowimg',
+            num: 1,
+        });
+        var cuploadpromainimgs = new Cupload({
+            ele: '#cupload-promainimgs',
+            num: 20,
+            data: ["http://shopapi.boiledchicken.top/File/GetUrl?objectname=1594660806.png"],
+        });
+        var cuploadprodetailimgs = new Cupload({
+            ele: '#cupload-prodetailimgs',
+            num: 20,
+        });
 
-        layui.use(['form', 'layedit', 'laydate', 'tableSelect','element'], function () {
+        layui.use(['form', 'layedit', 'laydate', 'tableSelect', 'element'], function () {
             var form = layui.form
                 , layer = layui.layer
                 , layedit = layui.layedit
@@ -215,22 +282,130 @@
 
             //监听提交
             form.on('submit(demo1)', function (data) {
-                layer.alert(JSON.stringify(data.field), {
-                    title: '最终的提交信息'
-                })
+
+                var skuinfos = GetSkuJson();
+                if (skuinfos == false) {
+                    layer.alert("商品至少要有一个规格，并且已有属性必须有值！");
+                    return false;
+                }
+
+                
+                var showimg = '';
+                var mainimgs = [];
+                var detailimgs = [];
+                if (cuploadproshowimg.imageInput.length == 0) {
+                    layer.alert("商品主图必须上传！");
+                    return false;
+                }
+                showloading(true);
+                if (cuploadproshowimg.imageInput[0].value.indexOf("shopapi") != -1) {
+                    showimg = cuploadproshowimg.imageInput[0].value;
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: domain + '/Upload/Base64Str',
+                        data: { base64str: cuploadproshowimg.imageInput[0].value },
+                        async: false,
+                        success: function (res) {
+                            if (res.state == 1) {
+                                showimg = res.msg;
+                            } else {
+                                showloading(false);
+                                layer.alert("商品主图上传失败");
+                                return false;
+                            }
+                        }
+                    })
+                }
+                
+                for (var i = 0; i < cuploadpromainimgs.imageInput.length; i++) {
+                    if (cuploadpromainimgs.imageInput[0].value.indexOf("shopapi") != -1) {
+                        var newimg = {
+                            "showimg": cuploadpromainimgs.imageInput[0].value,
+                            "displayorder": i + 1
+                        }
+                        mainimgs.push(newimg);
+                    } else {
+                        $.ajax({
+                            type: 'post',
+                            url: domain + '/Upload/Base64Str',
+                            data: { base64str: cuploadpromainimgs.imageInput[i].value },
+                            async: false,
+                            success: function (res) {
+                                if (res.state == 1) {
+                                    var newimg = {
+                                        "showimg": res.msg,
+                                        "displayorder": i + 1
+                                    }
+                                    mainimgs.push(newimg);
+                                } else {
+                                    showloading(false);
+                                    layer.alert("商品详情图第" + (i + 1) + "张上传失败！");
+                                    return false;
+                                }
+                            }
+                        })
+                    }
+                }
+                for (var i = 0; i < cuploadprodetailimgs.imageInput.length; i++) {
+                    if (cuploadpromainimgs.imageInput[0].value.indexOf("shopapi") != -1) {
+                        var newimg = {
+                            "showimg": cuploadpromainimgs.imageInput[0].value,
+                            "displayorder": i + 1
+                        }
+                        detailimgs.push(newimg);
+                    } else {
+                        $.ajax({
+                            type: 'post',
+                            url: domain + '/Upload/Base64Str',
+                            data: { base64str: cuploadprodetailimgs.imageInput[i].value },
+                            async: false,
+                            success: function (res) {
+                                if (res.state == 1) {
+                                    var newimg = {
+                                        "showimg": res.msg,
+                                        "displayorder": i + 1
+                                    }
+                                    detailimgs.push(newimg);
+                                } else {
+                                    showloading(false);
+                                    layer.alert("商品介绍图第" + (i + 1) + "张上传失败！");
+                                    return false;
+                                }
+                            }
+                        })
+                    }
+                    
+                }
+                showloading(false);
+
+                console.log($("#demo"));
+                var submitdata =
+                {
+                    "pid": pid,
+                    "cateids": $("#demo").data("tag").split(','),
+                    "name": data.field.productname,
+                    "shopprice": data.field.shopprice,
+                    "marketprice": data.field.macketprice,
+                    "costprice": 0,
+                    "isbest": data.field.isbest,
+                    "ishot": data.field.ishot,
+                    "isnew": data.field.isnew,
+                    "displayorder": data.field.displayorder,
+                    "weight": data.field.weight,
+                    "showimg": showimg,
+                    "description": data.field.productdescription,
+                    "isfullcut": data.field.isfullcut,
+                    "packprice": data.field.packprice,
+                    "mainImgs": mainimgs,
+                    "detailImgs": detailimgs,
+                    "skuInfos": skuinfos
+                }
+                console.log(submitdata);
                 return false;
             });
 
-            //表单初始赋值
-            form.val('example', {
-                "username": "贤心" // "name": "value"
-                , "password": "123456"
-                , "interest": 1
-                , "like[write]": true //复选框选中状态
-                , "close": true //开关状态
-                , "sex": "女"
-                , "desc": "我爱 layui"
-            })
+
 
             tableSelect.render({
                 elem: '#demo',
@@ -238,7 +413,7 @@
                 checkedKey: 'cateid',
                 searchPlaceholder: '请选择商品类别',
                 table: {
-                    url: domain +'/Product/GetCategories',
+                    url: domain + '/Product/GetCategories',
                     //url: '../../wwwroot/api/tableSelect.json',
                     cols: [[
                         { type: 'checkbox' },
@@ -254,10 +429,12 @@
                         IDJSON.push(item.cateid)
                     })
                     elem.val(NEWJSON.join(","))
-                    elem.data("tag", IDJSON.join(",")) 
+                    elem.data("tag", IDJSON.join(","))
                     console.log(elem.data("tag"))
                 }
             })
+
+            
 
         });
         $(function () {
@@ -278,16 +455,16 @@
             })
         });
 
-        
+
         //提供给弹出层调用的方法,新增属性
-        function AddAttribute(name) {
-            var newdiv = '<div class="layui-card attribute-div" style="width:100%" data-id="0">'
+        function AddAttribute(id, name) {
+            var newdiv = '<div class="layui-card attribute-div" style="width:100%" data-id="' + id + '">'
                 + '<div class="layui-card-header" style="background-color:lightgray;width:100%;">'
                 + name
-                + '<button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="0" onclick="DeleteAttribute(this); return false;">删除</button>'
-                + '<button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="0" data-name="' + name+'" onclick="AddValue(this); return false;">添加值</button>'
+                + '<button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="' + id + '" onclick="DeleteAttribute(this); return false;">删除</button>'
+                + '<button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="' + id + '" data-name="' + name + '" onclick="AddValue(this); return false;">添加值</button>'
                 + '</div>'
-                +'<div class="layui-card-body" style="background-color:whitesmoke">'
+                + '<div class="layui-card-body" style="background-color:whitesmoke">'
                 + '<div class="layui-input-block layui-row">'
                 + '</div></div></div></div>';
             $("#sku-div").append(newdiv);
@@ -295,10 +472,10 @@
         }
 
         //提供给弹出层调用的方法,新增属性值
-        function AddAttributeValue(name,value, price, stock) {
-            var newdiv = '<div class="layui-col-md2 value-div" data-id="0" data-name="' + name+'" data-value="' + value + '" data-price="' + price + '" data-stock="' + stock + '" onclick="EditValue(this); return false;">'
+        function AddAttributeValue(attrid, id, name, value, price, stock) {
+            var newdiv = '<div class="layui-col-md2 value-div" data-attrid=' + attrid + ' data-id="' + id + '" data-name="' + name + '" data-value="' + value + '" data-price="' + price + '" data-stock="' + stock + '" onclick="EditValue(this); return false;">'
                 + '<a class="layui-btn layui-btn-normal valuebtn">' + value + '</a>'
-                +'</div>';
+                + '</div>';
             $(addvalueDiv).append(newdiv);
             $(addvalueDiv).load();
         }
@@ -317,26 +494,25 @@
         }
 
         function DeleteAttribute(obj) {
-            var alert = layer.confirm('确认删除吗？' + $(obj).data("id") == 0?'':'(删除已存在的属性将不需要保存就会删除)', {
+            var alert = layer.confirm('确认删除吗？' + ($(obj).data("id") == 0 ? '' : '(删除已存在的属性将不需要保存就会删除)'), {
                 btn: ['确认', '取消'] //按钮
             }, function () {
-                    if ($(obj).data("id") == 0) {
-                        console.log($(obj).parent().parent());
-                        $(obj).parent().parent().remove();
-                    }//表示还未添加到数据库的数据直接删除
-                    else {
-
-                    }//调用接口删除
-                    layer.close(alert);
+                if ($(obj).data("id") == 0) {
+                    console.log($(obj).parent().parent());
+                    $(obj).parent().parent().remove();
+                }//表示还未添加到数据库的数据直接删除
+                else {
+                    $(obj).parent().parent().remove();
+                }//调用接口删除
+                layer.close(alert);
             }, function () {
-                    layer.close(alert);
+                layer.close(alert);
             });
             return false;
         }
 
         function AddValue(obj) {
             addvalueDiv = $($(obj).parent().parent().children()[1]).children()[0];
-            console.log(addvalueDiv);
             var index = layer.open({
                 title: '添加属性值',
                 type: 2,
@@ -344,7 +520,7 @@
                 maxmin: true,
                 shadeClose: true,
                 area: ['50%', '50%'],
-                content: '/Product/SkuAddValue?attributename=' + $(obj).data("name"),
+                content: '/Product/SkuAddValue?attrid=' + $(obj).data("id") + '&attributename=' + $(obj).data("name"),
             });
             $(window).on("resize", function () {
                 layer.full(index);
@@ -366,7 +542,7 @@
                 maxmin: true,
                 shadeClose: true,
                 area: ['50%', '50%'],
-                content: '/Product/SkuAddValue?attributename=' + name + '&value=' + value + '&price=' + price + '&stock=' + stock,
+                content: '/Product/SkuAddValue?attrid=' + $(obj).data("attrid") + '&attributename=' + name + '&valueid=' + $(obj).data("id") + '&value=' + value + '&price=' + price + '&stock=' + stock,
             });
             $(window).on("resize", function () {
                 layer.full(index);
@@ -377,7 +553,8 @@
         function GetSkuJson() {
             var result = [];
             var attributedivs = $("#sku-div").children();
-            for (var index in attributedivs) {
+            if (attributedivs.length == 0) return false;
+            for (var index = 0; index < attributedivs.length; index++) {
                 var skuinfo = {
                     "attrid": 0,
                     "name": "",
@@ -386,27 +563,28 @@
                 skuinfo.attrid = $(attributedivs[index]).data("id");
                 var paneldivs = $(attributedivs[index]).children();
                 var skudivs = $($(paneldivs[1]).children()[0]).children();
-                console.log(skudivs);
-                console.log(skudivs.length);
                 if (skudivs.length == 0) return false;
                 else {
-                    for (var index2 in skudivs) {
+                    for (var index2 = 0; index2 < skudivs.length; index2++) {
                         skuinfo.name = $(skudivs[index2]).data("name");
                         var skuvalueinfo = {
                             "attrvalueid": 0,
                             "attrvalue": "",
-                            "attrname": ""
+                            "attrname": "",
+                            "price": -1,
+                            "stock": -1
                         }
                         skuvalueinfo.attrvalueid = $(skudivs[index2]).data("id");
                         skuvalueinfo.attrvalue = $(skudivs[index2]).data("value");
                         skuvalueinfo.attrname = skuinfo.name;
-                        
+                        skuvalueinfo.price = $(skudivs[index2]).data("price");
+                        skuvalueinfo.stock = $(skudivs[index2]).data("price");
                         skuinfo.attributevalues.push(skuvalueinfo);
                     }
                     result.push(skuinfo);
                 }
-
             }
+
             return result;
         }
 
@@ -481,10 +659,61 @@
             ]
         }
 
-        $(".addproduct").click(function () {
-            console.log(GetSkuJson());
-            return false;
-        })
+        //$(".addproduct").click(function () {
+        //    showloading(true);
+        //    var showimg = '';
+        //    var mainimgs = [];
+        //    var detailimgs = [];
+        //    $.ajax({
+        //        type: 'post',
+        //        url: domain + '/Upload/Base64Str',
+        //        data: { base64str: cuploadproshowimg.imageInput[0].value },
+        //        async: false,
+        //        success: function (res) {
+        //            if (res.state == 1) {
+        //                showimg = res.msg;
+        //            } else {
+        //                layui.alert("商品主图上传失败");
+        //                return false;
+        //            }
+        //        }
+        //    })
+        //    for (var i = 0; i < cuploadpromainimgs.imageInput.length;i++) {
+        //        $.ajax({
+        //            type: 'post',
+        //            url: domain + '/Upload/Base64Str',
+        //            data: { base64str: cuploadpromainimgs.imageInput[i].value },
+        //            async: false,
+        //            success: function (res) {
+        //                if (res.state == 1) {
+        //                    mainimgs.push(res.msg);
+        //                } else {
+        //                    layui.alert("商品详情图第"+(i+1)+"张上传失败！");
+        //                    return false;
+        //                }
+        //            }
+        //        })
+        //    }
+        //    for (var i = 0; i < cuploadprodetailimgs.imageInput.length; i++) {
+        //        $.ajax({
+        //            type: 'post',
+        //            url: domain + '/Upload/Base64Str',
+        //            data: { base64str: cuploadprodetailimgs.imageInput[i].value },
+        //            async: false,
+        //            success: function (res) {
+        //                if (res.state == 1) {
+        //                    detailimgs.push(res.msg);
+        //                } else {
+        //                    layui.alert("商品介绍图第" + (i + 1) + "张上传失败！");
+        //                    return false;
+        //                }
+        //            }
+        //        })
+        //    }
+
+
+        //    return false;
+        //})
     </script>
 
 </body>

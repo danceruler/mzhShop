@@ -43,6 +43,8 @@ namespace Mzh.Shop.Admin.Controllers
 
         public ActionResult SkuAddAttribute()
         {
+            SKU sku = RemotingHelp.GetModelObject<SKU>();
+            ViewBag.Attributes = sku.GetAttributeInfos();
             return View();
         }
 
@@ -50,15 +52,20 @@ namespace Mzh.Shop.Admin.Controllers
         /// 添加编辑属性值
         /// </summary>
         /// <returns></returns>
-        public ActionResult SkuAddValue(string attributename,string value = "", int price = - 1, int stock = -1)
+        public ActionResult SkuAddValue(int attrid,string attributename,int valueid = 0,string value = "", int price = -1, int stock = -1)
         {
+            SKU sku = RemotingHelp.GetModelObject<SKU>();
+            ViewBag.attrid = attrid;
             ViewBag.attributename = attributename;
             ViewBag.value = value;
             ViewBag.price = price;
             ViewBag.stock = stock;
+            ViewBag.valueid = valueid;
+            ViewBag.values = sku.GetAttributeValueInfos(attrid);
             return View();
         }
 
+        #region 接口
         [HttpGet]
         public ActionResult GetCategories(int pid = 0)
         {
@@ -143,9 +150,47 @@ namespace Mzh.Shop.Admin.Controllers
             return Json(
                 product.AddProduct(model),
                 JsonRequestBehavior.AllowGet);
-
         }
 
+        /// <summary>
+        /// 获取已经存在的属性列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetAttributeInfos()
+        {
+            SKU sku = RemotingHelp.GetModelObject<SKU>();
+            return Json(
+                sku.GetAttributeInfos(),
+                JsonRequestBehavior.AllowGet);
+        }
 
+        /// <summary>
+        /// 获取已经存在的属性值列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetAttributeValueInfos(int attrid)
+        {
+            SKU sku = RemotingHelp.GetModelObject<SKU>();
+            return Json(
+                sku.GetAttributeValueInfos(attrid),
+                JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 删除商品的规格信息
+        /// </summary>
+        /// <param name="type">1表示删除某个属性的规格，2为删除某个属性值的规格</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult DeleteProductSku(int pid, int type, int id)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+                product.DeleteProductSku(pid,type,id),
+                JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

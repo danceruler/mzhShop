@@ -21,5 +21,6 @@ namespace Mzh.Public.DAL
         public byte showtype { get; set; }
         public byte isfilter { get; set; }
         public int displayorder { get; set; }
+        public string remark { get; set; }
     }
 }
