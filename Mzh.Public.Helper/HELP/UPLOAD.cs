@@ -19,7 +19,7 @@ namespace Mzh.Public.BLL.HELP
             OSSHelper osshelper = new OSSHelper();
             var suffixname = filename.Split('.')[filename.Split('.').Length - 1];
             var timestamp = EncryptHelp.GetTimeStamp();
-            var objectName = timestamp + "." + suffixname;
+            var objectName = EncryptHelp.GetRandomStr(4) + timestamp + "." + suffixname;
             if (!osshelper.Upload(content, filename, objectName, OSSHelper.GetContentTypeBySuffix(suffixname)))
                 return ResultModel.Error("oss文件上传失败，请联系管理员");
             using (brnshopEntities context = new brnshopEntities())

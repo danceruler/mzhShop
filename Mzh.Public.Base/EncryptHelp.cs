@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -92,6 +93,33 @@ namespace Mzh.Public.Base
         {
             TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
+        }
+
+
+        public static List<string> randomWords = new List<string>();
+
+        /// <summary>
+        /// 获取随机字符串（由a-z,A-Z组成的随机字符串）
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRandomStr(int length)
+        {
+            if(randomWords.Count == 0)
+            {
+                for(int i = 0;i< 26; i++)
+                {
+                    randomWords.Add(((char)('A' + i)).ToString());
+                    randomWords.Add(((char)('a' + i)).ToString());
+                }
+            }
+
+            string result = "";
+            for(int i = 0; i < length; i++)
+            {
+                var index = new Random(Guid.NewGuid().GetHashCode()).Next(0, randomWords.Count - 1);
+                result += randomWords[index];
+            }
+            return result;
         }
     }
 }
