@@ -109,12 +109,12 @@ namespace Remoting
                         FROM bsp_cateproducts 
 						JOIN bsp_products ON bsp_products.pid = bsp_cateproducts.pid
                         JOIN bsp_categories ON bsp_categories.cateid = bsp_cateproducts.cateid
-                        JOIN bsp_productskus ON bsp_productskus.pid = bsp_products.pid
+                        LEFT JOIN bsp_productskus ON bsp_productskus.pid = bsp_products.pid
                         LEFT JOIN bsp_attributes ON bsp_attributes.attrid = bsp_productskus.attrid
                         LEFT JOIN bsp_attributevalues ON bsp_attributevalues.attrvalueid = bsp_productskus.attrvalueid
                         WHERE bsp_products.isdelete = 0
                         ORDER BY bsp_categories.displayorder DESC,dbo.bsp_products.displayorder DESC";
-            DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, sql);
+            DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
 
             var cateids = dt.AsEnumerable().Select(t => int.Parse(t["cateid"].ToString())).Distinct().ToList();
 

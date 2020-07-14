@@ -283,7 +283,7 @@ namespace Remoting
                             newvalue.attrdisplayorder = valueindex++;
                             context.SaveChanges();
 
-                            //判断该商品是否已经存在该属性和值的sku，存在更新不存在新增
+                            //先获取商品所有的sku，然后新增没有的sku
                             var psku = context.bsp_productskus.SingleOrDefault(t => t.pid == newpro.pid & t.attrid == newattribute.attrid & t.attrvalueid == newvalue.attrvalueid);
                             if(psku == null)
                             {
