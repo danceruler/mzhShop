@@ -284,6 +284,7 @@ namespace Remoting
                             context.SaveChanges();
 
                             //先获取商品所有的sku，然后新增没有的sku
+
                             var psku = context.bsp_productskus.SingleOrDefault(t => t.pid == newpro.pid & t.attrid == newattribute.attrid & t.attrvalueid == newvalue.attrvalueid);
                             if(psku == null)
                             {

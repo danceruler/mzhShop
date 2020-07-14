@@ -795,6 +795,7 @@
           <Property Name="isdefaultprice" Type="int" Nullable="false" />
           <Property Name="inputattr" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="stock" Type="int" Nullable="false" />
+          <Property Name="skuguid" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productstats">
           <Key>
@@ -1805,6 +1806,7 @@
           <Property Name="isdefaultprice" Type="Int32" Nullable="false" />
           <Property Name="inputattr" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="stock" Type="Int32" Nullable="false" />
+          <Property Name="skuguid" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productstats">
           <Key>
@@ -2943,6 +2945,7 @@
           <EntitySetMapping Name="bsp_productskus">
             <EntityTypeMapping TypeName="brnshopModel.bsp_productskus">
               <MappingFragment StoreEntitySet="bsp_productskus">
+                <ScalarProperty Name="skuguid" ColumnName="skuguid" />
                 <ScalarProperty Name="stock" ColumnName="stock" />
                 <ScalarProperty Name="inputattr" ColumnName="inputattr" />
                 <ScalarProperty Name="isdefaultprice" ColumnName="isdefaultprice" />

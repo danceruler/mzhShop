@@ -24,5 +24,6 @@ namespace Mzh.Public.DAL
         public int isdefaultprice { get; set; }
         public string inputattr { get; set; }
         public int stock { get; set; }
+        public System.Guid skuguid { get; set; }
     }
 }
