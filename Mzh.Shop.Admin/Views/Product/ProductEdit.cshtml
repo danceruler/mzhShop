@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Mzh.Public.Model.Model;
+@{
+    var ProductInfo = ViewBag.ProductInfo as ShowProductInfo;
+    var allcates = ViewBag.allcates as List<ShowCatecory>;
+    var pcates = ViewBag.pcates as List<ShowCatecory>;
+    var catevalues = string.Join(",", pcates.Select(t => t.name).ToArray());
+    var cateids = string.Join(",", pcates.Select(t => t.cateid.ToString()).ToArray());
+    var showimg = ProductInfo.showimg == null ? "" : ProductInfo.showimg;
+    var mainimgs = ProductInfo.mainImgs == null ? "" : string.Join(",", ProductInfo.mainImgs.OrderBy(t => t.displayorder).Select(t => t.showimg).ToArray());
+    var detailimgs = ProductInfo.detailImgs == null ? "" : string.Join(",", ProductInfo.detailImgs.OrderBy(t => t.displayorder).Select(t => t.showimg).ToArray());
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -23,56 +34,43 @@
             @*<blockquote class="layui-elem-quote layui-text">
                     鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
                 </blockquote>*@
-            <img style="width:100%;height:auto" id="testimg"/>
+            <img style="width:100%;height:auto" id="testimg" />
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>添加商品</legend>
             </fieldset>
 
             <form class="layui-form" action="">
-                @*<div class="layui-form-item">
-            <label class="layui-form-label">商品类别</label>
-            <div class="layui-input-block">
-                <select name="producttype" lay-filter="producttype">
-                    <option value=""></option>
-                    <option value="0">写作</option>
-                    <option value="1" selected="">阅读</option>
-                    <option value="2">游戏</option>
-                    <option value="3">音乐</option>
-                    <option value="4">旅行</option>
-                </select>
-            </div>
-        </div>*@
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品类别</label>
                     <div class="layui-input-inline">
-                        <input type="text" readonly name="cateids" lay-verify="required" placeholder=""  autocomplete="off" class="layui-input" id="demo" data-tag="" value="" ts-selected="">
+                        <input type="text" readonly name="cateids" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" id="demo" data-tag="" value="@catevalues" ts-selected="@cateids">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="productname" lay-verify="required" autocomplete="required" placeholder="请输入商品名称" class="layui-input">
+                        <input type="text" name="productname" lay-verify="required" autocomplete="required" value="@ProductInfo.name" placeholder="请输入商品名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品状态</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="state" value="1" title="上架" checked="">
-                        <input type="radio" name="state" value="0" title="下架">
+                        <input type="radio" name="state" value="1" title="上架" @(ProductInfo.state == 1 ? "checked" : "")>
+                        <input type="radio" name="state" value="0" title="下架" @(ProductInfo.state == 0 ? "checked" : "")>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">商品描述</label>
                     <div class="layui-input-block">
-                        <textarea name="productdescription" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <textarea name="productdescription" placeholder="请输入内容" class="layui-textarea">@ProductInfo.description</textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">排序号</label>
                         <div class="layui-input-inline">
-                            <input type="number" name="displayorder" lay-verify="required" value="0" autocomplete="off" class="layui-input">
+                            <input type="number" name="displayorder" lay-verify="required" value="@ProductInfo.displayorder" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -80,19 +78,19 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">现价</label>
                         <div class="layui-input-inline">
-                            <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
+                            <input type="number" name="shopprice" value="@ProductInfo.shopprice" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">原价</label>
                         <div class="layui-input-inline">
-                            <input type="number" name="macketprice" lay-verify="required" autocomplete="off" class="layui-input">
+                            <input type="number" name="macketprice" value="@ProductInfo.marketprice" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">包装费</label>
                         <div class="layui-input-inline">
-                            <input type="number" name="packprice" lay-verify="required" autocomplete="off" class="layui-input">
+                            <input type="number" name="packprice" value="@ProductInfo.packprice" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -100,7 +98,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">重量(kg)</label>
                         <div class="layui-input-inline">
-                            <input type="number" name="weight" lay-verify="required" value="0" autocomplete="off" class="layui-input">
+                            <input type="number" name="weight" lay-verify="required" value="@ProductInfo.weight" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -108,36 +106,36 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">库存</label>
                         <div class="layui-input-inline">
-                            <input type="number" name="stock" lay-verify="required" value="99999" autocomplete="off" class="layui-input">
+                            <input type="number" name="stock" lay-verify="required" value="@ProductInfo.stock" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否满减</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="isfullcut" value="1" title="是" checked="">
-                        <input type="radio" name="isfullcut" value="0" title="否">
+                        <input type="radio" name="isfullcut" value="1" title="是" @(ProductInfo.isfullcut == 1 ? "checked" : "")>
+                        <input type="radio" name="isfullcut" value="0" title="否" @(ProductInfo.isfullcut == 0 ? "checked" : "")>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否支持外卖</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="isbest" value="1" title="是" checked="">
-                        <input type="radio" name="isbest" value="0" title="否">
+                        <input type="radio" name="isbest" value="1" title="是" @(ProductInfo.isbest == 1 ? "checked" : "")>
+                        <input type="radio" name="isbest" value="0" title="否" @(ProductInfo.isbest == 0 ? "checked" : "")>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否热销商品</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="ishot" value="1" title="是">
-                        <input type="radio" name="ishot" value="0" title="否" checked="">
+                        <input type="radio" name="ishot" value="1" title="是" @(ProductInfo.ishot == 1 ? "checked" : "")>
+                        <input type="radio" name="ishot" value="0" title="否" @(ProductInfo.ishot == 0 ? "checked" : "")>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否新上商品</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="isnew" value="1" title="是" checked="">
-                        <input type="radio" name="isnew" value="0" title="否">
+                        <input type="radio" name="isnew" value="1" title="是" @(ProductInfo.isnew == 1 ? "checked" : "")>
+                        <input type="radio" name="isnew" value="0" title="否" @(ProductInfo.isnew == 0 ? "checked" : "")>
                     </div>
                 </div>
 
@@ -148,42 +146,28 @@
                     </div>
                 </div>
                 <div id="sku-div" style="width:82%;margin-left:9%">
-                    @*<div class="layui-card attribute-div-0" style="width:100%" data-id="">
-                <div class="layui-card-header" style="background-color:lightgray;width:100%;">
-                    属性1
-                    <button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="0" onclick="DeleteAttribute(this); return false;">删除</button>
-                    <button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="" data-name="属性1"onclick="AddValue(this); return false;">添加值</button>
+                    @foreach (var attribute in ProductInfo.attributes)
+                    {
+                        <div class="layui-card attribute-div" style="width:100%" data-id="@attribute.attrid">
+                            <div class="layui-card-header" style="background-color:lightgray;width:100%;">
+                                @attribute.name
+                                <button class="layui-btn layui-btn-danger" style="margin-right:5px;float:right" data-id="@attribute.attrid" onclick="DeleteAttribute(this); return false;">删除</button>
+                                <button class="layui-btn layui-btn-warm add-value" style="margin-right:5px;float:right" data-id="@attribute.attrid" data-name="@attribute.name" onclick="AddValue(this); return false;">添加值</button>
+                            </div>
+                            <div class="layui-card-body" style="background-color:whitesmoke">
+                                <div class="layui-input-block layui-row">
+                                    @foreach (var value in attribute.attributevalues)
+                                    {
+                                        <div class="layui-col-md2 value-div" data-attrid='@attribute.attrid' data-id="@value.attrvalueid" data-name="@attribute.name" data-value="@value.attrvalue" data-price="" data-stock="" onclick="EditValue(this); return false;">
+                                            <a class="layui-btn layui-btn-normal valuebtn">@value.attrvalue</a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
-                <div class="layui-card-body" style="background-color:whitesmoke">
-                    <div class="layui-input-block layui-row values-div">
-                        <div class="layui-col-md2 value-div" data-name="" data-id="" data-value="" data-price="" data-stock=""  onclick="EditValue(this); return false;">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                        <div class="layui-col-md2">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                        <div class="layui-col-md2">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                        <div class="layui-col-md2">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                        <div class="layui-col-md2">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                        <div class="layui-col-md2">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                        <div class="layui-col-md2">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                        <div class="layui-col-md2">
-                            <a class="layui-btn layui-btn-normal valuebtn">值一</a>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-                </div>
+
                 <div class="layui-form-item" style="margin-top:20px">
                     <label class="layui-form-label">商品主图</label>
                     <div class="layui-input-block">
@@ -228,15 +212,27 @@
         var cuploadproshowimg = new Cupload({
             ele: '#cupload-proshowimg',
             num: 1,
+            @if(showimg != "")
+            {
+                @:data:["@showimg"]
+            }
+
         });
         var cuploadpromainimgs = new Cupload({
             ele: '#cupload-promainimgs',
             num: 20,
-            //data: ["http://shopapi.boiledchicken.top/File/GetUrl?objectname=1594660806.png"],
+            @if(mainimgs != "")
+            {
+                @:data:["@mainimgs"]
+            }
         });
         var cuploadprodetailimgs = new Cupload({
             ele: '#cupload-prodetailimgs',
             num: 20,
+            @if(detailimgs != "")
+            {
+                @:data:["@detailimgs"]
+            }
         });
 
         layui.use(['form', 'layedit', 'laydate', 'tableSelect', 'element'], function () {
@@ -284,13 +280,12 @@
             form.on('submit(demo1)', function (data) {
 
                 var skuinfos = GetSkuJson();
-                console.log(skuinfos)
                 if (skuinfos == false) {
                     layer.alert("商品至少要有一个规格，并且已有属性必须有值！");
                     return false;
                 }
 
-                
+
                 var showimg = '';
                 var mainimgs = [];
                 var detailimgs = [];
@@ -318,7 +313,7 @@
                         }
                     })
                 }
-                
+
                 for (var i = 0; i < cuploadpromainimgs.imageInput.length; i++) {
                     if (cuploadpromainimgs.imageInput[0].value.indexOf("shopapi") != -1) {
                         var newimg = {
@@ -376,7 +371,7 @@
                             }
                         })
                     }
-                    
+
                 }
                 showloading(false);
 
@@ -446,7 +441,7 @@
                 }
             })
 
-            
+
 
         });
         $(function () {

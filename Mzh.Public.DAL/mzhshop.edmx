@@ -582,6 +582,8 @@
           <Property Name="skuid" Type="int" Nullable="false" />
           <Property Name="inputattr" Type="nvarchar" MaxLength="50" />
           <Property Name="inputvalue" Type="nvarchar" MaxLength="50" />
+          <Property Name="skuinput" Type="nvarchar" MaxLength="1000" />
+          <Property Name="skuguid" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="bsp_orderrefunds">
           <Key>
@@ -1593,6 +1595,8 @@
           <Property Name="skuid" Type="Int32" Nullable="false" />
           <Property Name="inputattr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="inputvalue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="skuinput" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="skuguid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_orderrefunds">
           <Key>
@@ -2699,6 +2703,8 @@
           <EntitySetMapping Name="bsp_orderproducts">
             <EntityTypeMapping TypeName="brnshopModel.bsp_orderproducts">
               <MappingFragment StoreEntitySet="bsp_orderproducts">
+                <ScalarProperty Name="skuguid" ColumnName="skuguid" />
+                <ScalarProperty Name="skuinput" ColumnName="skuinput" />
                 <ScalarProperty Name="inputvalue" ColumnName="inputvalue" />
                 <ScalarProperty Name="inputattr" ColumnName="inputattr" />
                 <ScalarProperty Name="skuid" ColumnName="skuid" />

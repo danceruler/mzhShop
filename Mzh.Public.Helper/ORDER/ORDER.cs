@@ -59,13 +59,15 @@ namespace Remoting
                         newop.costprice = cartitem.productinfo.costprice;
                         newop.shopprice = cartitem.productinfo.shopprice;
                         newop.marketprice = cartitem.productinfo.marketprice;
-                        newop.inputattr = cartitem.inputattr;
-                        newop.inputvalue = cartitem.inputvalue;
+                        newop.inputattr = "";
+                        newop.inputvalue = "";
+                        newop.skuinput = cartitem.skuinput;
                         newop.name = cartitem.productinfo.name;
                         newop.oid = neworder.oid;
                         newop.pid = cartitem.productinfo.pid;
                         newop.showimg = cartitem.productinfo.showimg;
-                        newop.skuid = cartitem.skuid;
+                        newop.skuid = 0;
+                        newop.skuguid = cartitem.skuguid;
                         newop.uid = neworder.uid;
                         newop.weight = cartitem.count * cartitem.productinfo.weight;
                         context.bsp_orderproducts.Add(newop);

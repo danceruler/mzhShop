@@ -17,13 +17,6 @@ namespace Mzh.Public.Model.Model
                 if (t != null && tt != null) return t.pid == tt.pid;
                 return false;
             }
-            else if (typeof(TModel) == typeof(ShowSkuInfo))
-            {
-                ShowSkuInfo t = x as ShowSkuInfo;
-                ShowSkuInfo tt = y as ShowSkuInfo;
-                if (t != null && tt != null) return t.sku_recordid == tt.sku_recordid;
-                return false;
-            }
             else if (typeof(TModel) == typeof(ShowOrderInfo))
             {
                 ShowOrderInfo t = x as ShowOrderInfo;

@@ -1,4 +1,5 @@
-﻿using Mzh.Public.Model.Model;
+﻿using Mzh.Public.Base;
+using Mzh.Public.Model.Model;
 using Remoting;
 using Remoting.Client.Model;
 using System;
@@ -13,14 +14,14 @@ namespace WebApplication2.Controllers
     public class ProductController : ApiController
     {
         /// <summary>
-        /// 获取商品列表
+        /// 小程序获取商品列表
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public List<ShowProductList> GetProductList(int cateid = 0, int isonsale = -1)
+        public List<ShowProductList> GetProductListFromCache()
         {
             ProductCache productCache = RemotingHelp.GetModelObject<ProductCache>();
-            return productCache.GetProductList();
+            return productCache.GetProductListFromCache();
         }
 
         /// <summary>

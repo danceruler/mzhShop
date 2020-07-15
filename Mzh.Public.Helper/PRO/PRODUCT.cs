@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.Remoting.Metadata;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
@@ -239,7 +240,7 @@ namespace Remoting
 
                     var attrindex = 0;
                     
-                    //添加商品规格
+                    //添加属性和值
                     foreach (var attribute in model.skuInfos)
                     {
                         bsp_attributes newattribute = new bsp_attributes();
@@ -255,6 +256,7 @@ namespace Remoting
                         }//原有的属性
                         newattribute.displayorder = attrindex++;
                         context.SaveChanges();
+                        attribute.attrid = newattribute.attrid;
 
                         var valueindex = 0;
                         foreach (var value in attribute.attributevalues)
@@ -282,59 +284,79 @@ namespace Remoting
                             }//原有值
                             newvalue.attrdisplayorder = valueindex++;
                             context.SaveChanges();
-
-                            //先获取商品所有的sku，然后新增没有的sku
-
-                            var psku = context.bsp_productskus.SingleOrDefault(t => t.pid == newpro.pid & t.attrid == newattribute.attrid & t.attrvalueid == newvalue.attrvalueid);
-                            if(psku == null)
-                            {
-                                newsku.attrid = newattribute.attrid;
-                                newsku.attrvalueid = newvalue.attrvalueid;
-                                newsku.inputattr = newattribute.name;
-                                newsku.inputvalue = newvalue.attrvalue;
-                                newsku.isdefaultprice = value.price == -1 ? 1 : 0;
-                                newsku.price = value.price;
-                                newsku.stock = value.stock;
-                                newsku.pid = newpro.pid;
-                                newsku.skugid = 0;
-                                context.bsp_productskus.Add(newsku);
-                            }
-                            else
-                            {
-                                newsku = psku;
-                                newsku.inputattr = newattribute.name;
-                                newsku.inputvalue = newvalue.attrvalue;
-                                newsku.isdefaultprice = value.price == -1 ? 1 : 0;
-                                newsku.price = value.price;
-                                newsku.stock = value.stock;
-                            }
-                            context.SaveChanges();
+                            value.attrvalueid = newvalue.attrvalueid;
                         }
+                    }
 
+                    //添加商品的sku信息
+                    var skus = GetAllSkuByAttrAndValue(model.skuInfos);
+
+                    //得到商品已有的sku中的valuid，valueid从大到小按逗号分隔组成字符串比较
+                    var allpskus = context.bsp_productskus.Where(t => t.pid == newpro.pid).ToList();
+                    var sku_guids = allpskus.Select(t => t.skuguid).Distinct();
+                    List<string> guid_valueidstr = new List<string>();
+                    foreach(var sku_guid in sku_guids)
+                    {
+                        var valueids = allpskus.Where(t => t.skuguid == sku_guid).Select(t => t.attrvalueid.ToString()).ToArray();
+                        guid_valueidstr.Add(string.Join(",", valueids));
+                    }
+
+                    foreach (var sku in skus)
+                    {
+                        var valueids = sku.Select(t => t.valueid.ToString()).ToArray();
+                        var nowvalueidstr = string.Join(",", valueids);
+                        //该sku不存在，则新增
+                        if (!guid_valueidstr.Contains(nowvalueidstr))
+                        {
+                            Guid newskuguid = Guid.NewGuid();
+                            foreach(var s in sku)
+                            {
+                                bsp_productskus newsku = new bsp_productskus();
+                                newsku.attrid = (short)s.attrid;
+                                newsku.attrvalueid = s.valueid;
+                                newsku.inputattr = model.skuInfos.FirstOrDefault(t => t.attrid == newsku.attrid).name;
+                                newsku.inputvalue = model.skuInfos.FirstOrDefault(t => t.attrid == newsku.attrid).attributevalues.FirstOrDefault(t => t.attrvalueid == newsku.attrvalueid).attrvalue;
+                                newsku.isdefaultprice = 1;
+                                newsku.pid = newpro.pid;
+                                newsku.price = -1;
+                                newsku.skugid = 0;
+                                newsku.skuguid = newskuguid;
+                                newsku.stock = -1;
+                                context.bsp_productskus.Add(newsku);
+                                context.SaveChanges();
+                            }
+                        }
                     }
 
                     //添加商品图片
-                    foreach(var img in model.mainImgs)
+                    if (model.mainImgs != null)
                     {
-                        bsp_productimages newimg = new bsp_productimages();
-                        newimg.displayorder = img.displayorder;
-                        newimg.ismain = 1;
-                        newimg.pid = newpro.pid;
-                        newimg.showimg = img.showimg;
-                        context.bsp_productimages.Add(newimg);
-                        context.SaveChanges();
+                        foreach (var img in model.mainImgs)
+                        {
+                            bsp_productimages newimg = new bsp_productimages();
+                            newimg.displayorder = img.displayorder;
+                            newimg.ismain = 1;
+                            newimg.pid = newpro.pid;
+                            newimg.showimg = img.showimg;
+                            context.bsp_productimages.Add(newimg);
+                            context.SaveChanges();
+                        }
                     }
-
-                    foreach (var img in model.detailImgs)
+                    
+                    if(model.detailImgs != null)
                     {
-                        bsp_productimages newimg = new bsp_productimages();
-                        newimg.displayorder = img.displayorder;
-                        newimg.ismain = 0;
-                        newimg.pid = newpro.pid;
-                        newimg.showimg = img.showimg;
-                        context.bsp_productimages.Add(newimg);
-                        context.SaveChanges();
+                        foreach (var img in model.detailImgs)
+                        {
+                            bsp_productimages newimg = new bsp_productimages();
+                            newimg.displayorder = img.displayorder;
+                            newimg.ismain = 0;
+                            newimg.pid = newpro.pid;
+                            newimg.showimg = img.showimg;
+                            context.bsp_productimages.Add(newimg);
+                            context.SaveChanges();
+                        }
                     }
+                    
 
                     tran.Commit();
                     new ProductCache().Init();
@@ -366,18 +388,20 @@ namespace Remoting
                     var pro = context.bsp_products.SingleOrDefault(t => t.pid == pid);
                     if(type == 1)
                     {
-                        var skus = context.bsp_productskus.Where(t => t.pid == pid & t.attrid == id).ToList();
-                        foreach(var sku in skus)
+                        var skuguids = context.bsp_productskus.Where(t => t.pid == pid & t.attrid == id).Select(t => t.skuguid).Distinct();
+                        foreach(var skuguid in skuguids)
                         {
-                            context.bsp_productskus.Remove(sku);
+                            var deleteskus = context.bsp_productskus.Where(t => t.skuguid == skuguid).ToList();
+                            context.bsp_productskus.RemoveRange(deleteskus);
                         }
                     }
                     else
                     {
-                        var skus = context.bsp_productskus.Where(t => t.pid == pid & t.attrvalueid == id).ToList();
-                        foreach (var sku in skus)
+                        var skuguids = context.bsp_productskus.Where(t => t.pid == pid & t.attrvalueid == id).Select(t => t.skuguid).Distinct();
+                        foreach (var skuguid in skuguids)
                         {
-                            context.bsp_productskus.Remove(sku);
+                            var deleteskus = context.bsp_productskus.Where(t => t.skuguid == skuguid).ToList();
+                            context.bsp_productskus.RemoveRange(deleteskus);
                         }
                     }
                     context.SaveChanges();
@@ -585,6 +609,54 @@ namespace Remoting
                     return ResultModel.Error(ex.ToString());
                 }
             }
+        }
+
+        /// <summary>
+        /// 在新增或编辑商品时通过属性和属性值得到需要的sku列表
+        /// </summary>
+        private List<List<skuattrvalueItem>> GetAllSkuByAttrAndValue(List<AttributeInfo> attributes)
+        {
+            List<List<skuattrvalueItem>> allsku = new List<List<skuattrvalueItem>>();
+            List<skuattrvalueItem> items = new List<skuattrvalueItem>();
+            additemInAllSku(ref attributes, ref allsku, ref items, 0);
+            return allsku;
+        }
+
+        private void additemInAllSku(ref List<AttributeInfo> attributes,ref List<List<skuattrvalueItem>> allsku,ref List<skuattrvalueItem> items, int nowlevel)
+        {
+            for(int i = 0;i< attributes[nowlevel].attributevalues.Count; i++)
+            {
+                items.Add(new skuattrvalueItem() { 
+                    attrid = attributes[nowlevel].attrid,
+                    valueid = attributes[nowlevel].attributevalues[i].attrvalueid
+                });
+                
+                if(nowlevel == attributes.Count - 1 && i< attributes[nowlevel].attributevalues.Count - 1)
+                {
+                    var temparray = items.ToArray();
+                    allsku.Add(temparray.ToList());
+                    items.RemoveAt(items.Count - 1);
+                }else if(nowlevel == attributes.Count - 1 && i == attributes[nowlevel].attributevalues.Count - 1)
+                {
+                    var temparray = items.ToArray();
+                    allsku.Add(temparray.ToList());
+                    items.RemoveAt(items.Count - 1);
+                    return;
+                }else if(nowlevel < attributes.Count - 1)
+                {
+                    var nextlevel = nowlevel + 1;
+                    additemInAllSku(ref attributes, ref allsku, ref items, nextlevel);
+                    items.RemoveAt(items.Count - 1);
+                }
+            }
+        }
+
+
+
+        class skuattrvalueItem
+        {
+            public int attrid { get; set; }
+            public int valueid { get; set; }
         }
     }
 }

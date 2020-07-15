@@ -44,6 +44,16 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
+        public ActionResult ProductEdit(int cateid,int pid)
+        {
+            ProductCache pcache = RemotingHelp.GetModelObject<ProductCache>();
+            ViewBag.ProductInfo = pcache.GetProductInfoFromCache(cateid, pid);
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            ViewBag.allcates = product.GetCategories();
+            ViewBag.pcates = product.GetCategories(pid);
+            return View();
+        }
+
         public ActionResult SkuAddAttribute()
         {
             SKU sku = RemotingHelp.GetModelObject<SKU>();

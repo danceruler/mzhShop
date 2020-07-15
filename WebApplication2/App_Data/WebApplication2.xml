@@ -481,9 +481,9 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:WebApplication2.Controllers.ProductController.GetProductList">
+        <member name="M:WebApplication2.Controllers.ProductController.GetProductListFromCache">
             <summary>
-            获取商品列表
+            小程序获取商品列表
             </summary>
             <returns></returns>
         </member>

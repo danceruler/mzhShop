@@ -27,6 +27,7 @@ namespace Mzh.Public.Base
                 for (int i = 0; i < columnscount; i++)
                     data.Columns[i].ColumnName = data.Columns[i].ColumnName.ToUpper();
             }
+            
             try
             {
                 var properties = new T().GetType().GetProperties();

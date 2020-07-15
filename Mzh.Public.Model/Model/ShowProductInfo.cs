@@ -131,6 +131,13 @@ namespace Mzh.Public.Model.Model
         /// 规格数量（为1时不需要选规格）
         /// </summary>
         public int skuCount { get; set; }
+
+
+        /// <summary>
+        /// 商品的规格列表
+        /// </summary>
+        public List<AttributeInfo> attributes { get; set; }
+
         /// <summary>
         /// 规格信息
         /// </summary>
@@ -143,6 +150,9 @@ namespace Mzh.Public.Model.Model
         /// 商品详情图
         /// </summary>
         public List<ShowProductImg> detailImgs { get; set; }
+
+
+        public List<int> cateids { get; set; }
     }
 
     /// <summary>
@@ -152,21 +162,53 @@ namespace Mzh.Public.Model.Model
     public class ShowSkuInfo
     {
         /// <summary>
+        /// sku的guid
+        /// </summary>
+        public string sku_guid { get; set; }
+        //public int skugid { get; set; }
+        /// <summary>
+        /// 该sku对应的属性值
+        /// </summary>
+        public List<int> attrvalueids { get; set; }
+        /// <summary>
+        /// 规格文本
+        /// </summary>
+        public string sku_input { get; set; }
+        /// <summary>
+        /// 价格(为-1取商品默认价格)
+        /// </summary>
+        public Nullable<decimal> sku_price { get; set; }
+        /// <summary>
+        /// 是否商品默认价格
+        /// </summary>
+        public int sku_isdefaultprice { get; set; }
+        /// <summary>
+        /// 库存(为-1取商品库存)
+        /// </summary>
+        public int sku_stock { get; set; }
+        
+    }
+
+    /// <summary>
+    /// 用于将取出的sku进行操作的类
+    /// </summary>
+    [Serializable]
+    public class TempShowSkuInfo
+    {
+        /// <summary>
         /// skuid
         /// </summary>
         public int sku_recordid { get; set; }
+        /// <summary>
+        /// sku的guid
+        /// </summary>
+        public Guid sku_guid { get; set; }
         //public int skugid { get; set; }
         /// <summary>
         /// 产品id
         /// </summary>
         public int sku_pid { get; set; }
-        /// <summary>
-        /// 属性id
-        /// </summary>
-        public short sku_attrid { get; set; }
-        /// <summary>
-        /// 属性值id
-        /// </summary>
+        public int sku_attrid { get; set; }
         public int sku_attrvalueid { get; set; }
         /// <summary>
         /// 属性值文本
@@ -188,6 +230,9 @@ namespace Mzh.Public.Model.Model
         /// 库存(为-1取商品库存)
         /// </summary>
         public int sku_stock { get; set; }
+
+        public string sku_attrremark { get; set; }
+
     }
 
 

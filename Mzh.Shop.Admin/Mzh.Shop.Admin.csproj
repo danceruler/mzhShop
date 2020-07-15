@@ -373,6 +373,7 @@
     <Content Include="Views\Product\ProductAdd.cshtml" />
     <Content Include="Views\Product\SkuAddAttribute.cshtml" />
     <Content Include="Views\Product\SkuAddValue.cshtml" />
+    <Content Include="Views\Product\ProductEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

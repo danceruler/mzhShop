@@ -112,9 +112,8 @@ namespace Mzh.Public.Model.Model
         /// 总原价
         /// </summary>
         public decimal marketprice { get; set; }
-        public int skuid { get; set; }
-        public string inputattr { get; set; }
-        public string inputvalue { get; set; }
+        public string skuguid { get; set; }
+        public string skuinput { get; set; }
     }
 
     /// <summary>
@@ -177,7 +176,7 @@ namespace Mzh.Public.Model.Model
         public int attrvalueid { get; set; }
         public string attrvalue { get; set; }
         public string attrname { get; set; }
-        public int price { get; set; }
+        public decimal price { get; set; }
         public int stock { get; set; }
     }
 }

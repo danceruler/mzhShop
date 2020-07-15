@@ -45,5 +45,7 @@ namespace Mzh.Public.DAL
         public int skuid { get; set; }
         public string inputattr { get; set; }
         public string inputvalue { get; set; }
+        public string skuinput { get; set; }
+        public string skuguid { get; set; }
     }
 }
