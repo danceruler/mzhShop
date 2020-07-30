@@ -36,7 +36,7 @@
                 </blockquote>*@
             <img style="width:100%;height:auto" id="testimg" />
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>添加商品</legend>
+                <legend>编辑商品信息</legend>
             </fieldset>
 
             <form class="layui-form" action="">
@@ -44,7 +44,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品类别</label>
                     <div class="layui-input-inline">
-                        <input type="text" readonly name="cateids" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" id="demo" data-tag="" value="@catevalues" ts-selected="@cateids">
+                        <input type="text" readonly name="cateids" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" id="demo" data-tag="@cateids" value="@catevalues" ts-selected="@cateids">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -189,7 +189,7 @@
 
                 <div class="layui-form-item" style="margin-top:20px">
                     <div class="layui-input-block">
-                        <button class="layui-btn addproduct" lay-submit="" lay-filter="demo1">添加</button>
+                        <button class="layui-btn addproduct" lay-submit="" lay-filter="demo1">保存</button>
                         <button class="layui-btn layui-btn-primary cancel">取消</button>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
         //每次编辑属性值，记录当前的属性值div
         var editvalueDiv;
         //当前的产品id
-        var pid = 0;
+        var pid = @ProductInfo.pid;
         var cuploadproshowimg = new Cupload({
             ele: '#cupload-proshowimg',
             num: 1,
@@ -375,7 +375,7 @@
                 }
                 showloading(false);
 
-                console.log($("#demo"));
+               
                 var submitdata =
                 {
                     "pid": pid,
@@ -398,11 +398,11 @@
                     "detailImgs": detailimgs,
                     "skuInfos": skuinfos
                 }
-
+                console.log(submitdata);
                 showloading(true)
                 $.ajax({
                     type: 'post',
-                    url: domain + '/Product/AddProduct',
+                    url: domain + '/Product/UpdatePorduct',
                     data: { model: submitdata },
                     success: function (res) {
                         showloading(false);
@@ -496,12 +496,33 @@
         }
 
         //提供给弹出层调用的方法,删除属性值
-        function DeleteAttributeValue() {
-            $(editvalueDiv).remove();
+        function DeleteAttributeValue(valueid) {
+            $.ajax({
+                        url: domain + '/Product/DeleteProductSku',
+                        type: 'post',
+                        data: {
+                            pid:@ProductInfo.pid,
+                            type: 2,
+                            id: valueid
+                        },
+                        success: function (res) {
+                            if (res.state == 1) {
+                                layer.alert("删除成功", {
+                                    title: '提示'
+                                })
+                                $(editvalueDiv).remove();
+                            } else {
+                                layer.alert("异常，请联系管理员", {
+                                    title: '提示'
+                                })
+                            }
+                        }
+                    })
+            
         }
 
         function DeleteAttribute(obj) {
-            var alert = layer.confirm('确认删除吗？' + ($(obj).data("id") == 0 ? '' : '(删除已存在的属性将不需要保存就会删除)'), {
+            var alert = layer.confirm('确认删除吗？' + ($(obj).data("id") == 0 ? '' : '(删除已存在的属性将不需要保存就会删除,且删除后需要重新配置sku信息)'), {
                 btn: ['确认', '取消'] //按钮
             }, function () {
                 if ($(obj).data("id") == 0) {
@@ -509,7 +530,27 @@
                     $(obj).parent().parent().remove();
                 }//表示还未添加到数据库的数据直接删除
                 else {
-                    $(obj).parent().parent().remove();
+                    $.ajax({
+                        url: domain + '/Product/DeleteProductSku',
+                        type: 'post',
+                        data: {
+                            pid:@ProductInfo.pid,
+                            type: 1,
+                            id: $(obj).data("id")
+                        },
+                        success: function (res) {
+                            if (res.state == 1) {
+                                layer.alert("删除成功", {
+                                    title: '提示'
+                                })
+                                $(obj).parent().parent().remove();
+                            } else {
+                                layer.alert("异常，请联系管理员", {
+                                    title: '提示'
+                                })
+                            }
+                        }
+                    })
                 }//调用接口删除
                 layer.close(alert);
             }, function () {
@@ -666,6 +707,11 @@
             ]
         }
 
+        $(".cancel").click(function () {
+            var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);
+            return false;
+        })
         //$(".addproduct").click(function () {
         //    showloading(true);
         //    var showimg = '';

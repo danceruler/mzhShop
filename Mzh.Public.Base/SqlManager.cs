@@ -406,6 +406,7 @@ namespace Mzh.Public.Base
             {
                 if (useTransaction && transaction != null)
                     transaction.Rollback();
+                Logger._.Error(ex.ToString());
                 return false;
             }
         }

@@ -124,6 +124,9 @@
                                                 <a class="layui-btn layui-btn-normal product-edit" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">编辑</a>
                                             </div>
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
+                                                <a class="layui-btn layui-btn-normal product-editsku" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid" data-pname="@plist.productInfos[i].name">编辑商品sku信息</a>
+                                            </div>
+                                            <div class="layui-col-md4" style="line-height:120px;height:120px">
                                                 <a class="layui-btn layui-btn-danger product-delete" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">删除</a>
                                             </div>
                                         </div>
@@ -178,7 +181,7 @@
                                                 <a class="layui-btn layui-btn-normal product-edit" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">编辑商品信息</a>
                                             </div>
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
-                                                <a class="layui-btn layui-btn-normal product-editsku" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">编辑商品sku信息</a>
+                                                <a class="layui-btn layui-btn-normal product-editsku" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid" data-pname="@plist.productInfos[i].name">编辑商品sku信息</a>
                                             </div>
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
                                                 <a class="layui-btn layui-btn-danger product-delete" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">删除</a>
@@ -235,7 +238,22 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '/Product/ProductEdit?cateid=' + $(this).data("cateid") + '&pid=' + $(this).data("pid"),
+                    content: '/Product/ProductEdit?cateid=' + $(this).data("cateid") + '&pid=' + $(this).data("pid") ,
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            })
+
+            $(".product-editsku").click(function () {
+                var index = layer.open({
+                    title: '编辑商品sku信息(' + $(this).data("pname")+')',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: '/Product/ProductEditSKU?cateid=' + $(this).data("cateid") + '&pid=' + $(this).data("pid") + '&pname=' + $(this).data("pname"),
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

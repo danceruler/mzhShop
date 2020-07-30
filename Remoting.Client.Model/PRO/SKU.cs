@@ -63,5 +63,18 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 更新sku信息
+        /// </summary>
+        /// <param name="skuguid"></param>
+        /// <param name="isdefaultprice"></param>
+        /// <param name="price"></param>
+        /// <param name="stock"></param>
+        /// <returns></returns>
+        public ResultModel UpdateSku(string skuguid, int isdefaultprice, decimal price, int stock)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

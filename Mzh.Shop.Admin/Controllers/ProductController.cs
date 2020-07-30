@@ -54,6 +54,24 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
+        public ActionResult ProductEditSKU(int cateid,int pid,string pname)
+        {
+            ViewBag.cateid = cateid;
+            ViewBag.pid = pid;
+            ViewBag.pname = pname;
+            return View();
+        }
+
+        public ActionResult ProductEditSKUDetail(string skuguid,string sku_input, int isdefaultprice,decimal price,int stock)
+        {
+            ViewBag.skuguid = skuguid;
+            ViewBag.sku_input = sku_input;
+            ViewBag.isdefaultprice = isdefaultprice;
+            ViewBag.price = price;
+            ViewBag.stock = stock;
+            return View();
+        }
+
         public ActionResult SkuAddAttribute()
         {
             SKU sku = RemotingHelp.GetModelObject<SKU>();
@@ -152,7 +170,7 @@ namespace Mzh.Shop.Admin.Controllers
         }
 
         /// <summary>
-        /// 新增编辑商品
+        /// 新增商品
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -162,6 +180,20 @@ namespace Mzh.Shop.Admin.Controllers
             PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
             return Json(
                 product.AddProduct(model),
+                JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 编辑商品
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdatePorduct(AddProductModel model)
+        {
+            PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
+            return Json(
+                product.UpdatePorduct(model),
                 JsonRequestBehavior.AllowGet);
         }
 
@@ -197,6 +229,7 @@ namespace Mzh.Shop.Admin.Controllers
         /// <param name="type">1表示删除某个属性的规格，2为删除某个属性值的规格</param>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpPost]
         public ActionResult DeleteProductSku(int pid, int type, int id)
         {
             PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
@@ -210,6 +243,7 @@ namespace Mzh.Shop.Admin.Controllers
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
+        [HttpPost]
         public ActionResult Deleteproduct(int pid)
         {
             PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();
@@ -217,6 +251,66 @@ namespace Mzh.Shop.Admin.Controllers
                 product.Deleteproduct(pid),
                 JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// 获取商品的sku信息
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetProductSKUInfoFromCache(int cateid,int pid)
+        {
+            ProductCache pcache = RemotingHelp.GetModelObject<ProductCache>();
+            var skuinfos = pcache.GetProductInfoFromCache(cateid, pid).skuInfos;
+            List<ShowSkuInfoForLayuiTable> list = new List<ShowSkuInfoForLayuiTable>();
+            foreach(var skuinfo in skuinfos)
+            {
+                ShowSkuInfoForLayuiTable newitem = new ShowSkuInfoForLayuiTable() {
+                    sku_guid = skuinfo.sku_guid,
+                    sku_input = skuinfo.sku_input,
+                    sku_isdefaultprice = skuinfo.sku_isdefaultprice,
+                    sku_isdefaultprice_text = skuinfo.sku_isdefaultprice == 0 ? "否" : "是",
+                    sku_price = skuinfo.sku_price,
+                    sku_price_text = skuinfo.sku_price == -1 ? "默认" : skuinfo.sku_price.ToString(),
+                    sku_stock = skuinfo.sku_stock,
+                    sku_stock_text = skuinfo.sku_stock == -1 ? "默认" : skuinfo.sku_stock.ToString()
+                };
+                list.Add(newitem);
+            }
+            return Json(
+                new LayuiTableApiResult()
+                {
+                    code = 0,
+                    msg = "",
+                    count = list.Count,
+                    data = list
+                },
+               JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 更新sku信息
+        /// </summary>
+        /// <param name="skuguid"></param>
+        /// <param name="isdefaultprice"></param>
+        /// <param name="price"></param>
+        /// <param name="stock"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdateSku(string skuguid, int isdefaultprice, decimal price, int stock)
+        {
+            SKU sku = RemotingHelp.GetModelObject<SKU>();
+            return Json(sku.UpdateSku(skuguid, isdefaultprice, price, stock),
+                JsonRequestBehavior.AllowGet);
+        }
         #endregion
+    }
+
+    public class ShowSkuInfoForLayuiTable: ShowSkuInfo
+    {
+        public string sku_isdefaultprice_text { get; set; }
+        public string sku_price_text { get; set; }
+        public string sku_stock_text { get; set; }
     }
 }

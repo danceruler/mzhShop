@@ -3,6 +3,7 @@ using Mzh.Public.DAL;
 using Mzh.Public.Model.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -204,6 +205,27 @@ namespace Remoting
                     return null;
                 }
             }
+        }
+
+        /// <summary>
+        /// 更新sku信息
+        /// </summary>
+        /// <param name="skuguid"></param>
+        /// <param name="isdefaultprice"></param>
+        /// <param name="price"></param>
+        /// <param name="stock"></param>
+        /// <returns></returns>
+        public ResultModel UpdateSku(string skuguid,int isdefaultprice,decimal price,int stock)
+        {
+            price = isdefaultprice == 1 ? -1 : price;
+            string sql = $@"UPDATE dbo.bsp_productskus SET isdefaultprice = {isdefaultprice},price = {price},stock = {stock} WHERE skuguid = '{skuguid}'";
+            var r = SqlManager.ExecuteNonQuery(AppConfig.ConnectionString, new SqlCommand(sql));
+            if (r)
+            {
+                ProductCache.InitProductList();
+                return ResultModel.Success("修改成功");
+            }
+            return ResultModel.Fail("数据库操作失败,请联系管理员");
         }
     }
 }

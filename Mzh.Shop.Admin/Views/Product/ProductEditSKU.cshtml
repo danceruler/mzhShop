@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/wwwroot/css/public.css" media="all">
+</head>
+<body>
+    <input style="display:none" value="@ViewBag.cateid" id="cateid" />
+    <input style="display:none" value="@ViewBag.pid" id="pid" />
+    <input style="display:none" value="@ViewBag.pname" id="pname" />
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                </div>
+            </script>
+
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter">
+            </table>
+
+            <script type="text/html" id="currentTableBar">
+                <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+                @*<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>*@
+            </script>
+
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="~/wwwroot/js/lay-config.js"></script>
+    <script src="~/wwwroot/js/lay-module/layuimini/miniTab.js" charset="utf-8"></script>
+    <script src="~/Scripts/mzhconfig.js"></script>
+
+    <script>
+        var table
+        layui.use(['form', 'table', 'miniTab'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table;
+            var miniTab = layui.miniTab;
+
+            table.render({
+                elem: '#currentTableId',
+                //url: '../../wwwroot/api/table.json',
+                url: domain + '/Product/GetProductSKUInfoFromCache?cateid=' + $("#cateid").val() + '&pid=' + $("#pid").val(),
+                toolbar: '#toolbarDemo',
+                title: $("#pname").val(),
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    { field: 'sku_guid', width: 0.1, title: 'guid', sort: true },
+                    { field: 'sku_isdefaultprice', width: 0.1, title: 'sku_isdefaultprice', sort: false },
+                    { field: 'sku_price', width: 0.1, title: 'sku_price', sort: true },
+                    { field: 'sku_stock', width: 0.1, title: 'sku_stock', sort: true },
+                    { field: 'sku_input', width: 500, title: '规格信息', sort: true },
+                    { field: 'sku_isdefaultprice_text', width: 200, title: '是否商品默认价格', sort: false },
+                    { field: 'sku_price_text', width: 150, title: '价格', sort: true },
+                    { field: 'sku_stock_text', width: 150, title: '库存', sort: true },
+                    { title: '操作', minWidth: 200, toolbar: '#currentTableBar', align: "center" }
+                ]],
+                done: function (res, curr, count) { // 隐藏列
+                    $(".layui-table-box").find("[data-field='sku_guid']").css("display", "none");
+                    $(".layui-table-box").find("[data-field='sku_isdefaultprice']").css("display", "none");
+                    $(".layui-table-box").find("[data-field='sku_price']").css("display", "none");
+                    $(".layui-table-box").find("[data-field='sku_stock']").css("display", "none");
+                },
+                limits: [/*10, 15, 20, 25, 50, */100],
+                limit: 100,
+                page: true,
+                skin: 'line'
+            });
+
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                var result = JSON.stringify(data.field);
+                layer.alert(result, {
+                    title: '最终的搜索信息'
+                });
+
+                //执行搜索重载
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    }
+                    , where: {
+                        searchParams: result
+                    }
+                }, 'data');
+
+                return false;
+            });
+
+            /**
+             * toolbar监听事件
+             */
+            //table.on('toolbar(currentTableFilter)', function (obj) {
+            //    if (obj.event === 'add') {  // 监听添加操作
+            //        var index = layer.open({
+            //            title: '添加商品类型',
+            //            type: 2,
+            //            shade: 0.2,
+            //            maxmin: true,
+            //            shadeClose: true,
+            //            area: ['50%', '50%'],
+            //            content: '/Product/ProductTypeAdd',
+            //        });
+            //        $(window).on("resize", function () {
+            //            layer.full(index);
+            //        });
+            //    }
+            //});
+
+            //监听表格复选框选择
+            table.on('checkbox(currentTableFilter)', function (obj) {
+                console.log(obj)
+            });
+
+            table.on('tool(currentTableFilter)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'edit') {
+                    var index = layer.open({
+                        title: '编辑sku信息',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['50%', '50%'],
+                        content: '/Product/ProductEditSKUDetail?skuguid=' + data.sku_guid + '&sku_input=' + data.sku_input
+                            + '&isdefaultprice=' + data.sku_isdefaultprice + '&price=' + data.sku_price + '&stock=' + data.sku_stock,
+                    });
+                    $(window).on("resize", function () {
+                        layer.full(index);
+                    });
+                    return false;
+                }
+            });
+        });
+
+        function reloadTable() {
+            $(".layui-laypage-btn")[0].click();
+        }
+    </script>
+</body>
+</html>

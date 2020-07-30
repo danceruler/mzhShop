@@ -193,7 +193,7 @@
             return false;
         })
         $(".delete").click(function () {
-            layer.confirm('确认删除吗？(不需要保存就会删除)', {
+            layer.confirm('确认删除吗？(不需要保存就会删除，且需要重新配置sku信息)', {
                 btn: ['确认', '取消'] //按钮
             }, function () {
                     if ($("#valueid").val() > 0 && parent.pid != 0) {
@@ -216,7 +216,7 @@
                 }
                 var iframeIndex = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(iframeIndex);
-                parent.DeleteAttributeValue();
+                parent.DeleteAttributeValue($("#valueid").val());
             }, function () {
             });
             return false;

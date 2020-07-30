@@ -1,0 +1,200 @@
+﻿@using Mzh.Public.Model.Model;
+@{
+    var skuguid = ViewBag.skuguid;
+    var sku_input = ViewBag.sku_input;
+    var isdefaultprice = ViewBag.isdefaultprice;
+    var price = ViewBag.price;
+    var stock = ViewBag.stock;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/wwwroot/css/public.css" media="all">
+</head>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">sku信息</label>
+                <div class="layui-input-block">
+                    <input type="text" name="cateid" value="@sku_input" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否默认商品价格</label>
+                <div class="layui-input-inline" style="top:15px">
+                    <input type="radio" name="isdefaultprice" @(isdefaultprice == 1 ? "checked" : "") value="1">是
+                    <input type="radio" name="isdefaultprice" @(isdefaultprice == 1 ? "" : "checked") value="0">否
+                </div>
+            </div>
+            @if (isdefaultprice == 1)
+            {
+                <div class="layui-form-item" id="price" style="display:none">
+                    <label class="layui-form-label">价格</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="price" id="priceinput" lay-verify="required" value="" class="layui-input">
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="layui-form-item" id="price">
+                    <label class="layui-form-label">价格</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="price" id="priceinput" lay-verify="required" value="@ViewBag.price" class="layui-input">
+                    </div>
+                </div>
+            }
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">库存</label>
+                <div class="layui-input-block">
+                    <input type="number" name="stock" id="stockinput" lay-verify="required" placeholder="库存为-1表示使用商品库存" value="@ViewBag.stock" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn query" data-skuguid="@skuguid">确认</button>
+                    <button class="layui-btn layui-btn-primary cancel">取消</button>
+                </div>
+            </div>
+            @*<div class="layui-form-item">
+            <label class="layui-form-label">排序号</label>
+            <div class="layui-input-block">
+                <input type="number" name="displayorder" placeholder="请输入排序号，不填默认为0" value="@(cateid>0?cate.displayorder:0)" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>*@
+        </div>
+    </div>
+    <script src="~/wwwroot/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="~/wwwroot/js/lay-config.js"></script>
+    <script src="~/Scripts/mzhconfig.js"></script>
+    <script>
+        var isdefaultprice = @isdefaultprice
+        $(document).ready(function () {
+            $('input[type=radio][name=isdefaultprice]').change(function () {
+                console.log(this.value)
+                if (this.value == '1') {
+                    isdefaultprice = 1;
+                    $("#price").hide();
+                }
+                else if (this.value == '0') {
+                    isdefaultprice = 0;
+                    $("#price").show();
+                    $("#price").val("");
+                }
+            });
+        });
+        layui.use(['layer'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer;
+            $(".cancel").click(function () {
+                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(iframeIndex);
+            })
+            $(".query").click(function () {
+                var that = this;
+                if (isdefaultprice == 0 && $("#priceinput").val() == '') {
+                    layer.alert("价格不能为空", {
+                        title: '提示'
+                    })
+                    return;
+                }
+
+                if (isdefaultprice == 0 && !matchPositiveDecimal($("#priceinput").val())) {
+                    layer.alert("价格必须为数字", {
+                        title: '提示'
+                    })
+                    return;
+                }
+
+                if (isdefaultprice == 0 && matchPositiveDecimal($("#priceinput").val()) && $("#priceinput").val() <= 0) {
+                    layer.alert("价格必须大于0", {
+                        title: '提示'
+                    })
+                    return;
+                }
+                
+                if (matchInt($("#stockinput").val()) && $("#stockinput").val()<-1) {
+                    layer.alert("库存必须大于等于-1", {
+                        title: '提示'
+                    })
+                    return;
+                }
+                //showloading(true);
+                //调用接口更新
+                $.ajax({
+                    url: domain + "/Product/UpdateSku",
+                    type: 'post',
+                    data: {
+                        skuguid: $(that).data('skuguid'),
+                        isdefaultprice: isdefaultprice,
+                        price: $("#priceinput").val() == '' ? -1 : $("#priceinput").val(),
+                        stock: $("#stockinput").val(),
+                    },
+                    success: function (res) {
+                        layer.confirm(res.msg, {
+                            title: '提示'
+                        })
+                        if (res.state == 1) {
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                            parent.reloadTable();
+                        }
+
+                    }
+                })
+
+                
+                //if (isuseoldattr == 1) {
+                //    var id = $("#existattribute").val().split('&')[0];
+                //    var name = $("#existattribute").val().split('&')[1];
+                //    parent.AddAttribute(id, name);
+                //} else {
+                //    parent.AddAttribute(0, $("#attribute").val());
+                //}
+
+            })
+        });
+
+        //校验整型数字
+        function matchInt(text) {
+            var reg = /^[0-9]*$/;
+            if (!reg.test(text)) {
+                return false;
+            }
+            return true;
+        }
+
+        //校验正整数
+        function matchPositiveInt(text) {
+            var reg = /^\d+$/;
+            if (!reg.test(text)) {
+                return false;
+            }
+            return true;
+        }
+
+        //校验非负浮点数
+        function matchPositiveDecimal(text) {
+            var reg = /^(-?\d+)(\.\d+)?$/;
+            if (!reg.test(text)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

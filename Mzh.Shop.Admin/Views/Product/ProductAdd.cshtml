@@ -600,6 +600,12 @@
             return result;
         }
 
+        $(".cancel").click(function () {
+            var iframeIndex = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(iframeIndex);
+            return false;
+        })
+
         var submitdata = {
             "cateid": 1,
             "name": "sample string 2",

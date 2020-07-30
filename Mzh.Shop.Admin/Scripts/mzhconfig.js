@@ -23,3 +23,4 @@ function getQueryVariable(variable) {
     }
     return null;
 }
+
