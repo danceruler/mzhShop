@@ -124,7 +124,7 @@
                                                 <a class="layui-btn layui-btn-normal product-edit" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">编辑</a>
                                             </div>
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
-                                                <a class="layui-btn layui-btn-normal product-editsku" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid" data-pname="@plist.productInfos[i].name">编辑商品sku信息</a>
+                                                <a class="layui-btn layui-btn-normal product-editsku" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid" data-pname="@plist.productInfos[i].name">编辑sku信息</a>
                                             </div>
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
                                                 <a class="layui-btn layui-btn-danger product-delete" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">删除</a>
@@ -144,7 +144,7 @@
                             @for (int i = 0; i < plist.productInfos.Count; i++)
                             {
                                 <div class="layui-row" id="prow-@plist.cateid-@plist.productInfos[i].pid" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:@(i==0?0:20)px">
-                                    <div class="layui-col-md6">
+                                    <div class="layui-col-md3">
                                         <div class="layui-row">
                                             <div class="mzh-col" style="height:120px">
                                                 <div style="width:200px;height:100%;margin-right:5px">
@@ -175,13 +175,13 @@
                                     <div class="layui-col-md3" style="line-height:120px;height:120px">
                                         @plist.productInfos[i].displayorder
                                     </div>
-                                    <div class="layui-col-md3">
+                                    <div class="layui-col-md6">
                                         <div class="layui-row">
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
                                                 <a class="layui-btn layui-btn-normal product-edit" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">编辑商品信息</a>
                                             </div>
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
-                                                <a class="layui-btn layui-btn-normal product-editsku" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid" data-pname="@plist.productInfos[i].name">编辑商品sku信息</a>
+                                                <a class="layui-btn layui-btn-normal product-editsku" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid" data-pname="@plist.productInfos[i].name">编辑sku信息</a>
                                             </div>
                                             <div class="layui-col-md4" style="line-height:120px;height:120px">
                                                 <a class="layui-btn layui-btn-danger product-delete" data-pid="@plist.productInfos[i].pid" data-cateid="@plist.cateid">删除</a>

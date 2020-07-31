@@ -76,8 +76,8 @@
           ]
         },
         {
-          "title": "系统设置",
-          "href": "page/setting.html",
+          "title": "包厢管理",
+          "href": "Box/Index",
           "icon": "fa fa-gears",
           "target": "_self"
         },

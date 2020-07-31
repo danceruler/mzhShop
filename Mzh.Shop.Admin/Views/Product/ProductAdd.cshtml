@@ -65,7 +65,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">商品描述</label>
                     <div class="layui-input-block">
-                        <textarea name="productdescription" placeholder="请输入内容" class="layui-textarea"></textarea>
+                        <textarea name="productdescription" lay-verify="required" placeholder="请输入内容" class="layui-textarea"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -290,6 +290,8 @@
                     return false;
                 }
 
+
+
                 
                 var showimg = '';
                 var mainimgs = [];
@@ -380,7 +382,6 @@
                 }
                 showloading(false);
 
-                console.log($("#demo"));
                 var submitdata =
                 {
                     "pid": pid,
@@ -506,6 +507,9 @@
         }
 
         function DeleteAttribute(obj) {
+
+            
+
             var alert = layer.confirm('确认删除吗？' + ($(obj).data("id") == 0 ? '' : '(删除已存在的属性将不需要保存就会删除)'), {
                 btn: ['确认', '取消'] //按钮
             }, function () {

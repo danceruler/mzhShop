@@ -19,7 +19,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">是否选择已有属性</label>
                 <div class="layui-input-inline" style="top:15px">
-                    <input type="radio" name="isuseoldattr" checked="checked" value="1">是
+                    <input type="radio" name="isuseoldattr" id="y_isuseoldattr" @*checked="checked"*@ value="1">是
                     <input type="radio" name="isuseoldattr" checked="checked" value="0">否
                 </div>
             </div>
@@ -73,6 +73,7 @@
                     $("#attribute-div").show();
                 }
             });
+            document.getElementById("y_isuseoldattr").click();
         });
         layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form

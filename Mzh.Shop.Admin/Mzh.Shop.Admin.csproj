@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -376,6 +377,8 @@
     <Content Include="Views\Product\ProductEdit.cshtml" />
     <Content Include="Views\Product\ProductEditSKU.cshtml" />
     <Content Include="Views\Product\ProductEditSKUDetail.cshtml" />
+    <Content Include="Views\Box\Index.cshtml" />
+    <Content Include="Views\Box\BoxList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -400,6 +403,10 @@
     <ProjectReference Include="..\Mzh.Public.Base\Mzh.Public.Base.csproj">
       <Project>{d1886799-bb6e-459f-90e4-8b2e081d6dd4}</Project>
       <Name>Mzh.Public.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mzh.Public.DAL\Mzh.Public.DAL.csproj">
+      <Project>{1224c59e-a951-43c5-b80a-d56a947e696d}</Project>
+      <Name>Mzh.Public.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mzh.Public.Model\Mzh.Public.Model.csproj">
       <Project>{ac560c10-f6fd-4c90-9158-903317d13a29}</Project>

@@ -71,8 +71,8 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
-                    return ResultModel.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
@@ -120,8 +120,8 @@ namespace Remoting
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error(ex.ToString());
-                    return ResultModel.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
@@ -158,8 +158,8 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
-                    return ResultModel.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
@@ -185,8 +185,8 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
-                    return ResultModel.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
@@ -198,6 +198,18 @@ namespace Remoting
         /// <returns></returns>
         public ResultModel AddProduct(AddProductModel model)
         {
+            if(model.skuInfos.Count() != model.skuInfos.Select(t => t.name).Distinct().Count())
+            {
+                return ResultModel.Fail("不允许出现重复名称的属性");
+            }
+            foreach(var skuinfo in model.skuInfos)
+            {
+                if(skuinfo.attributevalues.Count() != skuinfo.attributevalues.Select(t => t.attrvalue).Distinct().Count())
+                {
+                    return ResultModel.Fail("同一属性下不允许出现重复名称的值");
+                }
+            }
+
             using (brnshopEntities context = new brnshopEntities())
             {
                 var tran = context.Database.BeginTransaction();
@@ -365,9 +377,9 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
                     tran.Rollback();
-                    return ResultModel.Error(ex.ToString());
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
@@ -382,33 +394,76 @@ namespace Remoting
         {
             using (brnshopEntities context = new brnshopEntities())
             {
-                var tran = context.Database.BeginTransaction();
                 try
                 {
+                    bool result = false;
                     var pro = context.bsp_products.SingleOrDefault(t => t.pid == pid);
                     //var proskus = context.bsp_productskus.Where(t => t.pid == pid);
                     if(type == 1)
                     {
-                        string sql = $@"delete from bsp_productskus where skuguid in (select skuguid from bsp_productskus where attrid = {id} and pid = {pid})";
-                        context.Database.ExecuteSqlCommand(sql);
+                        var proskus = context.bsp_productskus.Where(t => t.pid == pid);
+                        //需要留下的sku
+                        var leaveProskus = proskus.Where(t => t.attrid != id).ToList();
+                        var leaveProskuguids = leaveProskus.Select(t => t.skuguid).Distinct().ToList();
+                        //得到将要留下的skuguid
+                        Dictionary<string, Guid> valueidsstr_leavingskuguid = new Dictionary<string, Guid>();
+                        List<string> leavingskuguids = new List<string>();
+                        foreach (var leaveProskuguid in leaveProskuguids)
+                        {
+                            var valueidsstr = string.Join(",", leaveProskus.Where(t => t.skuguid == leaveProskuguid).Select(t => t.attrvalueid).ToList());
+                            if (!valueidsstr_leavingskuguid.ContainsKey(valueidsstr))
+                            {
+                                valueidsstr_leavingskuguid.Add(valueidsstr, leaveProskuguid);
+                                leavingskuguids.Add(leaveProskuguid.ToString());
+                            }
+                        }
+                        List<string> sqlList = new List<string>();
+                        //删除productsku表中不需要的属性对应的条目
+                        string sql1 = $@"delete from bsp_productskus where pid = {pid} and attrid = {id}";
+                        //删除规格重复的sku
+                        string sql2 = $@"delete from bsp_productskus where pid = {pid} and skuguid not in ('{string.Join(",",leavingskuguids)};')";
+                        sqlList.Add(sql1);
+                        sqlList.Add(sql2);
+                        result = SqlManager.ExecuteNonQueryWithSqlList(AppConfig.ConnectionString, sqlList);
+
                     }
                     else
                     {
+                        string selectsql = $@"SELECT bsp_productskus.attrid,COUNT(DISTINCT attrvalueid) valuecount
+                                                                FROM bsp_productskus
+                                                                WHERE pid = {pid} AND attrid = (SELECT DISTINCT attrid FROM dbo.bsp_productskus WHERE pid = {pid} AND attrvalueid = {id})
+                                                                GROUP BY bsp_productskus.attrid";
+                        DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString,new SqlCommand(selectsql));
+                        if (dt.Rows.Count > 0)
+                        {
+                            var valuecount = int.Parse(dt.Rows[0]["valuecount"].ToString());
+                            if (valuecount <= 1)
+                            {
+                                return ResultModel.Fail("当前属性只有一个值，请在主页面删除属性");
+                            }
+                        }
+                        else
+                        {
+                            return ResultModel.Error("数据异常");
+                        }
+
                         string sql = $@"delete from bsp_productskus where skuguid in (select skuguid from bsp_productskus where attrvalueid = {id} and pid = {pid})";
-                        context.Database.ExecuteSqlCommand(sql);
+                        result = SqlManager.ExecuteNonQuery(AppConfig.ConnectionString, new SqlCommand(sql));
                     }
-                    context.SaveChanges();
-
-                    tran.Commit();
-                    new ProductCache().Init();
-                    return ResultModel.Success("");
-
+                    if (result)
+                    {
+                        new ProductCache().Init();
+                        return ResultModel.Success("");
+                    }
+                    else
+                    {
+                        return ResultModel.Fail("数据库执行失败");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
-                    tran.Rollback();
-                    return ResultModel.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
@@ -419,6 +474,17 @@ namespace Remoting
         /// <returns></returns>
         public ResultModel UpdatePorduct(AddProductModel model)
         {
+            if (model.skuInfos.Count() != model.skuInfos.Select(t => t.name).Distinct().Count())
+            {
+                return ResultModel.Fail("不允许出现重复名称的属性");
+            }
+            foreach (var skuinfo in model.skuInfos)
+            {
+                if (skuinfo.attributevalues.Count() != skuinfo.attributevalues.Select(t => t.attrvalue).Distinct().Count())
+                {
+                    return ResultModel.Fail("同一属性下不允许出现重复名称的值");
+                }
+            }
             using (brnshopEntities context = new brnshopEntities())
             {
                 var tran = context.Database.BeginTransaction();
@@ -629,9 +695,9 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
                     tran.Rollback();
-                    return ResultModel.Error(ex.ToString());
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
@@ -657,9 +723,9 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
                     tran.Rollback();
-                    return ResultModel.Error(ex.ToString());
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }

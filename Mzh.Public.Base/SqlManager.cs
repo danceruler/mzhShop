@@ -406,7 +406,7 @@ namespace Mzh.Public.Base
             {
                 if (useTransaction && transaction != null)
                     transaction.Rollback();
-                Logger._.Error(ex.ToString());
+                Logger._.Error("错误语句：" + command.CommandText + "\r\n" + ex.Message);
                 return false;
             }
         }
@@ -570,6 +570,7 @@ namespace Mzh.Public.Base
                 catch (Exception e)
                 {
                     tx.Rollback();
+                    Logger._.Error("错误语句："+ strsql+"\r\n"+e.Message);
                     throw e;
                 }
                 finally

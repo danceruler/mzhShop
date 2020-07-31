@@ -46,8 +46,8 @@ namespace Mzh.Public.BLL.HELP
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
-                    return ResultModel.Error(ex.ToString());
+                    Logger._.Error(ex.Message);
+                    return ResultModel.Error(ex.Message);
                 }
             }
         }
