@@ -32,7 +32,7 @@ namespace Remoting
         /// </summary>
         public static void InitBoxes()
         {
-            string sql = $@"SELECT * FROM bsp_boxes WHERE STATE = 1";
+            string sql = $@"SELECT * FROM bsp_boxes";
             DataTable boxdt = SqlManager.FillDataTable(AppConfig.ConnectionString, sql);
             boxes = boxdt.GetList<bsp_boxes>(null);
         }

@@ -19,6 +19,8 @@ namespace Mzh.Shop.Admin.Controllers
 
         public ActionResult BoxList()
         {
+            BoxCache boxcache = RemotingHelp.GetModelObject<BoxCache>();
+            ViewBag.boxlist = boxcache.GetBoxes();
             return View();
         }
 
