@@ -4,6 +4,7 @@ using Mzh.Public.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace Remoting
         public static void InitBoxes()
         {
             string sql = $@"SELECT * FROM bsp_boxes";
-            DataTable boxdt = SqlManager.FillDataTable(AppConfig.ConnectionString, sql);
+            DataTable boxdt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
             boxes = boxdt.GetList<bsp_boxes>(null);
         }
     }

@@ -12,6 +12,7 @@ namespace Mzh.Public.DAL
     using System;
     using System.Collections.Generic;
     
+    [Serializable]
     public partial class bsp_boxes
     {
         public int boxid { get; set; }
@@ -21,5 +22,7 @@ namespace Mzh.Public.DAL
         public int oid { get; set; }
         public int uid { get; set; }
         public Nullable<System.DateTime> booktime { get; set; }
+        public string phone { get; set; }
+        public string username { get; set; }
     }
 }

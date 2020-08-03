@@ -160,6 +160,8 @@
           <Property Name="oid" Type="int" Nullable="false" />
           <Property Name="uid" Type="int" Nullable="false" />
           <Property Name="booktime" Type="datetime" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="bsp_brands">
           <Key>
@@ -1012,13 +1014,12 @@
             <PropertyRef Name="uid" />
           </Key>
           <Property Name="uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="email" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="mobile" Type="char" MaxLength="15" Nullable="false" />
           <Property Name="password" Type="char" MaxLength="32" Nullable="false" />
           <Property Name="userrid" Type="smallint" Nullable="false" />
           <Property Name="admingid" Type="smallint" Nullable="false" />
-          <Property Name="nickname" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="nickname" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="avatar" Type="char" MaxLength="40" Nullable="false" />
           <Property Name="paycredits" Type="int" Nullable="false" />
           <Property Name="rankcredits" Type="int" Nullable="false" />
@@ -1026,6 +1027,7 @@
           <Property Name="verifymobile" Type="tinyint" Nullable="false" />
           <Property Name="liftbantime" Type="datetime" Nullable="false" />
           <Property Name="salt" Type="nchar" MaxLength="6" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="brnshopModelStoreContainer">
           <EntitySet Name="bsp_adminactions" EntityType="Self.bsp_adminactions" Schema="dbo" store:Type="Tables" />
@@ -2008,26 +2010,6 @@
           <Property Name="creditsupper" Type="Int32" Nullable="false" />
           <Property Name="limitdays" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="bsp_users">
-          <Key>
-            <PropertyRef Name="uid" />
-          </Key>
-          <Property Name="uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="mobile" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="userrid" Type="Int16" Nullable="false" />
-          <Property Name="admingid" Type="Int16" Nullable="false" />
-          <Property Name="nickname" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="avatar" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="paycredits" Type="Int32" Nullable="false" />
-          <Property Name="rankcredits" Type="Int32" Nullable="false" />
-          <Property Name="verifyemail" Type="Byte" Nullable="false" />
-          <Property Name="verifymobile" Type="Byte" Nullable="false" />
-          <Property Name="liftbantime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="salt" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="bsp_pvstats">
           <Key>
             <PropertyRef Name="category" />
@@ -2104,7 +2086,6 @@
           <EntitySet Name="bsp_useraddrs" EntityType="Self.bsp_useraddrs" />
           <EntitySet Name="bsp_userdetails" EntityType="Self.bsp_userdetails" />
           <EntitySet Name="bsp_userranks" EntityType="Self.bsp_userranks" />
-          <EntitySet Name="bsp_users" EntityType="Self.bsp_users" />
           <EntitySet Name="bsp_pvstats" EntityType="Self.bsp_pvstats" />
           <EntitySet Name="bsp_navs" EntityType="brnshopModel.bsp_navs" />
           <EntitySet Name="bsp_adminactions" EntityType="brnshopModel.bsp_adminactions" />
@@ -2114,6 +2095,7 @@
           <EntitySet Name="bsp_helps" EntityType="brnshopModel.bsp_helps" />
           <EntitySet Name="bsp_cateproducts" EntityType="brnshopModel.bsp_cateproducts" />
           <EntitySet Name="bsp_files" EntityType="brnshopModel.bsp_files" />
+          <EntitySet Name="bsp_users" EntityType="brnshopModel.bsp_users" />
         </EntityContainer>
         <EntityType Name="bsp_navs">
           <Key>
@@ -2161,6 +2143,8 @@
           <Property Name="oid" Type="Int32" Nullable="false" />
           <Property Name="uid" Type="Int32" Nullable="false" />
           <Property Name="booktime" Type="DateTime" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_friendlinks">
           <Key>
@@ -2210,6 +2194,26 @@
           <Property Name="objectname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="requestcount" Type="Int32" Nullable="false" />
           <Property Name="domain" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="bsp_users">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="mobile" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="false" />
+          <Property Name="userrid" Type="Int16" Nullable="false" />
+          <Property Name="admingid" Type="Int16" Nullable="false" />
+          <Property Name="nickname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="avatar" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+          <Property Name="paycredits" Type="Int32" Nullable="false" />
+          <Property Name="rankcredits" Type="Int32" Nullable="false" />
+          <Property Name="verifyemail" Type="Byte" Nullable="false" />
+          <Property Name="verifymobile" Type="Byte" Nullable="false" />
+          <Property Name="liftbantime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="salt" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3176,27 +3180,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="bsp_users">
-            <EntityTypeMapping TypeName="brnshopModel.bsp_users">
-              <MappingFragment StoreEntitySet="bsp_users">
-                <ScalarProperty Name="uid" ColumnName="uid" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="mobile" ColumnName="mobile" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="userrid" ColumnName="userrid" />
-                <ScalarProperty Name="admingid" ColumnName="admingid" />
-                <ScalarProperty Name="nickname" ColumnName="nickname" />
-                <ScalarProperty Name="avatar" ColumnName="avatar" />
-                <ScalarProperty Name="paycredits" ColumnName="paycredits" />
-                <ScalarProperty Name="rankcredits" ColumnName="rankcredits" />
-                <ScalarProperty Name="verifyemail" ColumnName="verifyemail" />
-                <ScalarProperty Name="verifymobile" ColumnName="verifymobile" />
-                <ScalarProperty Name="liftbantime" ColumnName="liftbantime" />
-                <ScalarProperty Name="salt" ColumnName="salt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="bsp_pvstats">
             <EntityTypeMapping TypeName="brnshopModel.bsp_pvstats">
               <MappingFragment StoreEntitySet="bsp_pvstats">
@@ -3247,6 +3230,8 @@
           <EntitySetMapping Name="bsp_boxes">
             <EntityTypeMapping TypeName="brnshopModel.bsp_boxes">
               <MappingFragment StoreEntitySet="bsp_boxes">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="booktime" ColumnName="booktime" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
                 <ScalarProperty Name="oid" ColumnName="oid" />
@@ -3307,6 +3292,27 @@
                 <ScalarProperty Name="uploadtime" ColumnName="uploadtime" />
                 <ScalarProperty Name="client" ColumnName="client" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bsp_users">
+            <EntityTypeMapping TypeName="brnshopModel.bsp_users">
+              <MappingFragment StoreEntitySet="bsp_users">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="liftbantime" ColumnName="liftbantime" />
+                <ScalarProperty Name="verifymobile" ColumnName="verifymobile" />
+                <ScalarProperty Name="verifyemail" ColumnName="verifyemail" />
+                <ScalarProperty Name="rankcredits" ColumnName="rankcredits" />
+                <ScalarProperty Name="paycredits" ColumnName="paycredits" />
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="admingid" ColumnName="admingid" />
+                <ScalarProperty Name="userrid" ColumnName="userrid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

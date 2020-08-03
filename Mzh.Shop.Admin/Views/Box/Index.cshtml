@@ -6,9 +6,10 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" rel="stylesheet" />
     <link href="~/wwwroot/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/wwwroot/css/public.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/wwwroot/css/public.css" media="all">
+    <link href="~/Content/mzhstyle.css" rel="stylesheet" />
     <style>
 
         .layui-top-box {
@@ -61,14 +62,50 @@
 </head>
 
 <body>
-    <div class="layuimini-container" id="boxlist-div">
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin-left:30px">
+                        <a class="layui-btn layui-btn-warm addbox">新增包厢</a>
+                    </div>
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal refresh">刷新</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div id="boxlist-div">
 
+            </div>
+        </div>
     </div>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/wwwroot/lib/layui-v2.5.5/layui.js"></script>
+    <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="~/wwwroot/js/lay-config.js"></script>
+    <script src="~/wwwroot/js/lay-module/layuimini/miniTab.js" charset="utf-8"></script>
     <script src="~/Scripts/mzhconfig.js"></script>
     <script>
         RefreshBoxlist();
+
+        layui.use(['form', 'miniTab', 'layer'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer;
+            $(".addbox").click(function () {
+                layer.alert("添加包箱")
+            })
+
+            $(".refresh").click(function () {
+                showloading(true);
+                RefreshBoxlist();
+                showloading(false);
+            })
+        });
+
+        
         function RefreshBoxlist() {
             $("#boxlist-div").load(domain + '/Box/BoxList');
         }

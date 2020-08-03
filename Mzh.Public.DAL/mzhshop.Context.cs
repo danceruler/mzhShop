@@ -90,7 +90,6 @@ namespace Mzh.Public.DAL
         public virtual DbSet<bsp_useraddrs> bsp_useraddrs { get; set; }
         public virtual DbSet<bsp_userdetails> bsp_userdetails { get; set; }
         public virtual DbSet<bsp_userranks> bsp_userranks { get; set; }
-        public virtual DbSet<bsp_users> bsp_users { get; set; }
         public virtual DbSet<bsp_pvstats> bsp_pvstats { get; set; }
         public virtual DbSet<bsp_navs> bsp_navs { get; set; }
         public virtual DbSet<bsp_adminactions> bsp_adminactions { get; set; }
@@ -100,5 +99,6 @@ namespace Mzh.Public.DAL
         public virtual DbSet<bsp_helps> bsp_helps { get; set; }
         public virtual DbSet<bsp_cateproducts> bsp_cateproducts { get; set; }
         public virtual DbSet<bsp_files> bsp_files { get; set; }
+        public virtual DbSet<bsp_users> bsp_users { get; set; }
     }
 }

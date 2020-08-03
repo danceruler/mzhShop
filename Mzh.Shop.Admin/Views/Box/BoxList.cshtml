@@ -1,161 +1,93 @@
-﻿<div class="layuimini-main layui-top-box">
+﻿@{ 
+    var boxlist = ViewBag.boxlist as List<Mzh.Public.DAL.bsp_boxes>;
+}
+<div class="layuimini-main layui-top-box">
     <div class="layui-row layui-col-space10">
-
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-cyan">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-blue">实时</span>
-                            <h5>用户统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-blue">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-cyan">实时</span>
-                            <h5>商品统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
+        @foreach (var box in boxlist)
+        {
+            if (box.state == (int)Mzh.Public.Model.BoxState.Book)
+            {
+                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state">
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel layui-bg-blue">
+                            <div class="panel-body" style="height:100px">
+                                <div class="panel-title">
+                                    <span class="label pull-right layui-bg-orange">已预定</span>
+                                    <h5>@box.code</h5>
+                                </div>
+                                <div class="panel-content">
+                                    <h1 class="no-margins">@box.name</h1>
+                                    <div class="stat-percent font-bold text-gray">@box.phone</div>
+                                    <small>@(box.booktime == null?"": box.booktime.Value.ToString("yyyy-MM-dd"))</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-green">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-orange">实时</span>
-                            <h5>浏览统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-orange">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-green">实时</span>
-                            <h5>订单统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
+            }
+            if (box.state == (int)Mzh.Public.Model.BoxState.Use)
+            {
+                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state">
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel layui-bg-red">
+                            <div class="panel-body" style="height:100px">
+                                <div class="panel-title">
+                                    <span class="label pull-right layui-bg-cyan">有客</span>
+                                    <h5>@box.code</h5>
+                                </div>
+                                <div class="panel-content">
+                                    <h1 class="no-margins">@box.name</h1>
+                                    <div class="stat-percent font-bold text-gray">@box.phone</div>
+                                    <small>@(box.booktime == null?"": box.booktime.Value.ToString("yyyy-MM-dd"))</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-cyan">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-blue">实时</span>
-                            <h5>用户统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-blue">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-cyan">实时</span>
-                            <h5>商品统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
+            }
+            if (box.state == (int)Mzh.Public.Model.BoxState.Empty)
+            {
+                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state">
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel layui-bg-green">
+                            <div class="panel-body" style="height:100px">
+                                <div class="panel-title">
+                                    <span class="label pull-right layui-bg-blue">空闲</span>
+                                    <h5>@box.code</h5>
+                                </div>
+                                <div class="panel-content">
+                                    <h1 class="no-margins">@box.name</h1>
+                                    <div class="stat-percent font-bold text-gray">@(box.phone??"无顾客")</div>
+                                    <small>@(box.booktime == null?"暂无预定": box.booktime.Value.ToString("yyyy-MM-dd"))</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-green">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-orange">实时</span>
-                            <h5>浏览统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-col-md3">
-            <div class="col-xs-6 col-md-3">
-                <div class="panel layui-bg-orange">
-                    <div class="panel-body">
-                        <div class="panel-title">
-                            <span class="label pull-right layui-bg-green">实时</span>
-                            <h5>订单统计</h5>
-                        </div>
-                        <div class="panel-content">
-                            <h1 class="no-margins">1234</h1>
-                            <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                            <small>当前分类总记录数</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            }
+        }
 
     </div>
 </div>
 <script>
-    $(".label").click(function () {
-        alert("label");
-    })
 
-    $(".edit").click(function () {
 
-    })
-
-    $(".delete").click(function () {
-
-    })
+    layui.use(['form', 'miniTab', 'layer'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer;
+        $(".boxpanel").click(function () {
+            var index = layer.open({
+                title: '包厢信息',
+                type: 2,
+                shade: 0.2,
+                maxmin: true,
+                shadeClose: true,
+                area: ['50%', '50%'],
+                content: '/Box/BoxDetail?boxid=' + $(this).data("id") + '&code=' + $(this).data("code") + '&name=' + $(this).data("name") + '&state=' + $(this).data("state"),
+            });
+            $(window).on("resize", function () {
+                layer.full(index);
+            });
+        })
+    });
 </script>

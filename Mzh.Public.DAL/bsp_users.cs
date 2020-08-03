@@ -15,7 +15,6 @@ namespace Mzh.Public.DAL
     public partial class bsp_users
     {
         public int uid { get; set; }
-        public string username { get; set; }
         public string email { get; set; }
         public string mobile { get; set; }
         public string password { get; set; }
@@ -29,5 +28,6 @@ namespace Mzh.Public.DAL
         public byte verifymobile { get; set; }
         public System.DateTime liftbantime { get; set; }
         public string salt { get; set; }
+        public string username { get; set; }
     }
 }

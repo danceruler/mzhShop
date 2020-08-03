@@ -44,6 +44,7 @@
                 </div>
             </div>
             <form class="layui-form" action="">
+                
                 <div class="layui-form-item">
                     <label class="layui-form-label">属性名</label>
                     <div class="layui-input-inline">
@@ -178,7 +179,7 @@
                 , "sex": "女"
                 , "desc": "我爱 layui"
             })
-
+            form.render();
         });
         $(".cancel").click(function () {
             var iframeIndex = parent.layer.getFrameIndex(window.name);

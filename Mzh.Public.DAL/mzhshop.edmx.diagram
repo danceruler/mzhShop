@@ -70,7 +70,6 @@
         <EntityTypeShape EntityType="brnshopModel.bsp_useraddrs" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="brnshopModel.bsp_userdetails" Width="1.5" PointX="22.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="brnshopModel.bsp_userranks" Width="1.5" PointX="22.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="brnshopModel.bsp_users" Width="1.5" PointX="22.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="brnshopModel.bsp_pvstats" Width="1.5" PointX="24.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="brnshopModel.bsp_navs" Width="1.5" PointX="25.375" PointY="0.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_adminactions" Width="1.5" PointX="0.75" PointY="23.75" />
@@ -80,6 +79,7 @@
         <EntityTypeShape EntityType="brnshopModel.bsp_helps" Width="1.5" PointX="21.75" PointY="23.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_cateproducts" Width="1.5" PointX="24.375" PointY="22.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_files" Width="1.5" PointX="25.375" PointY="7.75" />
+        <EntityTypeShape EntityType="brnshopModel.bsp_users" Width="1.5" PointX="23.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,6 +24,15 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
+        public ActionResult BoxDetail(int boxid,string code,string name,int state)
+        {
+            ViewBag.boxid = boxid;
+            ViewBag.code = code;
+            ViewBag.name = name;
+            ViewBag.state = state;
+            return View();
+        }
+
 
         #region 接口
 
