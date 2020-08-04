@@ -24,5 +24,6 @@ namespace Mzh.Public.DAL
         public Nullable<System.DateTime> booktime { get; set; }
         public string phone { get; set; }
         public string username { get; set; }
+        public Nullable<decimal> price { get; set; }
     }
 }

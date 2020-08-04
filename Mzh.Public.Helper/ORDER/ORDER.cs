@@ -17,6 +17,16 @@ namespace Remoting
         COUPON Coupon;
 
         /// <summary>
+        /// 获取今日统计数据
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel GetTodayTodayStatistics()
+        {
+
+        }
+
+
+        /// <summary>
         /// 创建订单
         /// </summary>
         public void CreatOrder(CreateOrderModel createModel)

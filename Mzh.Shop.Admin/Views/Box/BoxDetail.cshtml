@@ -31,9 +31,9 @@
             <form class="layui-form" action="">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">搜索选择框</label>
+                        <label class="layui-form-label">包厢状态</label>
                         <div class="layui-input-inline">
-                            <select name="modules" lay-verify="required" lay-search="">
+                            <select name="boxstate" id="boxstate" lay-verify="required" lay-search="">
                                 @foreach (var state in statedic.Keys)
                                 {
                                     <option value="@state" @(state == ViewBag.state ? "selected" : "")>@statedic[state]</option>
@@ -43,14 +43,24 @@
                     </div>
                 </div>
                 <div class="layui-form-item" id="attribute-div">
-                    <label class="layui-form-label">属性名</label>
+                    <label class="layui-form-label">包厢编号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="attribute" id="attribute" placeholder="" class="layui-input">
+                        <input type="text" name="boxcode" id="boxcode" @(ViewBag.boxid == 0?"":"disabled")  placeholder="" value="@ViewBag.code" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">包厢名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="boxname" id="boxname" placeholder="" value="@ViewBag.name" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn query">确认</button>
+                        <button class="layui-btn query" data-id="@ViewBag.boxid">保存</button>
+                        @if (ViewBag.boxid != 0)
+                        {
+                            <button class="layui-btn layui-btn-danger delete " data-id="@ViewBag.boxid">删除</button>
+                        }
                         <button class="layui-btn layui-btn-primary cancel">取消</button>
                     </div>
                 </div>
@@ -71,8 +81,127 @@
                 miniTab = layui.miniTab,
                 layer = layui.layer;
 
+            $(".query").click(function () {
+                var boxid = $(this).data("id");
+                if ($("#boxcode").val() == '') {
+                    var index = layer.alert("包厢编号不允许为空", {
+                        title: "请你注意"
+                    }, function () {
+                        // 关闭弹出层
+                        layer.close(index);
+                    });
+                    return false;
+                }
+                if ($("#boxname").val() == '') {
+                    var index = layer.alert("包厢名称不允许为空", {
+                        title: "请你注意"
+                    }, function () {
+                        // 关闭弹出层
+                        layer.close(index);
+                    });
+                    return false;
+                }
+
+                //新增
+                if (boxid == 0) {
+                    $.ajax({
+                        url: domain + '/Box/AddBox',
+                        type: 'post',
+                        data: {
+                            code: $("#boxcode").val(),
+                            name: $("#boxname").val(),
+                        },
+                        async: false,
+                        success: function (res) {
+                            var index = layer.alert(res.msg, {
+                                title: "提示"
+                            }, function () {
+                                // 关闭弹出层
+                                layer.close(index);
+                            });
+                            if (res.state == 1) {
+                                //调用父层事件刷新包厢列表
+                                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(iframeIndex);
+                                parent.RefreshBoxlist();
+                            }
+                        }
+                    });
+                }
+                //编辑
+                else {
+                    $.ajax({
+                        url: domain + '/Box/UpdateBox',
+                        type: 'post',
+                        data: {
+                            boxid: boxid,
+                            name: $("#boxname").val(),
+                            state: $("#boxstate").val()
+                        },
+                        async: false,
+                        success: function (res) {
+                            var index = layer.alert(res.msg, {
+                                title: "提示"
+                            }, function () {
+                                // 关闭弹出层
+                                layer.close(index);
+                            });
+                            if (res.state == 1) {
+                                //调用父层事件刷新包厢列表
+                                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(iframeIndex);
+                                parent.RefreshBoxlist();
+                            }
+                        }
+                    });
+                }
+
+                
+
+                return false;
+
+            })
+            $(".cancel").click(function () {
+                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(iframeIndex);
+                return false;
+
+            })
+            $(".delete").click(function () {
+                var boxid = $(this).data("id");
+                layer.confirm('确认删除吗？', {
+                    btn: ['确认', '取消'] //按钮
+                }, function () {
+                        $.ajax({
+                            url: domain + '/Box/DeleteBox',
+                            type: 'post',
+                            data: {
+                                boxid: boxid,
+                            },
+                            async: false,
+                            success: function (res) {
+                                var index = layer.alert(res.msg, {
+                                    title: "提示"
+                                }, function () {
+                                    // 关闭弹出层
+                                    layer.close(index);
+                                });
+                                if (res.state == 1) {
+                                    //调用父层事件刷新包厢列表
+                                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(iframeIndex);
+                                    parent.RefreshBoxlist();
+                                }
+                            }
+                        });
+                });
+                return false;
+
+            })
             form.render();
         });
+
+        
     </script>
 
 </body>

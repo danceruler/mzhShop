@@ -50,13 +50,13 @@
             {
               "title": "商品类别管理",
               "href": "/Product/ProductType",
-              "icon": "fa fa-window-maximize",
+              "icon": "fa fa-lemon-o",
               "target": "_self"
             },
             {
               "title": "商品信息管理",
               "href": "/Product/Product",
-              "icon": "fa fa-window-maximize",
+              "icon": "fa fa-cutlery",
               "target": "_self"
             }
           ]
@@ -68,9 +68,21 @@
           "target": "_self",
           "child": [
             {
+              "title": "今日订单",
+              "href": "/order/orderlist",
+              "icon": "fa fa-jpy",
+              "target": "_self"
+            },
+            {
               "title": "订单列表",
               "href": "/order/orderlist",
-              "icon": "fa fa fa-window-maximize",
+              "icon": "fa fa-list-ul",
+              "target": "_self"
+            },
+            {
+              "title": "销售统计",
+              "href": "/order/orderlist",
+              "icon": "fa fa-bar-chart",
               "target": "_self"
             }
           ]
@@ -78,7 +90,7 @@
         {
           "title": "包厢管理",
           "href": "Box/Index",
-          "icon": "fa fa-gears",
+          "icon": "fa fa-th-large",
           "target": "_self"
         },
         {

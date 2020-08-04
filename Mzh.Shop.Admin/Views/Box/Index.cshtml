@@ -95,7 +95,18 @@
             var $ = layui.jquery,
                 layer = layui.layer;
             $(".addbox").click(function () {
-                layer.alert("添加包箱")
+                var index = layer.open({
+                    title: '添加包厢',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['50%', '50%'],
+                    content: '/Box/BoxDetail?boxid=0&code=0&name=0&state=0',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
             })
 
             $(".refresh").click(function () {
@@ -105,10 +116,11 @@
             })
         });
 
-        
         function RefreshBoxlist() {
             $("#boxlist-div").load(domain + '/Box/BoxList');
         }
+
+        
 
     </script>
 </body>

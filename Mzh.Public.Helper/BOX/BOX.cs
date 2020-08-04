@@ -36,6 +36,7 @@ namespace Remoting
                     context.SaveChanges();
 
                     tran.Commit();
+                    new BoxCache().Init();
                     return ResultModel.Success("修改成功");
                 }
                 catch (Exception ex)
@@ -76,6 +77,7 @@ namespace Remoting
                     context.SaveChanges();
 
                     tran.Commit();
+                    new BoxCache().Init();
                     return ResultModel.Success("添加成功");
                 }catch(Exception ex)
                 {
@@ -107,6 +109,7 @@ namespace Remoting
                     context.SaveChanges();
 
                     tran.Commit();
+                    new BoxCache().Init();
                     return ResultModel.Success("删除成功");
                 }
                 catch (Exception ex)

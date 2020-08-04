@@ -262,18 +262,24 @@
 
             $(".product-delete").click(function () {
                 var obj = $("#prow-" + $(this).data('cateid') + "-" + $(this).data('pid'));
-                $.ajax({
-                    type: 'post',
-                    url: domain + '/Product/Deleteproduct',
-                    data: { pid: $(this).data('pid') },
-                    success: function (res) {
-                        if (res.state == 1) {
-                            obj.hide();
-                        }
-                        layer.alert(res.msg);
-                    }
-                })
-                return false;
+                var that = this;
+                layer.confirm('确认删除吗？', {
+                    btn: ['确认', '取消'] //按钮
+                }, function () {
+                        $.ajax({
+                            type: 'post',
+                            url: domain + '/Product/Deleteproduct',
+                            data: { pid: $(that).data('pid') },
+                            success: function (res) {
+                                if (res.state == 1) {
+                                    obj.hide();
+                                }
+                                layer.alert(res.msg);
+                            }
+                        })
+                        return false;
+                });
+                
             })
 
             $(".query").click(function () {

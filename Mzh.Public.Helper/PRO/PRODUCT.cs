@@ -690,7 +690,7 @@ namespace Remoting
 
                     tran.Commit();
                     new ProductCache().Init();
-                    return ResultModel.Success("");
+                    return ResultModel.Success("修改成功");
 
                 }
                 catch (Exception ex)
