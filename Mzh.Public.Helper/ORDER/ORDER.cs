@@ -16,15 +16,6 @@ namespace Remoting
     {
         COUPON Coupon;
 
-        /// <summary>
-        /// 获取今日统计数据
-        /// </summary>
-        /// <returns></returns>
-        public ResultModel GetTodayTodayStatistics()
-        {
-
-        }
-
 
         /// <summary>
         /// 创建订单
@@ -178,6 +169,62 @@ namespace Remoting
                 }
             }
             return orderlist;
+        }
+
+        /// <summary>
+        /// 获取今日统计数据
+        /// </summary>
+        /// <returns></returns>
+        public DayStatisticsModel GetDayStatistics()
+        {
+            DayStatisticsModel model = new DayStatisticsModel();
+            DateTime beginTime = DateTime.Now.Date;
+            DateTime endTime = beginTime.AddDays(1);
+            GetBaseStatistics(beginTime, endTime,model);
+            //获取其他统计信息
+            return model;
+        }
+
+        /// <summary>
+        /// 获取周统计数据
+        /// </summary>
+        /// <returns></returns>
+        public WeekStatisticsModel GetWeekStatistics()
+        {
+            WeekStatisticsModel model = new WeekStatisticsModel();
+            DateTime beginTime = DateTime.Now.Date;
+            DateTime endTime = beginTime.AddDays(1);
+            GetBaseStatistics(beginTime, endTime, model);
+            //获取其他统计信息
+            return model;
+        }
+
+        /// <summary>
+        /// 获取月统计数据
+        /// </summary>
+        /// <returns></returns>
+        public MonthStatisticsModel GetMonthStatistics()
+        {
+            MonthStatisticsModel model = new MonthStatisticsModel();
+            DateTime beginTime = DateTime.Now.Date;
+            DateTime endTime = beginTime.AddDays(1);
+            GetBaseStatistics(beginTime, endTime, model);
+            //获取其他统计信息
+            return model;
+        }
+
+        /// <summary>
+        /// 获得基本统计信息
+        /// </summary>
+        private void GetBaseStatistics(DateTime beginTime,DateTime endTime,BaseStatisticsModel model)
+        {
+            var beginTimeStr = beginTime.ToString("yyyy-MM-dd");
+            var endTimeStr = endTime.ToString("yyyy-MM-dd");
+            List<ShowOrderInfo> orders = GetOrderList($@" and bsp_orders.addtime > '{beginTimeStr}' and bsp_orders.addtime < '{endTimeStr} and orderstate > 4 and orderstate <> 6 and orderstate <> 7", 1, 100000);
+            model.TurnOver = orders.Count == 0?0: orders.Select(t => t.surplusmoney).Sum();
+            model.FinishOrderCount = orders.Count;
+            model.OrderCountByTimeStatistics = new List<OrderCountByTimeStatistic>();
+
         }
     }
 }
