@@ -177,12 +177,24 @@ namespace Remoting
         /// <returns></returns>
         public DayStatisticsModel GetDayStatistics()
         {
-            DayStatisticsModel model = new DayStatisticsModel();
-            DateTime beginTime = DateTime.Now.Date;
-            DateTime endTime = beginTime.AddDays(1);
-            GetBaseStatistics(beginTime, endTime,model);
-            //获取其他统计信息
-            return model;
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                DayStatisticsModel model = new DayStatisticsModel();
+                DateTime beginTime = DateTime.Now.Date;
+                DateTime endTime = beginTime.AddDays(1);
+                GetBaseStatistics(beginTime, endTime, model);
+                //获取其他统计信息
+                var yestoday = DateTime.Now.AddDays(-1).Date;
+                var yestodayNowTime = DateTime.Now.AddDays(-1);
+                List<ShowOrderInfo> yestodayorders = GetOrderList($@" and bsp_orders.addtime > '{yestoday}' and bsp_orders.addtime < '{yestodayNowTime} and orderstate > 4 and orderstate <> 6 and orderstate <> 7", 1, 100000);
+                var yestodayTurnover = yestodayorders.Count == 0 ? 0 : yestodayorders.Select(t => t.surplusmoney).Sum();
+                model.TurnOverByYestoday = model.TurnOver - yestodayTurnover;
+                //string sql = $@"select  from bsp_orders where addtime <{beginTime}"
+                List<bsp_orderstatistics> orderstatistics = context.bsp_orderstatistics.Where(t => t.time >= yestoday && t.time <= beginTime).ToList();
+                model.TurnOverByAverage = model.TurnOver- orderstatistics
+
+                return model;
+            }
         }
 
         /// <summary>
@@ -223,8 +235,19 @@ namespace Remoting
             List<ShowOrderInfo> orders = GetOrderList($@" and bsp_orders.addtime > '{beginTimeStr}' and bsp_orders.addtime < '{endTimeStr} and orderstate > 4 and orderstate <> 6 and orderstate <> 7", 1, 100000);
             model.TurnOver = orders.Count == 0?0: orders.Select(t => t.surplusmoney).Sum();
             model.FinishOrderCount = orders.Count;
-            model.OrderCountByTimeStatistics = new List<OrderCountByTimeStatistic>();
-
+            //订单类别统计
+            model.OrderTypeStatistics = new List<OrderTypeStatistic>();
+            OrderTypeStatistic shipstat = new OrderTypeStatistic();
+            shipstat.Count = orders.Where(t => t.type == 1).Count();
+            shipstat.OrderType = OrderType.Ship;
+            shipstat.TypeName = shipstat.OrderType.ToText();
+            OrderTypeStatistic shopstat = new OrderTypeStatistic();
+            shopstat.Count = orders.Where(t => t.type == 1).Count();
+            shopstat.OrderType = OrderType.InShop;
+            shopstat.TypeName = shopstat.OrderType.ToText();
+            model.OrderTypeStatistics.Add(shipstat);
+            model.OrderTypeStatistics.Add(shopstat);
         }
+
     }
 }

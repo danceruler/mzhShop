@@ -663,6 +663,21 @@
           <Property Name="type" Type="int" Nullable="false" />
           <Property Name="boxid" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="bsp_orderstatistics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="time" Type="datetime" />
+          <Property Name="timestr" Type="nvarchar" MaxLength="50" />
+          <Property Name="ordercount" Type="int" Nullable="false" />
+          <Property Name="ordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="finishordercount" Type="int" Nullable="false" />
+          <Property Name="finishordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ordercountavg" Type="int" Nullable="false" />
+          <Property Name="ordersumavg" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
             <PropertyRef Name="recordid" />
@@ -1080,6 +1095,7 @@
           <EntitySet Name="bsp_orderrefunds" EntityType="Self.bsp_orderrefunds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_orderreviews" EntityType="Self.bsp_orderreviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_orders" EntityType="Self.bsp_orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bsp_orderstatistics" EntityType="Self.bsp_orderstatistics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_productattributes" EntityType="Self.bsp_productattributes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_productconsults" EntityType="Self.bsp_productconsults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_productconsulttypes" EntityType="Self.bsp_productconsulttypes" Schema="dbo" store:Type="Tables" />
@@ -2097,6 +2113,7 @@
           <EntitySet Name="bsp_cateproducts" EntityType="brnshopModel.bsp_cateproducts" />
           <EntitySet Name="bsp_files" EntityType="brnshopModel.bsp_files" />
           <EntitySet Name="bsp_users" EntityType="brnshopModel.bsp_users" />
+          <EntitySet Name="bsp_orderstatistics" EntityType="brnshopModel.bsp_orderstatistics" />
         </EntityContainer>
         <EntityType Name="bsp_navs">
           <Key>
@@ -2216,6 +2233,21 @@
           <Property Name="liftbantime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="salt" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="bsp_orderstatistics">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="time" Type="DateTime" Precision="3" />
+          <Property Name="timestr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ordercount" Type="Int32" Nullable="false" />
+          <Property Name="ordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="finishordercount" Type="Int32" Nullable="false" />
+          <Property Name="finishordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ordercountavg" Type="Int32" Nullable="false" />
+          <Property Name="ordersumavg" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3316,6 +3348,22 @@
                 <ScalarProperty Name="mobile" ColumnName="mobile" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bsp_orderstatistics">
+            <EntityTypeMapping TypeName="brnshopModel.bsp_orderstatistics">
+              <MappingFragment StoreEntitySet="bsp_orderstatistics">
+                <ScalarProperty Name="ordersumavg" ColumnName="ordersumavg" />
+                <ScalarProperty Name="ordercountavg" ColumnName="ordercountavg" />
+                <ScalarProperty Name="finishordersum" ColumnName="finishordersum" />
+                <ScalarProperty Name="finishordercount" ColumnName="finishordercount" />
+                <ScalarProperty Name="ordersum" ColumnName="ordersum" />
+                <ScalarProperty Name="ordercount" ColumnName="ordercount" />
+                <ScalarProperty Name="timestr" ColumnName="timestr" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
