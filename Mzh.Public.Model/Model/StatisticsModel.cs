@@ -101,6 +101,10 @@ namespace Mzh.Public.Model.Model
         /// 数量
         /// </summary>
         public int Count { get; set; }
+        /// <summary>
+        /// 总金额
+        /// </summary>
+        public decimal SUM { get; set; }
     }
 
     /// <summary>
@@ -143,5 +147,64 @@ namespace Mzh.Public.Model.Model
         public decimal Amount { get; set; }
     }
 
+    /// <summary>
+    /// 同数据库表orderstatistic结构
+    /// </summary>
+    public class OrderStatistic
+    {
+        public int id { get; set; }
+        /// <summary>
+        /// 0天1周2月
+        /// </summary>
+        public int type { get; set; }
+        /// <summary>
+        /// type为1，为当天日期;type为2，为当周周一日期；type为3，为当月第一天日期
+        /// </summary>
+        public DateTime time { get; set; }
+        /// <summary>
+        /// 日期字符串
+        /// </summary>
+        public string timestr { get; set; }
+        /// <summary>
+        /// 订单数量
+        /// </summary>
+        public int ordercount { get; set; }
+        /// <summary>
+        /// 订单总金额
+        /// </summary>
+        public decimal ordersum { get; set; }
+        /// <summary>
+        /// 完成订单量
+        /// </summary>
+        public int finishordercount { get; set; }
+        /// <summary>
+        /// 完成订单总金额
+        /// </summary>
+        public decimal finishordersum { get; set; }
+        /// <summary>
+        /// 日平均订单量（完成）
+        /// </summary>
+        public int ordercountavg { get; set; }
+        /// <summary>
+        /// 日平均订单总金额（完成）
+        /// </summary>
+        public decimal ordersumavg { get; set; }
+        /// <summary>
+        /// 外卖订单数量（完成）
+        /// </summary>
+        public int shipordercount { get; set; }
+        /// <summary>
+        /// 外卖订单总金额（完成）
+        /// </summary>
+        public decimal shipordersum { get; set; }
+        /// <summary>
+        /// 堂食订单数量（完成）
+        /// </summary>
+        public int shopordercount { get; set; }
+        /// <summary>
+        /// 堂食订单总金额（完成）
+        /// </summary>
+        public decimal shopordersum { get; set; }
+    }
 
 }

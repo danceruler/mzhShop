@@ -677,6 +677,10 @@
           <Property Name="finishordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ordercountavg" Type="int" Nullable="false" />
           <Property Name="ordersumavg" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="shipordercount" Type="int" Nullable="false" />
+          <Property Name="shipordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="shopordercount" Type="int" Nullable="false" />
+          <Property Name="shopordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
@@ -2248,6 +2252,10 @@
           <Property Name="finishordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="ordercountavg" Type="Int32" Nullable="false" />
           <Property Name="ordersumavg" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="shipordercount" Type="Int32" Nullable="false" />
+          <Property Name="shipordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="shopordercount" Type="Int32" Nullable="false" />
+          <Property Name="shopordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3354,6 +3362,10 @@
           <EntitySetMapping Name="bsp_orderstatistics">
             <EntityTypeMapping TypeName="brnshopModel.bsp_orderstatistics">
               <MappingFragment StoreEntitySet="bsp_orderstatistics">
+                <ScalarProperty Name="shopordersum" ColumnName="shopordersum" />
+                <ScalarProperty Name="shopordercount" ColumnName="shopordercount" />
+                <ScalarProperty Name="shipordersum" ColumnName="shipordersum" />
+                <ScalarProperty Name="shipordercount" ColumnName="shipordercount" />
                 <ScalarProperty Name="ordersumavg" ColumnName="ordersumavg" />
                 <ScalarProperty Name="ordercountavg" ColumnName="ordercountavg" />
                 <ScalarProperty Name="finishordersum" ColumnName="finishordersum" />

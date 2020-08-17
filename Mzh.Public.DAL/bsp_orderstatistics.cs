@@ -24,5 +24,9 @@ namespace Mzh.Public.DAL
         public decimal finishordersum { get; set; }
         public int ordercountavg { get; set; }
         public decimal ordersumavg { get; set; }
+        public int shipordercount { get; set; }
+        public decimal shipordersum { get; set; }
+        public int shopordercount { get; set; }
+        public decimal shopordersum { get; set; }
     }
 }

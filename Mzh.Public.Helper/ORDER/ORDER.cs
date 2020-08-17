@@ -91,6 +91,9 @@ namespace Remoting
                     //创建预支付订单
 
 
+                    //写入统计数据
+
+
                     tran.Commit();
                 }
                 catch (Exception ex)
@@ -182,17 +185,32 @@ namespace Remoting
                 DayStatisticsModel model = new DayStatisticsModel();
                 DateTime beginTime = DateTime.Now.Date;
                 DateTime endTime = beginTime.AddDays(1);
-                GetBaseStatistics(beginTime, endTime, model);
+                var todayStat = new OrderStatistic();
+                GetBaseStatistics(beginTime, endTime,0, model,ref todayStat);
+                if(todayStat.id == 0)
+                {
+                    return null;
+                }
                 //获取其他统计信息
                 var yestoday = DateTime.Now.AddDays(-1).Date;
-                var yestodayNowTime = DateTime.Now.AddDays(-1);
-                List<ShowOrderInfo> yestodayorders = GetOrderList($@" and bsp_orders.addtime > '{yestoday}' and bsp_orders.addtime < '{yestodayNowTime} and orderstate > 4 and orderstate <> 6 and orderstate <> 7", 1, 100000);
-                var yestodayTurnover = yestodayorders.Count == 0 ? 0 : yestodayorders.Select(t => t.surplusmoney).Sum();
-                model.TurnOverByYestoday = model.TurnOver - yestodayTurnover;
-                //string sql = $@"select  from bsp_orders where addtime <{beginTime}"
-                List<bsp_orderstatistics> orderstatistics = context.bsp_orderstatistics.Where(t => t.time >= yestoday && t.time <= beginTime).ToList();
-                model.TurnOverByAverage = model.TurnOver- orderstatistics
+                var yestodayStr = yestoday.ToString("yyyy-MM-dd");
+                var beginTimeStr = beginTime.ToString("yyyy-MM-dd");
+                var yestodayStatSql = $@"SELECT * FROM bsp_orderstatistics where time >= '{yestodayStr}' and time <'{beginTimeStr}' and type = 1";
+                var yestodaydt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(yestodayStatSql));
+                var yestodayStats = yestodaydt.GetList<OrderStatistic>("");
+                model.TurnOverByYestoday = 0;
+                if (yestodayStats.Count > 0)
+                {
+                    model.TurnOverByYestoday = model.TurnOver - yestodayStats[0].finishordersum;
+                }
 
+                var avgHistorySql = $@"select avg(finishordersum) avgfinishordersum from bsp_orderstatistics where type = 0 and time < '{beginTimeStr}'";
+                var avgHistorydt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(avgHistorySql));
+                model.TurnOverByAverage = 0;
+                if (avgHistorydt != null&& avgHistorydt.Rows.Count > 0)
+                {
+                    model.TurnOverByAverage = model.TurnOver - decimal.Parse(avgHistorydt.Rows[0]["avgfinishordersum"].ToString());
+                }
                 return model;
             }
         }
@@ -206,7 +224,8 @@ namespace Remoting
             WeekStatisticsModel model = new WeekStatisticsModel();
             DateTime beginTime = DateTime.Now.Date;
             DateTime endTime = beginTime.AddDays(1);
-            GetBaseStatistics(beginTime, endTime, model);
+            var weekStat = new OrderStatistic();
+            GetBaseStatistics(beginTime, endTime,1, model,ref weekStat);
             //获取其他统计信息
             return model;
         }
@@ -220,7 +239,8 @@ namespace Remoting
             MonthStatisticsModel model = new MonthStatisticsModel();
             DateTime beginTime = DateTime.Now.Date;
             DateTime endTime = beginTime.AddDays(1);
-            GetBaseStatistics(beginTime, endTime, model);
+            var monthStat = new OrderStatistic();
+            GetBaseStatistics(beginTime, endTime, 2, model, ref monthStat);
             //获取其他统计信息
             return model;
         }
@@ -228,26 +248,84 @@ namespace Remoting
         /// <summary>
         /// 获得基本统计信息
         /// </summary>
-        private void GetBaseStatistics(DateTime beginTime,DateTime endTime,BaseStatisticsModel model)
+        /// <param name="beginTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="type">0日1周2月</param>
+        /// <param name="model"></param>
+        private void GetBaseStatistics(DateTime beginTime,DateTime endTime,int type,BaseStatisticsModel model,ref OrderStatistic orderStatistic)
         {
             var beginTimeStr = beginTime.ToString("yyyy-MM-dd");
             var endTimeStr = endTime.ToString("yyyy-MM-dd");
-            List<ShowOrderInfo> orders = GetOrderList($@" and bsp_orders.addtime > '{beginTimeStr}' and bsp_orders.addtime < '{endTimeStr} and orderstate > 4 and orderstate <> 6 and orderstate <> 7", 1, 100000);
-            model.TurnOver = orders.Count == 0?0: orders.Select(t => t.surplusmoney).Sum();
-            model.FinishOrderCount = orders.Count;
-            //订单类别统计
-            model.OrderTypeStatistics = new List<OrderTypeStatistic>();
-            OrderTypeStatistic shipstat = new OrderTypeStatistic();
-            shipstat.Count = orders.Where(t => t.type == 1).Count();
-            shipstat.OrderType = OrderType.Ship;
-            shipstat.TypeName = shipstat.OrderType.ToText();
-            OrderTypeStatistic shopstat = new OrderTypeStatistic();
-            shopstat.Count = orders.Where(t => t.type == 1).Count();
-            shopstat.OrderType = OrderType.InShop;
-            shopstat.TypeName = shopstat.OrderType.ToText();
-            model.OrderTypeStatistics.Add(shipstat);
-            model.OrderTypeStatistics.Add(shopstat);
+            string sql = $@"SELECT * FROM bsp_orderstatistics where time >= '{beginTimeStr}' and time <'{endTimeStr}' and type = {type}";
+            DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+            List<OrderStatistic> orderStatisticses = dt.GetList<OrderStatistic>("");
+            if(orderStatisticses.Count > 0)
+            {
+                orderStatistic = orderStatisticses[0];
+                model.TurnOver = orderStatistic.finishordersum;
+                model.FinishOrderCount = orderStatistic.finishordercount;
+                //订单类别统计
+                model.OrderTypeStatistics = new List<OrderTypeStatistic>();
+                OrderTypeStatistic shipstat = new OrderTypeStatistic();
+                shipstat.Count = orderStatistic.shipordercount;
+                shipstat.SUM = orderStatistic.shipordersum;
+                shipstat.OrderType = OrderType.Ship;
+                shipstat.TypeName = shipstat.OrderType.ToText();
+                OrderTypeStatistic shopstat = new OrderTypeStatistic();
+                shopstat.Count = orderStatistic.shopordercount;
+                shopstat.SUM = orderStatistic.shopordersum;
+                shopstat.OrderType = OrderType.InShop;
+                shopstat.TypeName = shopstat.OrderType.ToText();
+                model.OrderTypeStatistics.Add(shipstat);
+                model.OrderTypeStatistics.Add(shopstat);
+            }
         }
 
+        /// <summary>
+        /// 写入统计数据
+        /// </summary>
+        /// <param name="isfinish">创建订单为false，支付完成为true</param>
+        /// <param name="sum">订单金额</param>
+        /// <param name="ordertime">订单创建日期</param>
+        private void AddStatistics(bool isfinish,bsp_orders order, brnshopEntities context)
+        {
+            //日统计
+            var todaytimeStr = order.addtime.Date.ToString("yyyy-MM-dd");
+            var todayStat = context.bsp_orderstatistics.Where(t => t.type == 0 && t.timestr == todaytimeStr).SingleOrDefault();
+            if(todayStat == null)
+            {
+                todayStat = new bsp_orderstatistics();
+                todayStat.ordercount = 0;
+                todayStat.ordersum = 0;
+                todayStat.finishordercount = 0;
+                todayStat.finishordersum = 0;
+                todayStat.ordercountavg = 0;
+                todayStat.ordersumavg = 0;
+                todayStat.shipordercount = 0;
+                todayStat.shipordersum = 0;
+                todayStat.shopordercount = 0;
+                todayStat.shopordersum = 0;
+                context.bsp_orderstatistics.Add(todayStat);
+            }
+            if (!isfinish)
+            {
+                todayStat.ordercount += 1;
+                todayStat.ordersum += order.surplusmoney;
+            }
+            else
+            {
+                todayStat.finishordercount += 1;
+                todayStat.finishordersum += order.payfee;
+                todayStat.shipordercount += order.type == (int)OrderType.InShop ? 0 : 1;
+                todayStat.shipordersum += order.type == (int)OrderType.InShop ? 0 : order.payfee;
+                todayStat.shopordercount += order.type == (int)OrderType.InShop ? 1 : 0;
+                todayStat.shopordersum += order.type == (int)OrderType.InShop ? order.payfee : 0;
+            }
+            context.SaveChanges();
+
+            //周统计
+
+            //月统计
+        }
     }
 }
