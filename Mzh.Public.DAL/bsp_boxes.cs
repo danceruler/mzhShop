@@ -12,6 +12,7 @@ namespace Mzh.Public.DAL
     using System;
     using System.Collections.Generic;
     
+    [Serializable]
     public partial class bsp_boxes
     {
         public int boxid { get; set; }

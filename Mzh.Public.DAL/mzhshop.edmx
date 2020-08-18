@@ -727,7 +727,7 @@
           </Key>
           <Property Name="pimgid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="pid" Type="int" Nullable="false" />
-          <Property Name="showimg" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="showimg" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="ismain" Type="tinyint" Nullable="false" />
           <Property Name="displayorder" Type="int" Nullable="false" />
         </EntityType>
@@ -1741,7 +1741,7 @@
           </Key>
           <Property Name="pimgid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="pid" Type="Int32" Nullable="false" />
-          <Property Name="showimg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="showimg" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ismain" Type="Byte" Nullable="false" />
           <Property Name="displayorder" Type="Int32" Nullable="false" />
         </EntityType>

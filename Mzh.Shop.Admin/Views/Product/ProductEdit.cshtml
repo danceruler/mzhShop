@@ -218,22 +218,35 @@
             }
 
         });
+        var promainimgs = []
+        @if (mainimgs != "")
+        {
+            foreach(string str in mainimgs.Split(','))
+            {
+                @:promainimgs.push("@str");
+            }
+        }
         var cuploadpromainimgs = new Cupload({
             ele: '#cupload-promainimgs',
             num: 20,
-            @if(mainimgs != "")
-            {
-                @:data:["@mainimgs"]
-            }
+            data: promainimgs.length == 0 ? null : promainimgs
         });
+
+        var detailimgs = []
+        @if (detailimgs != "")
+        {
+            foreach(string str in detailimgs.Split(','))
+            {
+                @:detailimgs.push("@str");
+            }
+        }
+
         var cuploadprodetailimgs = new Cupload({
             ele: '#cupload-prodetailimgs',
             num: 20,
-            @if(detailimgs != "")
-            {
-                @:data:["@detailimgs"]
-            }
+            data: detailimgs.length == 0 ? null : detailimgs
         });
+
 
         layui.use(['form', 'layedit', 'laydate', 'tableSelect', 'element'], function () {
             var form = layui.form
@@ -315,9 +328,9 @@
                 }
 
                 for (var i = 0; i < cuploadpromainimgs.imageInput.length; i++) {
-                    if (cuploadpromainimgs.imageInput[0].value.indexOf("shopapi") != -1) {
+                    if (cuploadpromainimgs.imageInput[i].value.indexOf("shopapi") != -1) {
                         var newimg = {
-                            "showimg": cuploadpromainimgs.imageInput[0].value,
+                            "showimg": cuploadpromainimgs.imageInput[i].value,
                             "displayorder": i + 1
                         }
                         mainimgs.push(newimg);
@@ -344,9 +357,9 @@
                     }
                 }
                 for (var i = 0; i < cuploadprodetailimgs.imageInput.length; i++) {
-                    if (cuploadpromainimgs.imageInput[0].value.indexOf("shopapi") != -1) {
+                    if (cuploadpromainimgs.imageInput[i].value.indexOf("shopapi") != -1) {
                         var newimg = {
-                            "showimg": cuploadpromainimgs.imageInput[0].value,
+                            "showimg": cuploadpromainimgs.imageInput[i].value,
                             "displayorder": i + 1
                         }
                         detailimgs.push(newimg);
@@ -518,7 +531,7 @@
                             }
                         }
                     })*@
-            
+
         }
 
         function DeleteAttribute(obj) {

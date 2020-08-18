@@ -96,5 +96,23 @@ namespace Mzh.Public.Base
             }
             return model;
         }
+
+        public static DateTime MonDay(this DateTime time)
+        {
+            var weekday = time.DayOfWeek;
+            if(weekday == 0)
+            {
+                return time.AddDays(-6).Date;
+            }
+            else
+            {
+                return time.AddDays(-1*((int)weekday-1)).Date;
+            }
+        }
+
+        public static DateTime FirstInMonth(this DateTime time)
+        {
+            return time.AddDays(1 - time.Day).Date;
+        }
     }
 }

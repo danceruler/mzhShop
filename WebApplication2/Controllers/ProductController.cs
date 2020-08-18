@@ -24,15 +24,6 @@ namespace WebApplication2.Controllers
             return productCache.GetProductListFromCache();
         }
 
-        /// <summary>
-        /// 新增编辑商品
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public AddProductModel AddProduct()
-        {
-            return new AddProductModel();
-        }
+
     }
 }

@@ -17,7 +17,7 @@ namespace Remoting
         /// <summary>
         /// 创建订单
         /// </summary>
-        public void CreatOrder(CreateOrderModel createModel)
+        public ResultModel CreatOrder(CreateOrderModel createModel)
         {
             throw new NotImplementedException();
         }
@@ -27,7 +27,33 @@ namespace Remoting
         /// </summary>
         /// <param name="sqlWhere"></param>
         /// <returns></returns>
-        private List<ShowOrderInfo> GetOrderList(string sqlWhere,int page,int count)
+        public List<ShowOrderInfo> GetOrderList(string sqlWhere, int page, int count)
+        {
+            throw new NotImplementedException();
+        }
+        /// <summary>
+        /// 获取今日统计数据
+        /// </summary>
+        /// <returns></returns>
+        public DayStatisticsModel GetDayStatistics()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取周统计数据
+        /// </summary>
+        /// <returns></returns>
+        public WeekStatisticsModel GetWeekStatistics()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取月统计数据
+        /// </summary>
+        /// <returns></returns>
+        public MonthStatisticsModel GetMonthStatistics()
         {
             throw new NotImplementedException();
         }

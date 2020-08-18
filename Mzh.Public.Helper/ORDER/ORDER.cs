@@ -20,7 +20,7 @@ namespace Remoting
         /// <summary>
         /// 创建订单
         /// </summary>
-        public void CreatOrder(CreateOrderModel createModel)
+        public ResultModel CreatOrder(CreateOrderModel createModel)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
@@ -92,14 +92,16 @@ namespace Remoting
 
 
                     //写入统计数据
-
+                    AddStatistics(false, neworder, context);
 
                     tran.Commit();
+                    return ResultModel.Success("");
                 }
                 catch (Exception ex)
                 {
                     Logger._.Error(ex.Message);
                     tran.Rollback();
+                    return ResultModel.Fail();
                 }
             }
         }
@@ -109,7 +111,7 @@ namespace Remoting
         /// </summary>
         /// <param name="sqlWhere"></param>
         /// <returns></returns>
-        private List<ShowOrderInfo> GetOrderList(string sqlWhere,int page,int count)
+        public List<ShowOrderInfo> GetOrderList(string sqlWhere,int page,int count)
         {
             List<ShowOrderInfo> orderlist = new List<ShowOrderInfo>();
             string sql = $@"SELECT TOP {count} bsp_orders.oid,bsp_orders.uid,bsp_orders.orderstate,bsp_orders.type,bsp_orders.productamount,bsp_orders.orderamount,
@@ -295,6 +297,9 @@ namespace Remoting
             if(todayStat == null)
             {
                 todayStat = new bsp_orderstatistics();
+                todayStat.type = 0;
+                todayStat.time = order.addtime.Date;
+                todayStat.timestr = todaytimeStr;
                 todayStat.ordercount = 0;
                 todayStat.ordersum = 0;
                 todayStat.finishordercount = 0;
@@ -324,8 +329,78 @@ namespace Remoting
             context.SaveChanges();
 
             //周统计
+            var MondayStr = order.addtime.MonDay().ToString("yyyy-MM-dd");
+            var weekStat = context.bsp_orderstatistics.Where(t => t.type == 1 && t.timestr == MondayStr).SingleOrDefault();
+            if(weekStat == null)
+            {
+                weekStat = new bsp_orderstatistics();
+                weekStat.type = 1;
+                weekStat.time = order.addtime.MonDay();
+                weekStat.timestr = MondayStr;
+                weekStat.ordercount = 0;
+                weekStat.ordersum = 0;
+                weekStat.finishordercount = 0;
+                weekStat.finishordersum = 0;
+                weekStat.ordercountavg = 0;
+                weekStat.ordersumavg = 0;
+                weekStat.shipordercount = 0;
+                weekStat.shipordersum = 0;
+                weekStat.shopordercount = 0;
+                weekStat.shopordersum = 0;
+                context.bsp_orderstatistics.Add(weekStat);
+            }
+            if (!isfinish)
+            {
+                weekStat.ordercount += 1;
+                weekStat.ordersum += order.surplusmoney;
+            }
+            else
+            {
+                weekStat.finishordercount += 1;
+                weekStat.finishordersum += order.payfee;
+                weekStat.shipordercount += order.type == (int)OrderType.InShop ? 0 : 1;
+                weekStat.shipordersum += order.type == (int)OrderType.InShop ? 0 : order.payfee;
+                weekStat.shopordercount += order.type == (int)OrderType.InShop ? 1 : 0;
+                weekStat.shopordersum += order.type == (int)OrderType.InShop ? order.payfee : 0;
+            }
+            context.SaveChanges();
 
             //月统计
+            var monthDayStr = order.addtime.FirstInMonth().ToString("yyyy-MM-dd");
+            var monthStat = context.bsp_orderstatistics.Where(t => t.type == 2  && t.timestr == monthDayStr).SingleOrDefault();
+            if (monthStat == null)
+            {
+                monthStat = new bsp_orderstatistics();
+                monthStat.type = 2;
+                monthStat.time = order.addtime.FirstInMonth();
+                monthStat.timestr = monthDayStr;
+                monthStat.ordercount = 0;
+                monthStat.ordersum = 0;
+                monthStat.finishordercount = 0;
+                monthStat.finishordersum = 0;
+                monthStat.ordercountavg = 0;
+                monthStat.ordersumavg = 0;
+                monthStat.shipordercount = 0;
+                monthStat.shipordersum = 0;
+                monthStat.shopordercount = 0;
+                monthStat.shopordersum = 0;
+                context.bsp_orderstatistics.Add(monthStat);
+            }
+            if (!isfinish)
+            {
+                monthStat.ordercount += 1;
+                monthStat.ordersum += order.surplusmoney;
+            }
+            else
+            {
+                monthStat.finishordercount += 1;
+                monthStat.finishordersum += order.payfee;
+                monthStat.shipordercount += order.type == (int)OrderType.InShop ? 0 : 1;
+                monthStat.shipordersum += order.type == (int)OrderType.InShop ? 0 : order.payfee;
+                monthStat.shopordercount += order.type == (int)OrderType.InShop ? 1 : 0;
+                monthStat.shopordersum += order.type == (int)OrderType.InShop ? order.payfee : 0;
+            }
+            context.SaveChanges();
         }
     }
 }

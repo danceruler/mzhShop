@@ -481,17 +481,15 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:WebApplication2.Controllers.OrderController.CreatOrder(Mzh.Public.Model.Model.CreateOrderModel)">
+            <summary>
+            创建订单
+            </summary>
+        </member>
         <member name="M:WebApplication2.Controllers.ProductController.GetProductListFromCache">
             <summary>
             小程序获取商品列表
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:WebApplication2.Controllers.ProductController.AddProduct">
-            <summary>
-            新增编辑商品
-            </summary>
-            <param name="model"></param>
             <returns></returns>
         </member>
         <member name="F:WebApplication2.Utils.MultiXmlDocumentationProvider.Providers">
