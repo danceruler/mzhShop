@@ -9,13 +9,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WxPayAPI;
 
 namespace Remoting
 {
     public class ORDER : MarshalByRefObject
     {
         COUPON Coupon;
-
 
         /// <summary>
         /// 创建订单
@@ -27,7 +27,10 @@ namespace Remoting
                 var tran = context.Database.BeginTransaction();
                 try
                 {
-                    //新增订单
+                    //商品描述
+                    string probody = "";
+
+                    #region 新增订单
                     bsp_orders neworder = new bsp_orders();
                     neworder.address = createModel.address;
                     neworder.addtime = DateTime.Now;
@@ -49,8 +52,9 @@ namespace Remoting
                     neworder.weight = createModel.weight;
                     context.bsp_orders.Add(neworder);
                     context.SaveChanges();
+                    #endregion
 
-                    //新增订单商品
+                    #region 新增订单商品
                     foreach (var cartitem in createModel.cart.items)
                     {
                         bsp_orderproducts newop = new bsp_orderproducts();
@@ -73,10 +77,12 @@ namespace Remoting
                         newop.weight = cartitem.count * cartitem.productinfo.weight;
                         context.bsp_orderproducts.Add(newop);
                         context.SaveChanges();
+                        probody += $"商品名称:{newop.name} 规格:{newop.skuinput} 数量:{newop.buycount} \r\n";
                     }
+                    #endregion
 
-                    //更新优惠券关联订单
-                    if(createModel.coupons.Count > 0)
+                    #region 更新优惠券关联订单
+                    if (createModel.coupons.Count > 0)
                     {
                         foreach(var c in createModel.coupons)
                         {
@@ -87,12 +93,42 @@ namespace Remoting
                             context.SaveChanges();
                         }
                     }
+                    #endregion
 
-                    //创建预支付订单
+                    #region 创建预支付订单
+                    var user = context.bsp_users.SingleOrDefault(t => t.uid == neworder.uid);
+                    WXPayHelper wXPayHelper = new WXPayHelper();
+                    var unifiedResult = wXPayHelper.unifiedorder(neworder.oid, 0, probody, user.openid, neworder.orderamount);
+                    if (!unifiedResult.Item1)
+                    {
+                        return ResultModel.Fail("调用微信下单接口失败，详情见日志");
+                    }
+                    bsp_orderprepays newprepay = new bsp_orderprepays();
+                    newprepay.addtime = DateTime.Now;
+                    newprepay.appid = unifiedResult.Item2.GetValue("appid").ToString();
+                    newprepay.device_info = unifiedResult.Item2.GetValue("device_info").ToString();
+                    newprepay.ispay = false;
+                    newprepay.mch_id = unifiedResult.Item2.GetValue("mch_id").ToString();
+                    newprepay.nonce_str = unifiedResult.Item2.GetValue("nonce_str").ToString();
+                    newprepay.notify_url = WXPayHelper.notify_url;
+                    newprepay.oid = neworder.oid;
+                    newprepay.openid = user.openid;
+                    newprepay.paytime = null;
+                    newprepay.prepayexpiretime = DateTime.Now.AddMinutes(120);
+                    newprepay.prepayid = unifiedResult.Item2.GetValue("prepay_id").ToString();
+                    newprepay.sign = unifiedResult.Item2.GetValue("sign").ToString();
+                    newprepay.signType = WxPayData.SIGN_TYPE_MD5;
+                    newprepay.spbill_create_ip = WXPayHelper.GetLocalIp();
+                    newprepay.timeStamp = WXPayHelper.GetTimeStamp();
+                    newprepay.total_fee = neworder.orderamount;
+                    newprepay.transaction_id = "";
+                    context.bsp_orderprepays.Add(newprepay);
+                    context.SaveChanges();
+                    #endregion
 
-
-                    //写入统计数据
+                    #region 写入统计数据
                     AddStatistics(false, neworder, context);
+                    #endregion
 
                     tran.Commit();
                     return ResultModel.Success("");
@@ -248,6 +284,95 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取微信小程序用来支付的数据
+        /// </summary>
+        public void GetDataForPay(int oid)
+        {
+
+        }
+
+        /// <summary>
+        /// 微信支付回调
+        /// </summary>
+        /// <param name="notifyxml"></param>
+        /// <returns></returns>
+        public string PayNotify(string notifyxml)
+        {
+            Logger._.Info("微信支付回调数据:" + notifyxml);
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    var notifydata = XMLHelper.FromXml(notifyxml);
+                    if(notifydata["result_code"].ToString() == "SUCCESS")
+                    {
+                        int oid = int.Parse(notifydata["out_trade_no"].ToString());
+                        var prepay = context.bsp_orderprepays.SingleOrDefault(t => t.oid == oid);
+                        if (prepay == null)
+                        {
+                            Logger._.Error("微信支付回调找不到对应的预支付订单");
+                            return $@"<xml>
+                                  <return_code><![CDATA[FAIL]]></return_code>
+                                  <return_msg><![CDATA[微信支付回调找不到对应的预支付订单]]></return_msg>
+                                </xml>";
+                        }
+                        #region 检验通知数据和预支付数据的一致性
+                        if(prepay.sign != notifydata["sign"].ToString())
+                        {
+                            return $@"<xml>
+                                      <return_code><![CDATA[FAIL]]></return_code>
+                                      <return_msg><![CDATA[签名失败]]></return_msg>
+                                    </xml>";
+                        }
+                        #endregion
+
+                        prepay.ispay = true;
+                        prepay.paytime = DateTime.Now;
+                        var order = context.bsp_orders.SingleOrDefault(t => t.oid == prepay.oid);
+                        order.paytime = prepay.paytime.Value;
+                        order.paymode = (int)PayMod.WxPay;
+                        order.payfee = order.orderamount;
+                        if (order.type == (int)OrderType.InShop)
+                        {
+                            order.orderstate = (int)OrderState.Booking;
+                        }
+                        else
+                        {
+                            order.orderstate = (int)OrderState.WaitSend;
+                        }
+                        context.SaveChanges();
+
+                        #region 写入统计数据
+                        AddStatistics(true, order, context);
+                        #endregion
+
+                        tran.Commit();
+                        return $@"<xml>
+                                      <return_code><![CDATA[SUCCESS]]></return_code>
+                                      <return_msg><![CDATA[OK]]></return_msg>
+                                    </xml>";
+                    }
+                    
+                    return $@"<xml>
+                                  <return_code><![CDATA[FAIL]]></return_code>
+                                  <return_msg><![CDATA[]]></return_msg>
+                                </xml>";
+                }
+                catch(Exception ex)
+                {
+                    Logger._.Error(ex.Message);
+                    tran.Rollback();
+                    return $@"<xml>
+                                  <return_code><![CDATA[FAIL]]></return_code>
+                                  <return_msg><![CDATA[数据操作失败]]></return_msg>
+                                </xml>";
+                }
+            }
+
+        }
+
+        /// <summary>
         /// 获得基本统计信息
         /// </summary>
         /// <param name="beginTime"></param>
@@ -315,7 +440,7 @@ namespace Remoting
             if (!isfinish)
             {
                 todayStat.ordercount += 1;
-                todayStat.ordersum += order.surplusmoney;
+                todayStat.ordersum += order.orderamount;
             }
             else
             {
@@ -352,7 +477,7 @@ namespace Remoting
             if (!isfinish)
             {
                 weekStat.ordercount += 1;
-                weekStat.ordersum += order.surplusmoney;
+                weekStat.ordersum += order.orderamount;
             }
             else
             {
@@ -389,7 +514,7 @@ namespace Remoting
             if (!isfinish)
             {
                 monthStat.ordercount += 1;
-                monthStat.ordersum += order.surplusmoney;
+                monthStat.ordersum += order.orderamount;
             }
             else
             {

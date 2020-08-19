@@ -188,6 +188,9 @@
     <Compile Include="bsp_orderactions.cs">
       <DependentUpon>mzhshop.tt</DependentUpon>
     </Compile>
+    <Compile Include="bsp_orderprepays.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
     <Compile Include="bsp_orderproducts.cs">
       <DependentUpon>mzhshop.tt</DependentUpon>
     </Compile>

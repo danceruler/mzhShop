@@ -58,6 +58,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WxPayAPI">
+      <HintPath>..\DLL\cs_sdk_v3.0.9\WxPayAPI\bin\WxPayAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BOX\BOX.cs" />

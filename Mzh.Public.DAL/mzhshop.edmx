@@ -550,6 +550,29 @@
           <Property Name="actiontime" Type="datetime" Nullable="false" />
           <Property Name="actiondes" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
+        <EntityType Name="bsp_orderprepays">
+          <Key>
+            <PropertyRef Name="prepayid" />
+          </Key>
+          <Property Name="prepayid" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="oid" Type="int" Nullable="false" />
+          <Property Name="appid" Type="nvarchar" MaxLength="200" />
+          <Property Name="mch_id" Type="nvarchar" MaxLength="200" />
+          <Property Name="device_info" Type="nvarchar" MaxLength="200" />
+          <Property Name="nonce_str" Type="nvarchar" MaxLength="200" />
+          <Property Name="sign" Type="nvarchar" MaxLength="1000" />
+          <Property Name="timeStamp" Type="nvarchar" MaxLength="200" />
+          <Property Name="signType" Type="nvarchar" MaxLength="200" />
+          <Property Name="notify_url" Type="nvarchar" MaxLength="1000" />
+          <Property Name="total_fee" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="addtime" Type="datetime" />
+          <Property Name="openid" Type="nvarchar" MaxLength="200" />
+          <Property Name="ispay" Type="bit" Nullable="false" />
+          <Property Name="paytime" Type="datetime" />
+          <Property Name="spbill_create_ip" Type="nvarchar" MaxLength="200" />
+          <Property Name="transaction_id" Type="nvarchar" MaxLength="200" />
+          <Property Name="prepayexpiretime" Type="datetime" />
+        </EntityType>
         <EntityType Name="bsp_orderproducts">
           <Key>
             <PropertyRef Name="recordid" />
@@ -1048,6 +1071,7 @@
           <Property Name="liftbantime" Type="datetime" Nullable="false" />
           <Property Name="salt" Type="nchar" MaxLength="6" Nullable="false" />
           <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="openid" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityContainer Name="brnshopModelStoreContainer">
           <EntitySet Name="bsp_adminactions" EntityType="Self.bsp_adminactions" Schema="dbo" store:Type="Tables" />
@@ -1095,6 +1119,7 @@
           <EntitySet Name="bsp_onlinetime" EntityType="Self.bsp_onlinetime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_onlineusers" EntityType="Self.bsp_onlineusers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_orderactions" EntityType="Self.bsp_orderactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bsp_orderprepays" EntityType="Self.bsp_orderprepays" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_orderproducts" EntityType="Self.bsp_orderproducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_orderrefunds" EntityType="Self.bsp_orderrefunds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_orderreviews" EntityType="Self.bsp_orderreviews" Schema="dbo" store:Type="Tables" />
@@ -2118,6 +2143,7 @@
           <EntitySet Name="bsp_files" EntityType="brnshopModel.bsp_files" />
           <EntitySet Name="bsp_users" EntityType="brnshopModel.bsp_users" />
           <EntitySet Name="bsp_orderstatistics" EntityType="brnshopModel.bsp_orderstatistics" />
+          <EntitySet Name="bsp_orderprepays" EntityType="brnshopModel.bsp_orderprepays" />
         </EntityContainer>
         <EntityType Name="bsp_navs">
           <Key>
@@ -2237,6 +2263,7 @@
           <Property Name="liftbantime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="salt" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="openid" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_orderstatistics">
           <Key>
@@ -2256,6 +2283,29 @@
           <Property Name="shipordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="shopordercount" Type="Int32" Nullable="false" />
           <Property Name="shopordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="bsp_orderprepays">
+          <Key>
+            <PropertyRef Name="prepayid" />
+          </Key>
+          <Property Name="prepayid" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="oid" Type="Int32" Nullable="false" />
+          <Property Name="appid" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="mch_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="device_info" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="nonce_str" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="sign" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="timeStamp" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="signType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="notify_url" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="total_fee" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="addtime" Type="DateTime" Precision="3" />
+          <Property Name="openid" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ispay" Type="Boolean" Nullable="false" />
+          <Property Name="paytime" Type="DateTime" Precision="3" />
+          <Property Name="spbill_create_ip" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="transaction_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="prepayexpiretime" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3341,6 +3391,7 @@
           <EntitySetMapping Name="bsp_users">
             <EntityTypeMapping TypeName="brnshopModel.bsp_users">
               <MappingFragment StoreEntitySet="bsp_users">
+                <ScalarProperty Name="openid" ColumnName="openid" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="salt" ColumnName="salt" />
                 <ScalarProperty Name="liftbantime" ColumnName="liftbantime" />
@@ -3376,6 +3427,30 @@
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bsp_orderprepays">
+            <EntityTypeMapping TypeName="brnshopModel.bsp_orderprepays">
+              <MappingFragment StoreEntitySet="bsp_orderprepays">
+                <ScalarProperty Name="prepayexpiretime" ColumnName="prepayexpiretime" />
+                <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
+                <ScalarProperty Name="spbill_create_ip" ColumnName="spbill_create_ip" />
+                <ScalarProperty Name="paytime" ColumnName="paytime" />
+                <ScalarProperty Name="ispay" ColumnName="ispay" />
+                <ScalarProperty Name="openid" ColumnName="openid" />
+                <ScalarProperty Name="addtime" ColumnName="addtime" />
+                <ScalarProperty Name="total_fee" ColumnName="total_fee" />
+                <ScalarProperty Name="notify_url" ColumnName="notify_url" />
+                <ScalarProperty Name="signType" ColumnName="signType" />
+                <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
+                <ScalarProperty Name="sign" ColumnName="sign" />
+                <ScalarProperty Name="nonce_str" ColumnName="nonce_str" />
+                <ScalarProperty Name="device_info" ColumnName="device_info" />
+                <ScalarProperty Name="mch_id" ColumnName="mch_id" />
+                <ScalarProperty Name="appid" ColumnName="appid" />
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="prepayid" ColumnName="prepayid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -29,7 +29,7 @@ namespace RemotingTest.Server
             ChannelServices.RegisterChannel(httpChannel, false);
             Assembly assembly = Assembly.LoadFile(AppDomain.CurrentDomain.BaseDirectory + "\\Mzh.Public.BLL.dll");
             Type[] types = assembly.GetTypes();
-            foreach(var type in types)
+            foreach (var type in types)
             {
                 RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
             }

@@ -29,5 +29,6 @@ namespace Mzh.Public.DAL
         public System.DateTime liftbantime { get; set; }
         public string salt { get; set; }
         public string username { get; set; }
+        public string openid { get; set; }
     }
 }

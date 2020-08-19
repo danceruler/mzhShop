@@ -81,6 +81,7 @@
         <EntityTypeShape EntityType="brnshopModel.bsp_files" Width="1.5" PointX="25.375" PointY="7.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_users" Width="1.5" PointX="23.375" PointY="13.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_orderstatistics" Width="1.5" PointX="9.375" PointY="25.75" />
+        <EntityTypeShape EntityType="brnshopModel.bsp_orderprepays" Width="1.5" PointX="25.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

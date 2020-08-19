@@ -326,11 +326,11 @@
                         }
                     })
                 }
-
-                for (var i = 0; i < cuploadpromainimgs.imageInput.length; i++) {
-                    if (cuploadpromainimgs.imageInput[i].value.indexOf("shopapi") != -1) {
+                console.log($(cuploadpromainimgs.imageList.children[0]).children('.cupload-image-preview')[0].src);
+                for (var i = 0; i < cuploadpromainimgs.imageList.children.length; i++) {
+                    if ($(cuploadpromainimgs.imageList.children[i]).children('.cupload-image-preview')[0].src.indexOf("shopapi") != -1) {
                         var newimg = {
-                            "showimg": cuploadpromainimgs.imageInput[i].value,
+                            "showimg": $(cuploadpromainimgs.imageList.children[i]).children('.cupload-image-preview')[0].src,
                             "displayorder": i + 1
                         }
                         mainimgs.push(newimg);
@@ -338,7 +338,7 @@
                         $.ajax({
                             type: 'post',
                             url: domain + '/Upload/Base64Str',
-                            data: { base64str: cuploadpromainimgs.imageInput[i].value },
+                            data: { base64str: $(cuploadpromainimgs.imageList.children[i]).children('.cupload-image-preview')[0].src },
                             async: false,
                             success: function (res) {
                                 if (res.state == 1) {
@@ -356,10 +356,10 @@
                         })
                     }
                 }
-                for (var i = 0; i < cuploadprodetailimgs.imageInput.length; i++) {
-                    if (cuploadpromainimgs.imageInput[i].value.indexOf("shopapi") != -1) {
+                for (var i = 0; i < cuploadprodetailimgs.imageList.children.length; i++) {
+                    if ($(cuploadprodetailimgs.imageList.children[i]).children('.cupload-image-preview')[0].src.indexOf("shopapi") != -1) {
                         var newimg = {
-                            "showimg": cuploadpromainimgs.imageInput[i].value,
+                            "showimg": $(cuploadprodetailimgs.imageList.children[i]).children('.cupload-image-preview')[0].src,
                             "displayorder": i + 1
                         }
                         detailimgs.push(newimg);
@@ -367,7 +367,7 @@
                         $.ajax({
                             type: 'post',
                             url: domain + '/Upload/Base64Str',
-                            data: { base64str: cuploadprodetailimgs.imageInput[i].value },
+                            data: { base64str: $(cuploadprodetailimgs.imageList.children[i]).children('.cupload-image-preview')[0].src },
                             async: false,
                             success: function (res) {
                                 if (res.state == 1) {

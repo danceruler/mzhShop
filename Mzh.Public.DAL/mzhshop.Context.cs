@@ -101,5 +101,6 @@ namespace Mzh.Public.DAL
         public virtual DbSet<bsp_files> bsp_files { get; set; }
         public virtual DbSet<bsp_users> bsp_users { get; set; }
         public virtual DbSet<bsp_orderstatistics> bsp_orderstatistics { get; set; }
+        public virtual DbSet<bsp_orderprepays> bsp_orderprepays { get; set; }
     }
 }

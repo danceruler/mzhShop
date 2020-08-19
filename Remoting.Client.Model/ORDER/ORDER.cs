@@ -57,5 +57,23 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 获取微信小程序用来支付的数据
+        /// </summary>
+        public void GetDataForPay(int oid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 微信支付回调
+        /// </summary>
+        /// <param name="notifyxml"></param>
+        /// <returns></returns>
+        public string PayNotify(string notifyxml)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
