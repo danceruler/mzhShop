@@ -41,5 +41,34 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 获取首页可领用优惠券列表
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowCouponTypeInfo> GetRecpientCoupon(int uid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 用户领用优惠券接口
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="couponTypeid"></param>
+        public ResultModel RecpientCoupon(int uid, int couponTypeid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取用户可用的优惠券列表，前端发起创建订单请求时判断优惠券使用逻辑
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        public List<ShowCouponInfo> GetCanUseCoupons(int uid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

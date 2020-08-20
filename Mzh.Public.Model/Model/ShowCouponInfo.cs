@@ -129,5 +129,9 @@ namespace Mzh.Public.Model.Model
         /// 为折扣时的折扣
         /// </summary>
         public double ct_discount { get; set; }
+        /// <summary>
+        /// 优惠券关联产品（仅在优惠券为指定商品时有值）
+        /// </summary>
+        public int ct_pid { get; set; }
     }
 }

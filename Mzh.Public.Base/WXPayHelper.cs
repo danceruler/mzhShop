@@ -13,7 +13,7 @@ namespace Mzh.Public.Base
     public class WXPayHelper
     {
         public static string appid = ConfigurationManager.AppSettings["appid"];
-        private static string appsecret = ConfigurationManager.AppSettings["appsecret"];
+        public static string appsecret = ConfigurationManager.AppSettings["appsecret"];
         private static string mch_id = ConfigurationManager.AppSettings["mch_id"];
         public static string notify_url = ConfigurationManager.AppSettings["notify_url"];
         public static string refund_notify_url = ConfigurationManager.AppSettings["refund_notify_url"];
@@ -119,6 +119,15 @@ namespace Mzh.Public.Base
             }
             return AddressIP;
         }
+    }
+
+    public class Code2SessionModel
+    {
+        public string openid { get; set; }
+        public string session_key { get; set; }
+        public string unionid { get; set; }
+        public int errcode { get; set; }
+        public string errmsg { get; set; }
     }
 
 

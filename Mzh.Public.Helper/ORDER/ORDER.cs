@@ -95,6 +95,23 @@ namespace Remoting
                     }
                     #endregion
 
+                    #region 修改包厢信息
+                    if(neworder.type == (int)OrderType.InShop && neworder.boxid > 0)
+                    {
+                        var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == neworder.boxid);
+                        if(box.state != (int)BoxState.Empty)
+                        {
+                            return ResultModel.Fail("该包厢已被占用，请重新选择包厢");
+                        }
+                        box.booktime = DateTime.Now;
+                        box.oid = neworder.oid;
+                        box.phone = neworder.mobile;
+                        box.state = (int)BoxState.Book;
+                        box.uid = neworder.uid;
+                        context.SaveChanges();
+                    }
+                    #endregion
+
                     #region 创建预支付订单
                     var user = context.bsp_users.SingleOrDefault(t => t.uid == neworder.uid);
                     WXPayHelper wXPayHelper = new WXPayHelper();
@@ -137,7 +154,7 @@ namespace Remoting
                 {
                     Logger._.Error(ex.Message);
                     tran.Rollback();
-                    return ResultModel.Fail();
+                    return ResultModel.Error();
                 }
             }
         }
@@ -336,6 +353,11 @@ namespace Remoting
                         if (order.type == (int)OrderType.InShop)
                         {
                             order.orderstate = (int)OrderState.Booking;
+                            //if(order.boxid > 0)
+                            //{
+                            //    var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
+                            //    box.
+                            //}
                         }
                         else
                         {

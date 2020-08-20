@@ -30,5 +30,6 @@ namespace Mzh.Public.DAL
         public string salt { get; set; }
         public string username { get; set; }
         public string openid { get; set; }
+        public int gender { get; set; }
     }
 }

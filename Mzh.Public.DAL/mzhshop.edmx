@@ -1063,7 +1063,7 @@
           <Property Name="userrid" Type="smallint" Nullable="false" />
           <Property Name="admingid" Type="smallint" Nullable="false" />
           <Property Name="nickname" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="avatar" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="avatar" Type="nvarchar" MaxLength="1000" />
           <Property Name="paycredits" Type="int" Nullable="false" />
           <Property Name="rankcredits" Type="int" Nullable="false" />
           <Property Name="verifyemail" Type="tinyint" Nullable="false" />
@@ -1072,6 +1072,7 @@
           <Property Name="salt" Type="nchar" MaxLength="6" Nullable="false" />
           <Property Name="username" Type="nvarchar" MaxLength="50" />
           <Property Name="openid" Type="nvarchar" MaxLength="200" />
+          <Property Name="gender" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="brnshopModelStoreContainer">
           <EntitySet Name="bsp_adminactions" EntityType="Self.bsp_adminactions" Schema="dbo" store:Type="Tables" />
@@ -2255,7 +2256,7 @@
           <Property Name="userrid" Type="Int16" Nullable="false" />
           <Property Name="admingid" Type="Int16" Nullable="false" />
           <Property Name="nickname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="avatar" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+          <Property Name="avatar" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="paycredits" Type="Int32" Nullable="false" />
           <Property Name="rankcredits" Type="Int32" Nullable="false" />
           <Property Name="verifyemail" Type="Byte" Nullable="false" />
@@ -2264,6 +2265,7 @@
           <Property Name="salt" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="openid" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_orderstatistics">
           <Key>
@@ -3391,6 +3393,7 @@
           <EntitySetMapping Name="bsp_users">
             <EntityTypeMapping TypeName="brnshopModel.bsp_users">
               <MappingFragment StoreEntitySet="bsp_users">
+                <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="openid" ColumnName="openid" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="salt" ColumnName="salt" />
