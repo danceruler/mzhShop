@@ -60,6 +60,7 @@
     <Compile Include="Model\ShowCouponInfo.cs" />
     <Compile Include="Model\ShowOrderInfo.cs" />
     <Compile Include="Model\ShowProductInfo.cs" />
+    <Compile Include="Model\ShowSYSModel.cs" />
     <Compile Include="Model\ShowUserInfo.cs" />
     <Compile Include="Model\StatisticsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

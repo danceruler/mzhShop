@@ -18,8 +18,8 @@ namespace Remoting
     {
         public static List<bsp_banners> banners = new List<bsp_banners>();
         public void Init() 
-        { 
-            
+        {
+            InitBanners();
         }
 
         public List<bsp_banners> GetBanners()

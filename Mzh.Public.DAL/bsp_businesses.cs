@@ -18,5 +18,13 @@ namespace Mzh.Public.DAL
         public string name { get; set; }
         public string address { get; set; }
         public Nullable<System.DateTime> addtime { get; set; }
+        public string description { get; set; }
+        public string showimg { get; set; }
+        public Nullable<decimal> latitude { get; set; }
+        public Nullable<decimal> longitude { get; set; }
+        public Nullable<decimal> canSendRadius { get; set; }
+        public string businessTimeStr { get; set; }
+        public int businessStart { get; set; }
+        public int businessEnd { get; set; }
     }
 }

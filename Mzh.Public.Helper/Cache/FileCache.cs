@@ -78,7 +78,7 @@ namespace Mzh.Public.BLL.Cache
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
                     return "";
                 }
             }

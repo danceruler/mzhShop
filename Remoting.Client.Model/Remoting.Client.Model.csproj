@@ -57,6 +57,7 @@
     <Compile Include="PRO\PRODUCT.cs" />
     <Compile Include="PRO\SKU.cs" />
     <Compile Include="RemotingHelp.cs" />
+    <Compile Include="SYS\SYS.cs" />
     <Compile Include="USER\USER.cs" />
   </ItemGroup>
   <ItemGroup>

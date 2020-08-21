@@ -51,7 +51,7 @@ namespace Mzh.Public.Model
         /// </summary>
         Refunded = 7,
         /// <summary>
-        /// 评价完成
+        /// 评价完成（暂时没有这个）
         /// </summary>
         Reviewed = 8,
     }

@@ -37,8 +37,8 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.Message);
-                    return ResultModel.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error(ex.ToString());
                 }
             }
         }
@@ -72,8 +72,8 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.Message);
-                    return ResultModel.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error(ex.ToString());
                 }
             }
         }
@@ -109,8 +109,8 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.Message);
-                    return ResultModel.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error(ex.ToString());
                 }
             }
         }
@@ -138,8 +138,8 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.Message);
-                    return ResultModel.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error(ex.ToString());
                 }
             }
         }
@@ -170,7 +170,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
                     return new List<AttributeInfo>();
                 }
             }
@@ -201,7 +201,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
                     return null;
                 }
             }

@@ -75,5 +75,32 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 用户确认收货接口
+        /// </summary>
+        public ResultModel QueryRecieve(int oid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 修改堂食订单为已使用
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel UseShopOder(int oid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 用户申请退款
+        /// </summary>
+        /// <param name="oid"></param>
+        /// <returns></returns>
+        public ResultModel ApplyRefund(int oid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

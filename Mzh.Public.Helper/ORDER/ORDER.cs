@@ -152,7 +152,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
                     tran.Rollback();
                     return ResultModel.Error();
                 }
@@ -383,7 +383,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.Message);
+                    Logger._.Error(ex.ToString());
                     tran.Rollback();
                     return $@"<xml>
                                   <return_code><![CDATA[FAIL]]></return_code>
@@ -392,6 +392,114 @@ namespace Remoting
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 用户确认收货接口
+        /// </summary>
+        public ResultModel QueryRecieve(int oid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    var order = context.bsp_orders.SingleOrDefault(t => t.oid == oid);
+                    if (order.orderstate == (int)OrderState.Sending)
+                    {
+                        //修改订单状态
+                        order.orderstate = (int)OrderState.WaitReview;
+                        context.SaveChanges();
+                        tran.Commit();
+                        return ResultModel.Success("确认收货成功");
+                    }
+                    else
+                        return ResultModel.Fail("请刷新订单列表");
+
+                }catch(Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 修改堂食订单为已使用
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel UseShopOder(int oid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    var order = context.bsp_orders.SingleOrDefault(t => t.oid == oid);
+                    if (order.orderstate == (int)OrderState.Booking)
+                    {
+                        //修改订单状态
+                        order.orderstate = (int)OrderState.WaitReview;
+                        var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
+                        box.state = (int)BoxState.Use;
+                        context.SaveChanges();
+                        tran.Commit();
+                        return ResultModel.Success("修改成功");
+                    }
+                    else
+                        return ResultModel.Fail("请刷新订单列表");
+
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 用户申请退款
+        /// </summary>
+        /// <param name="oid"></param>
+        /// <returns></returns>
+        public ResultModel ApplyRefund(int oid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    var order = context.bsp_orders.SingleOrDefault(t => t.oid == oid);
+                    if (order.orderstate == (int)OrderState.Booking|| order.orderstate == (int)OrderState.WaitSend
+                        ||order.orderstate == (int)OrderState.Sending)
+                    {
+                        //修改订单状态
+                        order.orderstate = (int)OrderState.ApplyRefund;
+                        var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
+                        box.state = (int)BoxState.Use;
+                        context.SaveChanges();
+                        tran.Commit();
+                        return ResultModel.Success("申请成功，请等待商家确认");
+                    }
+                    else if(order.orderstate == (int)OrderState.WaitReview)
+                    {
+                        return ResultModel.Fail("当前订单已确认，不允许退款");
+                    }else 
+                    //if(order.orderstate == (int)OrderState.ApplyRefund|| order.orderstate == (int)OrderState.Refunded|| order.orderstate == (int)OrderState.WaitPay)
+                    {
+                        return ResultModel.Fail("请刷新订单");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
         }
 
         /// <summary>

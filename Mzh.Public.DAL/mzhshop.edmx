@@ -191,6 +191,14 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" />
           <Property Name="address" Type="nvarchar" MaxLength="100" />
           <Property Name="addtime" Type="datetime" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" />
+          <Property Name="showimg" Type="nvarchar" MaxLength="500" />
+          <Property Name="latitude" Type="decimal" Precision="18" Scale="8" />
+          <Property Name="longitude" Type="decimal" Precision="18" Scale="8" />
+          <Property Name="canSendRadius" Type="decimal" Precision="18" Scale="8" />
+          <Property Name="businessTimeStr" Type="nvarchar" MaxLength="100" />
+          <Property Name="businessStart" Type="int" Nullable="false" />
+          <Property Name="businessEnd" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_businessimgs">
           <Key>
@@ -1312,6 +1320,14 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="addtime" Type="DateTime" Precision="3" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="showimg" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="latitude" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="longitude" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="canSendRadius" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="businessTimeStr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="businessStart" Type="Int32" Nullable="false" />
+          <Property Name="businessEnd" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_businessimgs">
           <Key>
@@ -2471,6 +2487,14 @@
           <EntitySetMapping Name="bsp_businesses">
             <EntityTypeMapping TypeName="brnshopModel.bsp_businesses">
               <MappingFragment StoreEntitySet="bsp_businesses">
+                <ScalarProperty Name="businessEnd" ColumnName="businessEnd" />
+                <ScalarProperty Name="businessStart" ColumnName="businessStart" />
+                <ScalarProperty Name="businessTimeStr" ColumnName="businessTimeStr" />
+                <ScalarProperty Name="canSendRadius" ColumnName="canSendRadius" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="showimg" ColumnName="showimg" />
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="businessid" ColumnName="businessid" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="address" ColumnName="address" />

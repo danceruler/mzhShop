@@ -40,7 +40,9 @@ namespace Remoting.WinServer
                 {
                     RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
                 }
-            }catch(Exception ex)
+                Hello.InitAll();
+            }
+            catch(Exception ex)
             {
                 File.AppendAllText(AppDomain.CurrentDomain.BaseDirectory + "\\log.txt", ex.ToString());
             }
