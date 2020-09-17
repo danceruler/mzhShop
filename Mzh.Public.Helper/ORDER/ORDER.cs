@@ -160,6 +160,19 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取用户的某个状态的订单列表
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="orderstate"></param>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<ShowOrderInfo> GetUserOrderList(int uid,OrderState orderstate,int page,int count)
+        {
+            return GetOrderList($@"AND bsp_orders.uid = {uid} AND bsp_orders.orderstate = {orderstate}", page, count);
+        }
+
+        /// <summary>
         /// 获取订单列表
         /// </summary>
         /// <param name="sqlWhere"></param>
@@ -303,9 +316,37 @@ namespace Remoting
         /// <summary>
         /// 获取微信小程序用来支付的数据
         /// </summary>
-        public void GetDataForPay(int oid)
+        public ResultModel GetDataForPay(int oid)
         {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                try
+                {
+                    var prepay = context.bsp_orderprepays.SingleOrDefault(t => t.oid == oid);
+                    if (prepay.addtime.Value <= DateTime.Now.AddMinutes(-119))
+                    {
+                        return ResultModel.Fail("该订单已经超时未支付");
+                    }
 
+                    var timestamp = WXPayHelper.GetTimeStamp();
+                    string aSign = $@"appId={prepay.appid}&nonceStr={prepay.nonce_str}&package=prepay_id={prepay.prepayid}&signType=MD5&timeStamp={timestamp}&key={WXPayHelper.apisecret}";
+
+                    WxpayDataForApi model = new WxpayDataForApi();
+                    model.appId = prepay.appid;
+                    model.nonceStr = prepay.nonce_str;
+                    model.package = $@"prepay_id={prepay.prepayid}";
+                    model.paySign = EncryptHelp.EncryptMD5(aSign);
+                    model.signType = WxPayData.SIGN_TYPE_MD5;
+                    model.timeStamp = timestamp;
+
+                    return ResultModel.Success("",model);
+
+                }
+                catch (Exception ex)
+                {
+                    return ResultModel.Error(ex.ToString());
+                }
+            }    
         }
 
         /// <summary>

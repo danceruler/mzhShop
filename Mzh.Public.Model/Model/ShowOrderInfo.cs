@@ -233,4 +233,19 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public string op_inputvalue { get; set; }
     }
+
+    /// <summary>
+    /// 用于小程序前端调起支付的信息类
+    /// </summary>
+    [Serializable]
+    public class WxpayDataForApi
+    {
+        public string appId { get; set; }
+        public string timeStamp { get; set; }
+        public string nonceStr { get; set; }
+        public string package { get; set; }
+        public string signType { get; set; }
+        public string paySign { get; set; }
+       
+    }
 }

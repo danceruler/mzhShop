@@ -14,7 +14,8 @@ namespace Mzh.Public.Base
     {
         public static string appid = ConfigurationManager.AppSettings["appid"];
         public static string appsecret = ConfigurationManager.AppSettings["appsecret"];
-        private static string mch_id = ConfigurationManager.AppSettings["mch_id"];
+        public static string mch_id = ConfigurationManager.AppSettings["mch_id"];
+        public static string apisecret = ConfigurationManager.AppSettings["apisecret"];
         public static string notify_url = ConfigurationManager.AppSettings["notify_url"];
         public static string refund_notify_url = ConfigurationManager.AppSettings["refund_notify_url"];
 
@@ -51,8 +52,6 @@ namespace Mzh.Public.Base
             }
             return new Tuple<bool, WxPayData>(false, result);
         }
-
-        
 
         #region 生成随机字符串 
         public static string GetRandomString(int CodeCount)

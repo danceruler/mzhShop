@@ -23,6 +23,19 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取用户的某个状态的订单列表
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="orderstate"></param>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<ShowOrderInfo> GetUserOrderList(int uid, OrderState orderstate, int page, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 获取订单列表
         /// </summary>
         /// <param name="sqlWhere"></param>
@@ -61,7 +74,7 @@ namespace Remoting
         /// <summary>
         /// 获取微信小程序用来支付的数据
         /// </summary>
-        public void GetDataForPay(int oid)
+        public ResultModel GetDataForPay(int oid)
         {
             throw new NotImplementedException();
         }
