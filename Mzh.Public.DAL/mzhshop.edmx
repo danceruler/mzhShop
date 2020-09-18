@@ -163,6 +163,7 @@
           <Property Name="phone" Type="nvarchar" MaxLength="50" />
           <Property Name="username" Type="nvarchar" MaxLength="50" />
           <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="bookprice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="bsp_brands">
           <Key>
@@ -655,7 +656,7 @@
             <PropertyRef Name="oid" />
           </Key>
           <Property Name="oid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="osn" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="osn" Type="nvarchar" MaxLength="20" />
           <Property Name="uid" Type="int" Nullable="false" />
           <Property Name="orderstate" Type="tinyint" Nullable="false" />
           <Property Name="productamount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -667,12 +668,12 @@
           <Property Name="shipsn" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="shipsystemname" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="shipfriendname" Type="nchar" MaxLength="30" Nullable="false" />
-          <Property Name="shiptime" Type="datetime" Nullable="false" />
+          <Property Name="shiptime" Type="datetime" />
           <Property Name="paysn" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="paysystemname" Type="char" MaxLength="20" Nullable="false" />
           <Property Name="payfriendname" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="paymode" Type="tinyint" Nullable="false" />
-          <Property Name="paytime" Type="datetime" Nullable="false" />
+          <Property Name="paytime" Type="datetime" />
           <Property Name="regionid" Type="smallint" Nullable="false" />
           <Property Name="consignee" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="mobile" Type="varchar" MaxLength="15" Nullable="false" />
@@ -680,7 +681,7 @@
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="zipcode" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="besttime" Type="datetime" Nullable="false" />
+          <Property Name="besttime" Type="datetime" />
           <Property Name="shipfee" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="payfee" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="fullcut" Type="int" Nullable="false" />
@@ -693,6 +694,8 @@
           <Property Name="ip" Type="char" MaxLength="15" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
           <Property Name="boxid" Type="int" Nullable="false" />
+          <Property Name="boxprice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="bookprice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="bsp_orderstatistics">
           <Key>
@@ -1699,7 +1702,7 @@
             <PropertyRef Name="oid" />
           </Key>
           <Property Name="oid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="osn" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="osn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="uid" Type="Int32" Nullable="false" />
           <Property Name="orderstate" Type="Byte" Nullable="false" />
           <Property Name="productamount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
@@ -1711,12 +1714,12 @@
           <Property Name="shipsn" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="shipsystemname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="shipfriendname" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="shiptime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="shiptime" Type="DateTime" Precision="3" />
           <Property Name="paysn" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="paysystemname" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="payfriendname" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="paymode" Type="Byte" Nullable="false" />
-          <Property Name="paytime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="paytime" Type="DateTime" Precision="3" />
           <Property Name="regionid" Type="Int16" Nullable="false" />
           <Property Name="consignee" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
@@ -1724,7 +1727,7 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="zipcode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="besttime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="besttime" Type="DateTime" Precision="3" />
           <Property Name="shipfee" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="payfee" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="fullcut" Type="Int32" Nullable="false" />
@@ -1737,6 +1740,8 @@
           <Property Name="ip" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="type" Type="Int32" Nullable="false" />
           <Property Name="boxid" Type="Int32" Nullable="false" />
+          <Property Name="boxprice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="bookprice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
@@ -2211,6 +2216,7 @@
           <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="bookprice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="bsp_friendlinks">
           <Key>
@@ -2897,6 +2903,8 @@
           <EntitySetMapping Name="bsp_orders">
             <EntityTypeMapping TypeName="brnshopModel.bsp_orders">
               <MappingFragment StoreEntitySet="bsp_orders">
+                <ScalarProperty Name="bookprice" ColumnName="bookprice" />
+                <ScalarProperty Name="boxprice" ColumnName="boxprice" />
                 <ScalarProperty Name="boxid" ColumnName="boxid" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="oid" ColumnName="oid" />
@@ -3348,6 +3356,7 @@
           <EntitySetMapping Name="bsp_boxes">
             <EntityTypeMapping TypeName="brnshopModel.bsp_boxes">
               <MappingFragment StoreEntitySet="bsp_boxes">
+                <ScalarProperty Name="bookprice" ColumnName="bookprice" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="phone" ColumnName="phone" />

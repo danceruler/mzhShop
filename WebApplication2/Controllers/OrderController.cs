@@ -16,6 +16,7 @@ namespace WebApplication2.Controllers
         /// <summary>
         /// 创建订单
         /// </summary>
+        [HttpPost]
         public ResultModel CreatOrder(CreateOrderModel createModel)
         {
             ORDER order = RemotingHelp.GetModelObject<ORDER>();
@@ -25,6 +26,7 @@ namespace WebApplication2.Controllers
         /// <summary>
         /// 用户确认收货接口
         /// </summary>
+        [HttpPost]
         public ResultModel QueryRecieve(int oid)
         {
             ORDER order = RemotingHelp.GetModelObject<ORDER>();
@@ -36,6 +38,7 @@ namespace WebApplication2.Controllers
         /// </summary>
         /// <param name="oid"></param>
         /// <returns></returns>
+        [HttpPost]
         public ResultModel ApplyRefund(int oid)
         {
             ORDER order = RemotingHelp.GetModelObject<ORDER>();
@@ -45,6 +48,7 @@ namespace WebApplication2.Controllers
         /// <summary>
         /// 获取微信小程序用来支付的数据
         /// </summary>
+        [HttpPost]
         public ResultModel GetDataForPay(int oid)
         {
             ORDER order = RemotingHelp.GetModelObject<ORDER>();
@@ -59,6 +63,7 @@ namespace WebApplication2.Controllers
         /// <param name="page"></param>
         /// <param name="count"></param>
         /// <returns></returns>
+        [HttpPost]
         public List<ShowOrderInfo> GetUserOrderList(int uid, OrderState orderstate, int page, int count)
         {
             ORDER order = RemotingHelp.GetModelObject<ORDER>();

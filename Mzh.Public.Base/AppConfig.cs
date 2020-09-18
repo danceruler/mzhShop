@@ -19,6 +19,7 @@ namespace Mzh.Public.Base
         public static int TcpPort { get; set; }
         public static int HttpPort { get; set; }
         public static string Client { get; set; } = "";
+        public static DateTime expiretime { get; set; }
 
         public static void ClientInit()
         {
@@ -48,6 +49,7 @@ namespace Mzh.Public.Base
             WebAdminId = WebAdminid;
             TcpPort = tcpport;
             HttpPort = httpport;
+            expiretime = DateTime.Parse(EncryptHelp.Decrypt3Des(configJson["ee"].ToString()));
         }
 
     }

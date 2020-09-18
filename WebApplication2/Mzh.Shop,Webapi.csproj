@@ -163,6 +163,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -185,6 +186,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <None Include="json\test.json" />
+    <None Include="json\products.json" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -268,6 +271,10 @@
     <ProjectReference Include="..\Mzh.Public.Base\Mzh.Public.Base.csproj">
       <Project>{d1886799-bb6e-459f-90e4-8b2e081d6dd4}</Project>
       <Name>Mzh.Public.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mzh.Public.DAL\Mzh.Public.DAL.csproj">
+      <Project>{1224C59E-A951-43C5-B80A-D56A947E696D}</Project>
+      <Name>Mzh.Public.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mzh.Public.Model\Mzh.Public.Model.csproj">
       <Project>{ac560c10-f6fd-4c90-9158-903317d13a29}</Project>

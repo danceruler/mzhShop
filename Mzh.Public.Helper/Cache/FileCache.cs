@@ -32,7 +32,6 @@ namespace Mzh.Public.BLL.Cache
             {
                 try
                 {
-
                     var filecache = files.OrderByDescending(t => t.expiretime).FirstOrDefault(t => t.objectname == objectname);
                     if (filecache == null || filecache.expiretime < DateTime.Now.AddMinutes(3))
                     {

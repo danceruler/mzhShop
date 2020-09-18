@@ -36,10 +36,6 @@ namespace Remoting.Client.Model
         {
             if (!IsConnect) return null;
             return (TModel)Activator.GetObject(typeof(TModel), $"tcp://localhost:{AppConfig.TcpPort}/"+ typeof(TModel).Name);
-            //Assembly assembly = Assembly.LoadFile(AppDomain.CurrentDomain.BaseDirectory.Trim() + "\\Remoting.Client.Model.dll");
-            ////获取对象
-            //object obj1 = assembly.CreateInstance(typeof(TModel).Name);
-            //return (TModel)obj1;
         }
     }
 }

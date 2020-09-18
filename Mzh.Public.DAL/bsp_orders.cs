@@ -27,12 +27,12 @@ namespace Mzh.Public.DAL
         public string shipsn { get; set; }
         public string shipsystemname { get; set; }
         public string shipfriendname { get; set; }
-        public System.DateTime shiptime { get; set; }
+        public Nullable<System.DateTime> shiptime { get; set; }
         public string paysn { get; set; }
         public string paysystemname { get; set; }
         public string payfriendname { get; set; }
         public byte paymode { get; set; }
-        public System.DateTime paytime { get; set; }
+        public Nullable<System.DateTime> paytime { get; set; }
         public short regionid { get; set; }
         public string consignee { get; set; }
         public string mobile { get; set; }
@@ -40,7 +40,7 @@ namespace Mzh.Public.DAL
         public string email { get; set; }
         public string zipcode { get; set; }
         public string address { get; set; }
-        public System.DateTime besttime { get; set; }
+        public Nullable<System.DateTime> besttime { get; set; }
         public decimal shipfee { get; set; }
         public decimal payfee { get; set; }
         public int fullcut { get; set; }
@@ -53,5 +53,7 @@ namespace Mzh.Public.DAL
         public string ip { get; set; }
         public int type { get; set; }
         public int boxid { get; set; }
+        public Nullable<decimal> boxprice { get; set; }
+        public Nullable<decimal> bookprice { get; set; }
     }
 }

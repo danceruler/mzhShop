@@ -1,0 +1,191 @@
+﻿{
+  "type": 2,
+  "orderamount": 44.0,
+  "regionid": 11,
+  "consignee": "sample string 4",
+  "mobile": "15273239270",
+  "address": "宁波市鄞州区",
+  "besttime": "2020-09-18T09:00:58.9319093+08:00",
+  "shipfee": 1,
+  "fullcut": 0,
+  "discount": 0,
+  "couponmoney": 0,
+  "weight": 2,
+  "buyerremark": "remark",
+  "boxid": 4,
+  "uid": 10,
+  "cart": {
+    "items": [
+      {
+        "productinfo": {
+          "pid": 74,
+          "cateid": 84,
+          "name": "12312",
+          "shopprice": 22.00,
+          "marketprice": 22.00,
+          "costprice": 0.00,
+          "packprice": 0.0,
+          "state": 1,
+          "isbest": 1,
+          "ishot": 0,
+          "isnew": 1,
+          "displayorder": 0,
+          "weight": 0,
+          "showimg": "http://shopapi.boiledchicken.top/File/GetUrl?objectname=QWFO1596186283.png",
+          "salecount": 0,
+          "visitcount": 0,
+          "reviewcount": 0,
+          "addtime": "2020-07-31T09:04:42.87",
+          "description": "123213",
+          "isfullcut": 1,
+          "stock": 0,
+          "skuCount": 6,
+          "attributes": [
+            {
+              "attrid": 55,
+              "name": "饮料",
+              "remark": null,
+              "attributevalues": [
+                {
+                  "attrvalueid": 191,
+                  "attrvalue": "可乐",
+                  "attrname": "饮料",
+                  "price": 22.00,
+                  "stock": -1
+                },
+                {
+                  "attrvalueid": 193,
+                  "attrvalue": "666",
+                  "attrname": "饮料",
+                  "price": 22.00,
+                  "stock": -1
+                },
+                {
+                  "attrvalueid": 198,
+                  "attrvalue": "芬达",
+                  "attrname": "饮料",
+                  "price": 22.00,
+                  "stock": -1
+                }
+              ]
+            },
+            {
+              "attrid": 56,
+              "name": "配菜",
+              "remark": null,
+              "attributevalues": [
+                {
+                  "attrvalueid": 194,
+                  "attrvalue": "酸萝卜",
+                  "attrname": "配菜",
+                  "price": 22.00,
+                  "stock": -1
+                },
+                {
+                  "attrvalueid": 195,
+                  "attrvalue": "酸豆角",
+                  "attrname": "配菜",
+                  "price": 22.00,
+                  "stock": -1
+                }
+              ]
+            }
+          ],
+          "skuInfos": [
+            {
+              "sku_guid": "24a0cbc3-86b5-4af5-b47c-0798e714ae31",
+              "attrvalueids": [
+                191,
+                194
+              ],
+              "sku_input": "饮料-可乐 配菜-酸萝卜 ",
+              "sku_price": -1.00,
+              "sku_isdefaultprice": 1,
+              "sku_stock": -1
+            },
+            {
+              "sku_guid": "7f9f0690-80c2-43d9-b2b0-9940d9ad26f7",
+              "attrvalueids": [
+                193,
+                194
+              ],
+              "sku_input": "饮料-666 配菜-酸萝卜 ",
+              "sku_price": -1.00,
+              "sku_isdefaultprice": 1,
+              "sku_stock": -1
+            },
+            {
+              "sku_guid": "e47d4cd0-a51e-4627-a857-d8e2d6886775",
+              "attrvalueids": [
+                198,
+                194
+              ],
+              "sku_input": "饮料-芬达 配菜-酸萝卜 ",
+              "sku_price": -1.00,
+              "sku_isdefaultprice": 1,
+              "sku_stock": -1
+            },
+            {
+              "sku_guid": "0eb93d55-9cc4-4694-8036-fb5bcc274414",
+              "attrvalueids": [
+                191,
+                195
+              ],
+              "sku_input": "饮料-可乐 配菜-酸豆角 ",
+              "sku_price": -1.00,
+              "sku_isdefaultprice": 1,
+              "sku_stock": -1
+            },
+            {
+              "sku_guid": "7bb08391-56c5-4f80-928f-3e05b9a11d50",
+              "attrvalueids": [
+                193,
+                195
+              ],
+              "sku_input": "饮料-666 配菜-酸豆角 ",
+              "sku_price": -1.00,
+              "sku_isdefaultprice": 1,
+              "sku_stock": -1
+            },
+            {
+              "sku_guid": "2c2df053-a395-4952-b894-c58bc3dbe182",
+              "attrvalueids": [
+                198,
+                195
+              ],
+              "sku_input": "饮料-芬达 配菜-酸豆角 ",
+              "sku_price": -1.00,
+              "sku_isdefaultprice": 1,
+              "sku_stock": -1
+            }
+          ],
+          "mainImgs": [
+            {
+              "showimg": "http://shopapi.boiledchicken.top/File/GetUrl?objectname=ieTe1597772675.png",
+              "displayorder": 1
+            }
+          ],
+          "detailImgs": [
+            {
+              "showimg": "http://shopapi.boiledchicken.top/File/GetUrl?objectname=gfUX1597769464.png",
+              "displayorder": 1
+            },
+            {
+              "showimg": "http://shopapi.boiledchicken.top/File/GetUrl?objectname=gfUX1597769464.png",
+              "displayorder": 2
+            }
+          ],
+          "cateids": null
+        },
+        "count": 2,
+        "shopprice": 22.0,
+        "marketprice": 22.0,
+        "skuguid": "24a0cbc3-86b5-4af5-b47c-0798e714ae31",
+        "skuinput": "饮料-可乐 配菜-酸萝卜 "
+      }
+    ],
+    "productamount": 44
+  },
+  "coupons": [
+  ]
+}

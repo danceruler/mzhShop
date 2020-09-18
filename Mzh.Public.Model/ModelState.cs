@@ -54,6 +54,10 @@ namespace Mzh.Public.Model
         /// 评价完成（暂时没有这个）
         /// </summary>
         Reviewed = 8,
+        /// <summary>
+        /// 超时未支付
+        /// </summary>
+        EndForNoPay = 9,
     }
 
     /// <summary>

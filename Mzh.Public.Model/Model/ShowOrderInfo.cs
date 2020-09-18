@@ -232,6 +232,10 @@ namespace Mzh.Public.Model.Model
         /// 规格值
         /// </summary>
         public string op_inputvalue { get; set; }
+        /// <summary>
+        /// 规格值
+        /// </summary>
+        public string op_skuinput { get; set; }
     }
 
     /// <summary>

@@ -69,6 +69,14 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public int boxid { get; set; }
         /// <summary>
+        /// 包厢费
+        /// </summary>
+        public decimal boxprice { get; set; }
+        /// <summary>
+        /// 预定费
+        /// </summary>
+        public decimal bookprice { get; set; }
+        /// <summary>
         /// 用户信息
         /// </summary>
         public int uid { get; set; }

@@ -481,6 +481,12 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:WebApplication2.Controllers.BoxController.GetBoxes">
+            <summary>
+            获取包厢列表
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication2.Controllers.CouponController.GetRecpientCoupon(System.Int32)">
             <summary>
             获取首页可领用优惠券列表
@@ -516,6 +522,21 @@
             用户申请退款
             </summary>
             <param name="oid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication2.Controllers.OrderController.GetDataForPay(System.Int32)">
+            <summary>
+            获取微信小程序用来支付的数据
+            </summary>
+        </member>
+        <member name="M:WebApplication2.Controllers.OrderController.GetUserOrderList(System.Int32,Mzh.Public.Model.OrderState,System.Int32,System.Int32)">
+            <summary>
+            获取用户的某个状态的订单列表
+            </summary>
+            <param name="uid"></param>
+            <param name="orderstate"></param>
+            <param name="page"></param>
+            <param name="count"></param>
             <returns></returns>
         </member>
         <member name="M:WebApplication2.Controllers.ProductController.GetProductListFromCache">
