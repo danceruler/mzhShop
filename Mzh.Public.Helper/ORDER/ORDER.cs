@@ -519,8 +519,11 @@ namespace Remoting
                     {
                         //修改订单状态
                         order.orderstate = (int)OrderState.WaitReview;
-                        var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
-                        box.state = (int)BoxState.Use;
+                        if(order.boxid > 0)
+                        {
+                            var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
+                            box.state = (int)BoxState.Use;
+                        }
                         context.SaveChanges();
                         tran.Commit();
                         return ResultModel.Success("修改成功");

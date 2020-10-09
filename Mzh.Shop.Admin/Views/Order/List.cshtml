@@ -684,28 +684,35 @@
                     if (res.length > 0) {
                         page = page + 1;
                         for (var index in res) {
+                            var detail = ''
+                            for (var index2 in res[index].orderProducts) {
+                                detail = detail + res[index].orderProducts[index2].op_name + '*' + res[index].orderProducts[index2].op_buycount + '   ';
+                            }
 
                             var optionHtml = '';
                             if (res[index].orderstate == 2) {
                                 optionHtml = '<div class="layui-col-md4" style="line-height:120px;height:120px">'
-                                    + '<a class="layui-btn layui-btn-danger order-sender">发货</a>'
+                                    + '<a class="layui-btn layui-btn-danger order-sender" data-oid='+res[index].oid+'>发货</a>'
                                     + '</div>';
-                            } else {
+                            } else if(res[index].orderstate == 4){
                                 optionHtml = '<div class="layui-col-md4" style="line-height:120px;height:120px">'
-                                    + '<a class="layui-btn layui-btn-danger order-use">预定使用</a>'
+                                    + '<a class="layui-btn layui-btn-danger order-use" data-oid='+res[index].oid+'>预定使用</a>'
                                     + '</div>'
                             }
 
-                            $("#orderlist-box").append('<div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:20px">'
+                            $("#orderlist-box").append('<div class="layui-row" style="margin-left:5%;width:90%;border:2px #222222 thin groove;background-color:#DDDDDD;margin-top:20px">'
                                 +'<div class="layui-col-md6">'
                                 +'<div class="layui-row">'
                                 +'<div class="mzh-col" style="height:120px">'
                                 + '<div class="layui-row" style="height:100%">'
-                                + '<div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">'
-                                + '订单编号'+res[index].oid
+                                + '<div style="margin-top:20px;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">'
+                                + '订单编号  '+res[index].oid+'       用户手机号:'+res[index].mobile
+                                + '</div>'
+                                + '<div style="height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">'
+                                + '详情:  '+detail
                                 + '</div>'
                                 + '<div style="height:33%;align-content:center">'
-                                + '订单金额' +res[index].orderamount
+                                + '订单金额   ' +res[index].orderamount
                                 + '</div>'
                                 + '</div>'
                                 + '</div>'
@@ -726,14 +733,28 @@
                         $(".order-sender").click(function () {
                             $.ajax({
                                 type: 'post',
-                                url: '/Order/GetOrderList?startTime=' + $("#startTime").val() + '&endTime=' + $("#endTime").val() + '&page=' + page + '&count=' + count + '&orderid=' + $("#orderid").val(),
+                                url: '/Order/SendOrder?oid=' + $(this).data('oid'),
                                 dataType: 'json',
+                                success: function (res) {
+                                    if (res.state == 1) {
+                                        $(".query").click()
+                                    }
+                                }
                             })
                         });
 
                         $(".order-use").unbind()
                         $(".order-use").click(function () {
-                            alert('使用')
+                            $.ajax({
+                                type: 'post',
+                                url: '/Order/UseShopOder?oid=' + $(this).data('oid'),
+                                dataType: 'json',
+                                success: function (res) {
+                                    if (res.state == 1) {
+                                        $(".query").click()
+                                    }
+                                }
+                            })
                         });
                     }
                 }
