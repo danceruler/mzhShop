@@ -36,6 +36,18 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取用户的订单列表
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<ShowOrderInfo> GetUserAllOrderList(int uid, int page, int count)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 获取订单列表
         /// </summary>
         /// <param name="sqlWhere"></param>
@@ -102,6 +114,15 @@ namespace Remoting
         /// </summary>
         /// <returns></returns>
         public ResultModel UseShopOder(int oid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 修改外卖订单为已发货
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel SendOrder(int oid)
         {
             throw new NotImplementedException();
         }

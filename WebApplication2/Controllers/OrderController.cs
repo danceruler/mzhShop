@@ -69,5 +69,37 @@ namespace WebApplication2.Controllers
             ORDER order = RemotingHelp.GetModelObject<ORDER>();
             return order.GetUserOrderList(uid,orderstate,page,count);
         }
+
+        /// <summary>
+        /// 获取用户的订单列表
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="orderstate"></param>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public List<ShowOrderInfo> GetUserAllOrderList(int uid, int page, int count)
+        {
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            return order.GetUserAllOrderList(uid, page, count);
+        }
+
+        [HttpPost]
+        public string PayNotify()
+        {
+            String xmlData = getPostStr();
+            //保存付款成功过来的数据
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            return order.PayNotify(xmlData);
+        }
+
+        public static string getPostStr()
+        {
+            Int32 intLen = Convert.ToInt32(System.Web.HttpContext.Current.Request.InputStream.Length);
+            byte[] b = new byte[intLen];
+            System.Web.HttpContext.Current.Request.InputStream.Read(b, 0, intLen);
+            return System.Text.Encoding.UTF8.GetString(b);
+        }
     }
 }

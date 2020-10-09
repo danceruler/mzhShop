@@ -173,6 +173,8 @@ namespace Mzh.Public.Model
                     return "退款完成";
                 case OrderState.Reviewed:
                     return "评价完成";
+                case OrderState.EndForNoPay:
+                    return "支付超时";
                 default:
                     return "";
             }

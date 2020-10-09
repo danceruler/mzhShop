@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,22 +15,643 @@
 <body>
     <div class="layuimini-container">
         <div class="layuimini-main">
-            暂无数据（先放着）
-
-            @*<script type="text/html" id="toolbarDemo">
-                <div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
-                    <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始时间</label>
+                        <div class="layui-input-block" style="width:200px">
+                            <div class="layui-input-inline">
+                                <input type="text" name="date" id="startTime" lay-verify="date" value="@ViewBag.startTime" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束时间</label>
+                        <div class="layui-input-block" style="width:200px">
+                            <div class="layui-input-inline">
+                                <input type="text" name="date" id="endTime" lay-verify="date" value="@ViewBag.endTime" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">订单编号</label>
+                        <div class="layui-input-block" style="width:200px">
+                            <input type="text" name="title" lay-verify="title" id="orderid" autocomplete="off" placeholder="订单编号" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-primary query">查询</a>
+                    </div>
                 </div>
-            </script>
+            </form>
 
-            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+            @*<div class="layui-card catecard" style="background-color: rgba(246, 250, 249, 1);">
 
-            <script type="text/html" id="currentTableBar">
-                <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
-            </script>*@
-
+        </div>*@
+        <div class="layui-card-body" id="orderlist-box">
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-danger order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-danger order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:10px">
+                <div class="layui-col-md6">
+                    <div class="layui-row">
+                        <div class="mzh-col" style="height:120px">
+                            @*<div style="width:200px;height:100%;margin-right:5px">
+                            <img style="width:100%;height:100%" src="@plist.productInfos[i].showimg" />
+                            <img src="@plist.productInfos[i].showimg"/>
+                        </div>*@
+                            <div class="layui-row" style="height:100%">
+                                <div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">
+                                    订单编号
+                                </div>
+                                <div style="height:33%;align-content:center">
+                                    订单金额
+                                </div>
+                                @*<div class="mzh-col" style="height:33%;align-content:center">
+                                <div>
+                                    1111
+                                </div>
+                                <div style="margin-left:5px;text-decoration:line-through;">
+                                    <span style="color:gray">
+                                        2222
+                                    </span>
+                                </div>
+                            </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="layui-col-md3" style="line-height:120px;height:120px">
+                @plist.productInfos[i].displayorder
+            </div>*@
+                <div class="layui-col-md3">
+                    <div class="layui-row">
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-sender">发货</a>
+                        </div>
+                        <div class="layui-col-md4" style="line-height:120px;height:120px">
+                            <a class="layui-btn layui-btn-normal order-use">预定使用</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
@@ -39,192 +663,102 @@
     <script src="~/Scripts/mzhconfig.js"></script>
 
     <script>
-        layui.use(['form', 'table', 'miniTab'], function () {
-            var $ = layui.jquery,
-                form = layui.form,
-                table = layui.table;
-            var miniTab = layui.miniTab;
+        var page = 1;
+        var count = 20;
 
-            table.render({
-                elem: '#currentTableId',
-                //url: '../../wwwroot/api/table.json',
-                url: domain + '/Product/GetCategories',
-                toolbar: '#toolbarDemo',
-                defaultToolbar: ['filter', 'exports', 'print', {
-                    title: '提示',
-                    layEvent: 'LAYTABLE_TIPS',
-                    icon: 'layui-icon-tips'
-                }],
-                cols: [[
-                    { type: "checkbox", width: 50 },
-                    { field: 'cateid', width: 100, title: 'ID', sort: true },
-                    { field: 'name', width: 200, title: '分类名称', sort: true },
-                    { field: 'productCount', width: 120, title: '商品数量', event: 'showproducts', style: 'cursor: pointer;color:orange', sort: true },
-                    { field: 'displayorder', width: 100, title: '排序号', sort: false },
-                    //{ field: 'id', width: 80, title: 'ID', sort: true },
-                    //{ field: 'username', width: 80, title: '用户名' },
-                    //{ field: 'sex', width: 80, title: '性别', sort: true },
-                    //{ field: 'city', width: 80, title: '城市' },
-                    //{ field: 'sign', title: '签名', minWidth: 150 },
-                    //{ field: 'experience', width: 80, title: '积分', sort: true },
-                    //{ field: 'score', width: 80, title: '评分', sort: true },
-                    //{ field: 'classify', width: 80, title: '职业' },
-                    //{ field: 'wealth', width: 135, title: '财富', sort: true },
-                    { title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center" }
-                ]],
-                limits: [/*10, 15, 20, 25, 50, */100],
-                limit: 100,
-                //page: true,
-                skin: 'line'
-            });
+        window.onload = function () {
+            ClearOrderList();
+            GetMoreOrder();
+        }
 
-            // 监听搜索操作
-            form.on('submit(data-search-btn)', function (data) {
-                var result = JSON.stringify(data.field);
-                layer.alert(result, {
-                    title: '最终的搜索信息'
-                });
+        function ClearOrderList() {
+            $("#orderlist-box").html('');
+        }
 
-                //执行搜索重载
-                table.reload('currentTableId', {
-                    page: {
-                        curr: 1
-                    }
-                    , where: {
-                        searchParams: result
-                    }
-                }, 'data');
+        function GetMoreOrder() {
+            $.ajax({
+                type: 'post',
+                url: '/Order/GetOrderList?startTime=' + $("#startTime").val() + '&endTime=' + $("#endTime").val() + '&page=' + page + '&count=' + count + '&orderid=' + $("#orderid").val(),
+                dataType:'json',
+                success: function (res) {
+                    if (res.length > 0) {
+                        page = page + 1;
+                        for (var index in res) {
 
-                return false;
-            });
-
-            /**
-             * toolbar监听事件
-             */
-            table.on('toolbar(currentTableFilter)', function (obj) {
-                if (obj.event === 'add') {  // 监听添加操作
-                    var index = layer.open({
-                        title: '添加商品类型',
-                        type: 2,
-                        shade: 0.2,
-                        maxmin: true,
-                        shadeClose: true,
-                        area: ['50%', '50%'],
-                        content: '/Product/ProductTypeAdd',
-                    });
-                    $(window).on("resize", function () {
-                        layer.full(index);
-                    });
-                } else if (obj.event === 'delete') {  // 监听删除操作
-                    var checkStatus = table.checkStatus('currentTableId')
-                        , data = checkStatus.data;
-                    if (data.length == 0) {
-                        var index = layer.alert('没有选择要删除的分类信息', {
-                            title: '提示'
-                        }, function () {
-                            // 关闭弹出层
-                            layer.close(index);
-                        });
-                    } else {
-                        layer.confirm('确认删除吗？', function (index) {
-                            var cateids = [];
-                            for (var i = 0; i < data.length; i++) {
-                                cateids.push(data[i].cateid);
+                            var optionHtml = '';
+                            if (res[index].orderstate == 2) {
+                                optionHtml = '<div class="layui-col-md4" style="line-height:120px;height:120px">'
+                                    + '<a class="layui-btn layui-btn-danger order-sender">发货</a>'
+                                    + '</div>';
+                            } else {
+                                optionHtml = '<div class="layui-col-md4" style="line-height:120px;height:120px">'
+                                    + '<a class="layui-btn layui-btn-danger order-use">预定使用</a>'
+                                    + '</div>'
                             }
+
+                            $("#orderlist-box").append('<div class="layui-row" style="margin-left:5%;width:90%;border:1px #808080 thin groove;background-color:white;margin-top:20px">'
+                                +'<div class="layui-col-md6">'
+                                +'<div class="layui-row">'
+                                +'<div class="mzh-col" style="height:120px">'
+                                + '<div class="layui-row" style="height:100%">'
+                                + '<div style="margin-top:6%;height:27%;align-content:center;font-family: SimHei;font-weight:bold;font-size:15px">'
+                                + '订单编号'+res[index].oid
+                                + '</div>'
+                                + '<div style="height:33%;align-content:center">'
+                                + '订单金额' +res[index].orderamount
+                                + '</div>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>'
+                                + '<div class="layui-col-md3">'
+                                + '<div class="layui-row">'
+                                + '<div class="layui-col-md4" style="line-height:120px;height:120px">'
+                                + '<a class="layui-btn layui-btn-danger order-detail">订单详情</a>'
+                                + '</div>'
+                                + optionHtml
+                                + '</div>'
+                                + '</div>'
+                                +'</div>')
+                        }
+
+                        $(".order-sender").unbind()
+                        $(".order-sender").click(function () {
                             $.ajax({
                                 type: 'post',
-                                url: domain + '/Product/DeleteCateGories',
-                                data: { cateids: cateids },
-                                beforeSend: function () {
-                                    showloading(true);
-                                },
-                                success: function (res) {
-                                    showloading(false);
-                                    if (res.state == 1) {
-                                        window.location.reload();
-                                    } else {
-                                        var index = layer.alert(res.msg, {
-                                            title: '提示'
-                                        }, function () {
-                                            // 关闭弹出层
-                                            layer.close(index);
-                                        });
-                                    }
-                                }
+                                url: '/Order/GetOrderList?startTime=' + $("#startTime").val() + '&endTime=' + $("#endTime").val() + '&page=' + page + '&count=' + count + '&orderid=' + $("#orderid").val(),
+                                dataType: 'json',
                             })
+                        });
+
+                        $(".order-use").unbind()
+                        $(".order-use").click(function () {
+                            alert('使用')
                         });
                     }
                 }
+            })
+        }
+
+        $(".query").click(function () {
+            page = 1;
+            ClearOrderList();
+            GetMoreOrder();
+        })
+        
+
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.form
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate;
+            laydate.render({
+                elem: '#startTime'
             });
-
-            //监听表格复选框选择
-            table.on('checkbox(currentTableFilter)', function (obj) {
-                console.log(obj)
+            laydate.render({
+                elem: '#endTime'
             });
-
-            table.on('tool(currentTableFilter)', function (obj) {
-                var data = obj.data;
-                if (obj.event === 'edit') {
-                    var index = layer.open({
-                        title: '编辑商品类型',
-                        type: 2,
-                        shade: 0.2,
-                        maxmin: true,
-                        shadeClose: true,
-                        area: ['50%', '50%'],
-                        content: '/Product/ProductTypeAdd?cateid=' + data.cateid,
-                    });
-                    $(window).on("resize", function () {
-                        layer.full(index);
-                    });
-                    return false;
-                } else if (obj.event === 'delete') {
-                    layer.confirm('真的删除行么', function (index) {
-                        $.ajax({
-                            type: 'post',
-                            url: domain + '/Product/DeleteCateGory?cateid=' + data.cateid,
-                            beforeSend: function () {
-                                showloading(true);
-                            },
-                            success: function (res) {
-                                showloading(false);
-                                if (res.state == 1) {
-                                    obj.del();
-                                }
-                                var index = layer.alert(res.msg, {
-                                    title: '提示'
-                                }, function () {
-                                    // 关闭弹出层
-                                    layer.close(index);
-                                });
-                            }
-                        })
-                    });
-                }
-                else if (obj.event === 'showproducts') {
-                    miniTab.openNewTabByIframe({
-                        href: "/Product/Product?cateid=" + data.cateid,
-                        title: "商品信息管理",
-                    });
-                    //layer.prompt({
-                    //  formType: 2
-                    //  ,title: '修改 ID 为 ['+ data.id +'] 的用户签名'
-                    //  ,value: data.sign
-                    //}, function(value, index){
-                    //  layer.close(index);
-
-                    //  //这里一般是发送修改的Ajax请求
-
-                    //  //同步更新表格和缓存对应的值
-                    //  obj.update({
-                    //    sign: value
-                    //  });
-                    //});
-                }
-            });
-
-
-        });
+        })
     </script>
 </body>
 </html>

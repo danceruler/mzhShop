@@ -539,6 +539,16 @@
             <param name="count"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication2.Controllers.OrderController.GetUserAllOrderList(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取用户的订单列表
+            </summary>
+            <param name="uid"></param>
+            <param name="orderstate"></param>
+            <param name="page"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication2.Controllers.ProductController.GetProductListFromCache">
             <summary>
             小程序获取商品列表

@@ -33,16 +33,16 @@ namespace Remoting
 
                     #region 新增订单
                     bsp_orders neworder = new bsp_orders();
-                    neworder.address = createModel.address;
+                    neworder.address = createModel.address == null?"": createModel.address;
                     neworder.addtime = DateTime.Now;
                     neworder.besttime = createModel.besttime;
                     neworder.boxid = createModel.boxid;
                     neworder.buyerremark = createModel.buyerremark;
-                    neworder.consignee = createModel.consignee;
+                    neworder.consignee = createModel.consignee == null?"":createModel.consignee;
                     neworder.couponmoney = createModel.couponmoney;
                     neworder.discount = createModel.discount;
                     neworder.fullcut = createModel.fullcut;
-                    neworder.mobile = createModel.mobile;
+                    neworder.mobile = createModel.mobile == null?"": createModel.mobile;
                     neworder.orderamount = createModel.orderamount;
                     neworder.orderstate = (int)OrderState.WaitPay;
                     neworder.productamount = createModel.cart.productamount;
@@ -128,36 +128,37 @@ namespace Remoting
                     }
                     #endregion
 
-                    //#region 创建预支付订单
-                    //var user = context.bsp_users.SingleOrDefault(t => t.uid == neworder.uid);
-                    //WXPayHelper wXPayHelper = new WXPayHelper();
-                    //var unifiedResult = wXPayHelper.unifiedorder(neworder.oid, 0, probody, user.openid, neworder.orderamount);
-                    //if (!unifiedResult.Item1)
-                    //{
-                    //    return ResultModel.Fail("调用微信下单接口失败，详情见日志");
-                    //}
-                    //bsp_orderprepays newprepay = new bsp_orderprepays();
-                    //newprepay.addtime = DateTime.Now;
-                    //newprepay.appid = unifiedResult.Item2.GetValue("appid").ToString();
-                    //newprepay.device_info = unifiedResult.Item2.GetValue("device_info").ToString();
-                    //newprepay.ispay = false;
-                    //newprepay.mch_id = unifiedResult.Item2.GetValue("mch_id").ToString();
-                    //newprepay.nonce_str = unifiedResult.Item2.GetValue("nonce_str").ToString();
-                    //newprepay.notify_url = WXPayHelper.notify_url;
-                    //newprepay.oid = neworder.oid;
-                    //newprepay.openid = user.openid;
-                    //newprepay.paytime = null;
-                    //newprepay.prepayexpiretime = DateTime.Now.AddMinutes(120);
-                    //newprepay.prepayid = unifiedResult.Item2.GetValue("prepay_id").ToString();
-                    //newprepay.sign = unifiedResult.Item2.GetValue("sign").ToString();
-                    //newprepay.signType = WxPayData.SIGN_TYPE_MD5;
-                    //newprepay.spbill_create_ip = WXPayHelper.GetLocalIp();
-                    //newprepay.timeStamp = WXPayHelper.GetTimeStamp();
-                    //newprepay.total_fee = neworder.orderamount;
-                    //newprepay.transaction_id = "";
-                    //context.bsp_orderprepays.Add(newprepay);
-                    //context.SaveChanges();
-                    //#endregion
+                    #region 创建预支付订单
+                    var user = context.bsp_users.SingleOrDefault(t => t.uid == neworder.uid);
+                    WXPayHelper wXPayHelper = new WXPayHelper();
+                    var unifiedResult = wXPayHelper.unifiedorder(neworder.oid, 0, probody, user.openid, neworder.orderamount);
+                    if (!unifiedResult.Item1)
+                    {
+                        return ResultModel.Fail("调用微信下单接口失败，详情见日志");
+                    }
+                    var timestamp = WXPayHelper.GetTimeStamp();
+                    bsp_orderprepays newprepay = new bsp_orderprepays();
+                    newprepay.addtime = DateTime.Now;
+                    newprepay.appid = unifiedResult.Item2["appid"].ToString();
+                    newprepay.device_info = "";
+                    newprepay.ispay = false;
+                    newprepay.mch_id = "";
+                    newprepay.nonce_str = unifiedResult.Item2["nonce_str"].ToString();
+                    newprepay.notify_url = WXPayHelper.notify_url;
+                    newprepay.oid = neworder.oid;
+                    newprepay.openid = user.openid;
+                    newprepay.paytime = null;
+                    newprepay.prepayexpiretime = DateTime.Now.AddMinutes(120);
+                    newprepay.prepayid = unifiedResult.Item2["prepay_id"].ToString();
+                    newprepay.sign = unifiedResult.Item2["sign"].ToString();
+                    newprepay.signType = WxPayData.SIGN_TYPE_MD5;
+                    newprepay.spbill_create_ip = WXPayHelper.GetLocalIp();
+                    newprepay.timeStamp = timestamp;
+                    newprepay.total_fee = neworder.orderamount;
+                    newprepay.transaction_id = "";
+                    context.bsp_orderprepays.Add(newprepay);
+                    context.SaveChanges();
+                    #endregion
 
                     #region 写入统计数据
                     AddStatistics(false, neworder, context);
@@ -165,7 +166,7 @@ namespace Remoting
 
                     tran.Commit();
                     BoxCache.InitBoxes();
-                    return ResultModel.Success("");
+                    return ResultModel.Success("", neworder.oid);
                 }
                 catch (Exception ex)
                 {
@@ -187,6 +188,18 @@ namespace Remoting
         public List<ShowOrderInfo> GetUserOrderList(int uid,OrderState orderstate,int page,int count)
         {
             return GetOrderList($@"AND bsp_orders.uid = {uid} AND bsp_orders.orderstate = {(int)orderstate}", page, count);
+        }
+
+        /// <summary>
+        /// 获取用户的订单列表
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<ShowOrderInfo> GetUserAllOrderList(int uid,int page,int count)
+        {
+            return GetOrderList($@"AND bsp_orders.uid = {uid}", page, count);
         }
 
         /// <summary>
@@ -392,15 +405,22 @@ namespace Remoting
                                   <return_msg><![CDATA[微信支付回调找不到对应的预支付订单]]></return_msg>
                                 </xml>";
                         }
-                        #region 检验通知数据和预支付数据的一致性
-                        if(prepay.sign != notifydata["sign"].ToString())
+                        //#region 检验通知数据和预支付数据的一致性
+                        //if(prepay.sign != notifydata["sign"].ToString())
+                        //{
+                        //    return $@"<xml>
+                        //              <return_code><![CDATA[FAIL]]></return_code>
+                        //              <return_msg><![CDATA[签名失败]]></return_msg>
+                        //            </xml>";
+                        //}
+                        //#endregion
+                        if (prepay.ispay)
                         {
                             return $@"<xml>
-                                      <return_code><![CDATA[FAIL]]></return_code>
-                                      <return_msg><![CDATA[签名失败]]></return_msg>
+                                      <return_code><![CDATA[SUCCESS]]></return_code>
+                                      <return_msg><![CDATA[OK]]></return_msg>
                                     </xml>";
                         }
-                        #endregion
 
                         prepay.ispay = true;
                         prepay.paytime = DateTime.Now;
@@ -501,6 +521,40 @@ namespace Remoting
                         order.orderstate = (int)OrderState.WaitReview;
                         var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
                         box.state = (int)BoxState.Use;
+                        context.SaveChanges();
+                        tran.Commit();
+                        return ResultModel.Success("修改成功");
+                    }
+                    else
+                        return ResultModel.Fail("请刷新订单列表");
+
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 修改外卖订单为已发货
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel SendOrder(int oid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    var order = context.bsp_orders.SingleOrDefault(t => t.oid == oid);
+                    if (order.orderstate == (int)OrderState.WaitSend)
+                    {
+                        //修改订单状态
+                        order.orderstate = (int)OrderState.Sending;
+                        order.shiptime = DateTime.Now;
                         context.SaveChanges();
                         tran.Commit();
                         return ResultModel.Success("修改成功");

@@ -12,6 +12,7 @@ namespace Mzh.Public.DAL
     using System;
     using System.Collections.Generic;
     
+    [Serializable]
     public partial class bsp_orderprepays
     {
         public string prepayid { get; set; }
