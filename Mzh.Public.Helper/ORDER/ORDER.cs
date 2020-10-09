@@ -128,7 +128,7 @@ namespace Remoting
                     }
                     #endregion
 
-                    #region 创建预支付订单
+                    //#region 创建预支付订单
                     //var user = context.bsp_users.SingleOrDefault(t => t.uid == neworder.uid);
                     //WXPayHelper wXPayHelper = new WXPayHelper();
                     //var unifiedResult = wXPayHelper.unifiedorder(neworder.oid, 0, probody, user.openid, neworder.orderamount);
@@ -157,7 +157,7 @@ namespace Remoting
                     //newprepay.transaction_id = "";
                     //context.bsp_orderprepays.Add(newprepay);
                     //context.SaveChanges();
-                    #endregion
+                    //#endregion
 
                     #region 写入统计数据
                     AddStatistics(false, neworder, context);

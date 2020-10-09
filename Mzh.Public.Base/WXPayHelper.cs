@@ -27,21 +27,36 @@ namespace Mzh.Public.Base
         public Tuple<bool, WxPayData> unifiedorder(int oid,int pid,string body,string openid,decimal totalfee)
         {
             WxPayData data = new WxPayData();
+            Dictionary<string, string> dic = new Dictionary<string, string>() {
+                { "appid", appid},
+                { "body", body.Replace("\r\n","")},
+                { "mch_id", mch_id},
+                { "nonce_str", GetRandomString(16)},
+                { "notify_url", notify_url},
+                { "sign_type", WxPayData.SIGN_TYPE_MD5},
+                { "openid", openid},
+                { "out_trade_no", oid.ToString()},
+                { "spbill_create_ip", GetLocalIp()},
+                { "total_fee", ((int)totalfee*100).ToString() },
+                { "trade_type", "JSAPI" },
+            };
             data.SetValue("appid", appid);
+            data.SetValue("body", body.Replace("\r\n", ""));//商品描述
             data.SetValue("mch_id", mch_id);
-            data.SetValue("device_info", "service");
             data.SetValue("nonce_str", GetRandomString(16));
-            data.SetValue("timestamp", GetTimeStamp());
-            data.SetValue("sign_type", WxPayData.SIGN_TYPE_MD5);
-            data.SetValue("body", body);//商品描述
-            data.SetValue("out_trade_no", oid);//商家订单号
-            data.SetValue("total_fee", totalfee);//交易金额
-            data.SetValue("spbill_create_ip", GetLocalIp());
-            data.SetValue("product_id", pid);//商品ID
             data.SetValue("notify_url", notify_url);//支付成功回调地址
+            //data.SetValue("timestamp", GetTimeStamp());
+            data.SetValue("sign_type", WxPayData.SIGN_TYPE_MD5);
             data.SetValue("openid", openid);//用户openid
-            data.SetValue("sign", data.MakeSign());
-
+            data.SetValue("out_trade_no", oid.ToString());//商家订单号
+            data.SetValue("spbill_create_ip", GetLocalIp());
+            data.SetValue("total_fee", ((int)totalfee * 100).ToString());//交易金额
+            data.SetValue("trade_type", "JSAPI");
+            //data.SetValue("product_id", pid.ToString());//商品ID
+            data.SetValue("sign", GetSignString(dic));
+            //var b = data.CheckSign(WxPayData.SIGN_TYPE_MD5);
+            //data.MakeSign(WxPayData.SIGN_TYPE_MD5);
+            var a = data.ToXml();
             Logger._.Info("请求下单接口请求数据:" + data.ToJson());
             WxPayData result = WxPayApi.UnifiedOrder(data);//调用统一下单接口
             Logger._.Info("请求下单接口返回数据:" + result.ToJson());
@@ -83,14 +98,14 @@ namespace Mzh.Public.Base
         #region 签名
         public string GetSignString(Dictionary<string, string> dic)
         {
-            string key = ConfigurationManager.AppSettings["key"].ToString();    //商户平台 API安全里面设置的KEY
+            string key = apisecret;    //商户平台 API安全里面设置的KEY
                                                                                 //排序  
             dic = dic.OrderBy(d => d.Key).ToDictionary(d => d.Key, d => d.Value);
             //连接字段  
             var sign = dic.Aggregate("", (current, d) => current + (d.Key + "=" + d.Value + "&"));
             sign += "key=" + key;
             //MD5  
-            // sign = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sign, "MD5").ToUpper();  
+            //sign = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sign, "MD5").ToUpper();  
             System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
             sign = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(sign))).Replace("-", null);
             return sign;

@@ -9,6 +9,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 前端用户信息类
     /// </summary>
+    [Serializable]
     public class ShowUserInfo
     {
         public int uid { get; set; }

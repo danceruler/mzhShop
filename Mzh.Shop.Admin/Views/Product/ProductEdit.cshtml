@@ -302,18 +302,19 @@
                 var showimg = '';
                 var mainimgs = [];
                 var detailimgs = [];
+                console.log(cuploadproshowimg.imageInput)
                 if (cuploadproshowimg.imageInput.length == 0) {
                     layer.alert("商品主图必须上传！");
                     return false;
                 }
                 showloading(true);
-                if (cuploadproshowimg.imageInput[0].value.indexOf("shopapi") != -1) {
-                    showimg = cuploadproshowimg.imageInput[0].value;
+                if (cuploadproshowimg.imageInput[cuploadproshowimg.imageInput.length-1].value.indexOf("shopapi") != -1) {
+                    showimg = cuploadproshowimg.imageInput[cuploadproshowimg.imageInput.length-1].value;
                 } else {
                     $.ajax({
                         type: 'post',
                         url: domain + '/Upload/Base64Str',
-                        data: { base64str: cuploadproshowimg.imageInput[0].value },
+                        data: { base64str: cuploadproshowimg.imageInput[cuploadproshowimg.imageInput.length-1].value },
                         async: false,
                         success: function (res) {
                             if (res.state == 1) {
