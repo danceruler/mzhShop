@@ -25,8 +25,9 @@ namespace RemotingTest.Server
     {
         static void Main(string[] args)
         {
-            AppConfig.ServerInit();
             //var a = EncryptHelp.Encrypt3Des(DateTime.Now.ToString("2021-09-18 11:15"));
+            AppConfig.ServerInit();
+            
             var tcpChannel = new TcpServerChannel(AppConfig.TcpPort);
             ChannelServices.RegisterChannel(tcpChannel, false);
             var httpChannel = new HttpChannel(AppConfig.HttpPort);

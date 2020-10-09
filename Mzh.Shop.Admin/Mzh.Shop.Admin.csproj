@@ -381,12 +381,13 @@
     <Content Include="Views\Box\Index.cshtml" />
     <Content Include="Views\Box\BoxList.cshtml" />
     <Content Include="Views\Box\BoxDetail.cshtml" />
+    <Content Include="Views\Order\Statistics.cshtml" />
+    <Content Include="Views\Order\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Menu\" />
-    <Folder Include="Views\Order\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
