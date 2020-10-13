@@ -1,6 +1,8 @@
 ﻿using Mzh.Public.Base;
 using Mzh.Public.DAL;
+using Mzh.Public.Model;
 using Mzh.Public.Model.Model;
+using NLog.LayoutRenderers.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,6 +26,7 @@ namespace Remoting
             string sqlWhere = $" AND bsp_coupons.oid in ({string.Join(",", oids.ToArray())})";
             return GetCouponList(sqlWhere, 1, 100);
         }
+
         /// <summary>
         /// 获取某笔订单使用的优惠券信息
         /// </summary>
@@ -117,6 +120,11 @@ namespace Remoting
                             ";
                 DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
                 List<ShowCouponTypeInfo> result = dt.GetList<ShowCouponTypeInfo>("");
+                result.ForEach(t => {
+                    t.t_ct_isstack = t.ct_isstack == 1 ? "可以叠加" : "不可以叠加";
+                    t.t_ct_type = EnumToText.ToText((CouponType)t.ct_type);
+                    t.t_ct_fullcut = t.ct_fullmoney.ToString() + '/' + t.ct_cutmoney.ToString();
+                });
                 return result;
             }
             catch (Exception ex)
@@ -146,7 +154,7 @@ namespace Remoting
                     }
                     var newcoupon = new bsp_coupons();
                     newcoupon.uid = uid;
-                    newcoupon.activateip = WXPayHelper.GetLocalIp();
+                    newcoupon.activateip = WXPayHelper.GetPublicIp();
                     newcoupon.activatetime = DateTime.Now;
                     newcoupon.couponsn = "";
                     newcoupon.coupontypeid = couponTypeid;
@@ -184,7 +192,151 @@ namespace Remoting
         /// <returns></returns>
         public List<ShowCouponInfo> GetCanUseCoupons(int uid)
         {
-            return GetCouponList($"AND bsp_coupons.uid = {uid} AND bsp_coupons.isuse = 0 AND bsp_coupons.expiretime > getdate()",1,20);
+            return GetCouponList($"AND bsp_coupons.uid = {uid} AND bsp_coupons.isuse = 0 AND bsp_coupons.expiretime > getdate()",1,100);
+        }
+
+        /// <summary>
+        /// 获取所有的优惠券类型（用于后台配置）
+        /// </summary>
+        /// <returns></returns>
+        public LayuiTableApiResult GetCouponType()
+        {
+            LayuiTableApiResult result = new LayuiTableApiResult();
+            try
+            {
+                string sql = $@"SELECT bsp_coupontypes.coupontypeid ct_coupontypeid,
+                                   state ct_state,
+                                   name ct_name,
+                                   money ct_money,
+                                   count ct_count,
+                                   sendmode ct_sendmode,
+                                   getmode ct_getmode,
+                                   usemode ct_usemode,
+                                   userranklower ct_userranklower,
+                                   orderamountlower ct_orderamountlower,
+                                   limitcateid ct_limitcateid,
+                                   limitbrandid ct_limitbrandid,
+                                   limitproduct ct_limitproduct,
+                                   sendstarttime ct_sendstarttime,
+                                   sendendtime ct_sendendtime,
+                                   useexpiretime ct_useexpiretime,
+                                   usestarttime ct_usestarttime,
+                                   useendtime ct_useendtime,
+                                   type ct_type,
+                                   isstack ct_isstack,
+                                   fullmoney ct_fullmoney,
+                                   cutmoney ct_cutmoney,
+                                   discount ct_discount,
+                                   ISNULL(bsp_couponproducts.pid,0) ct_pid
+                            FROM bsp_coupontypes
+                            LEFT JOIN bsp_couponproducts ON bsp_couponproducts.coupontypeid = bsp_coupontypes.coupontypeid
+                            ORDER BY sendendtime DESC
+                            ";
+                DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                List<ShowCouponTypeInfo> list = dt.GetList<ShowCouponTypeInfo>("");
+                list.ForEach(t => {
+                    t.t_ct_isstack = t.ct_isstack == 1 ? "可以叠加" : "不可以叠加";
+                    t.t_ct_type = EnumToText.ToText((CouponType)t.ct_type);
+                    t.t_ct_fullcut = t.ct_fullmoney.ToString() + '/' +t.ct_cutmoney.ToString();
+                    t.t_ct_sendstarttime = t.ct_sendstarttime.ToString("yyyy-MM-dd");
+                    t.t_ct_sendendtime = t.ct_sendendtime.ToString("yyyy-MM-dd");
+                });
+
+                result.code = 0;
+                result.msg = "";
+                result.count = list.Count;
+                result.data = list;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger._.Error(ex.ToString());
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 结束发放优惠券
+        /// </summary>
+        /// <param name="coupontypeids"></param>
+        /// <returns></returns>
+        public ResultModel StopCoupon(int[] coupontypeids)
+        {
+            
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    foreach(var coupontypeid in coupontypeids)
+                    {
+                        var coupontype = context.bsp_coupontypes.SingleOrDefault(t => t.coupontypeid == coupontypeid);
+                        coupontype.sendendtime = DateTime.Now;
+                        context.SaveChanges();
+                    }
+                    tran.Commit();
+                    return ResultModel.Success("结束发放成功");
+                }
+                catch(Exception ex)
+                {
+                    tran.Rollback();
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 新增优惠券（后台）
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ResultModel AddCouponType(ShowCouponTypeInfo model)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    //新增
+                    if(model.ct_coupontypeid == 0)
+                    {
+                        bsp_coupontypes newcoupontype = new bsp_coupontypes();
+                        newcoupontype.cutmoney = model.ct_cutmoney;
+                        newcoupontype.discount = model.ct_discount;
+                        newcoupontype.fullmoney = model.ct_fullmoney;
+                        newcoupontype.count = 0;
+                        newcoupontype.getmode = 0;
+                        newcoupontype.isstack = model.ct_isstack;
+                        newcoupontype.limitbrandid = 0;
+                        newcoupontype.limitcateid = 0;
+                        newcoupontype.limitproduct = 0;
+                        newcoupontype.money = 0;
+                        newcoupontype.name = model.ct_name;
+                        newcoupontype.orderamountlower = 0;
+                        newcoupontype.sendendtime = model.ct_sendendtime;
+                        newcoupontype.sendmode = 0;
+                        newcoupontype.sendstarttime = model.ct_sendstarttime;
+                        newcoupontype.state = 0;
+                        newcoupontype.type = model.ct_type;
+                        newcoupontype.useendtime = model.ct_useexpiretime == 1?model.ct_useendtime:DateTime.Now;
+                        newcoupontype.useexpiretime = model.ct_useexpiretime;
+                        newcoupontype.usemode = 0;
+                        newcoupontype.userranklower = 0;
+                        newcoupontype.usestarttime = model.ct_useexpiretime == 1 ? model.ct_usestarttime : DateTime.Now;
+                        context.bsp_coupontypes.Add(newcoupontype);
+                        context.SaveChanges();
+                    }
+                    tran.Commit();
+                    return ResultModel.Success("添加成功");
+                }
+                catch(Exception ex)
+                {
+                    tran.Rollback();
+                    Logger._.Error(ex.ToString());
+                    return ResultModel.Error();
+                }
+            }
         }
     }
 }

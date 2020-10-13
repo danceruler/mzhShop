@@ -211,5 +211,22 @@ namespace Mzh.Public.Model
                     return "";
             }
         }
+
+        public static string ToText(this CouponType enumModel)
+        {
+            switch (enumModel)
+            {
+                case CouponType.AppointProductDiscount:
+                    return "指定商品折扣优惠券";
+                case CouponType.AppointProductFullcut:
+                    return "指定商品满减优惠券";
+                case CouponType.NormalDiscount:
+                    return "折扣优惠券";
+                case CouponType.NormalFullcut:
+                    return "满减优惠券";
+                default:
+                    return "";
+            }
+        }
     }
 }

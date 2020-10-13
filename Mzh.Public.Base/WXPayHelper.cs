@@ -168,7 +168,7 @@ namespace Mzh.Public.Base
         /// 时间：2016-07-22
         /// </summary>
         /// <returns></returns>
-        private static string GetPublicIp()
+        public static string GetPublicIp()
         {
             var urlList = new List<string>
             {

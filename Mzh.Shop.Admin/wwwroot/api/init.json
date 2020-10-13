@@ -61,6 +61,12 @@
           "href": "Box/Index",
           "icon": "fa fa-th-large",
           "target": "_self"
+        },
+        {
+          "title": "优惠券管理",
+          "href": "Coupon/Index",
+          "icon": "fa fa-ticket",
+          "target": "_self"
         }
       ]
     }

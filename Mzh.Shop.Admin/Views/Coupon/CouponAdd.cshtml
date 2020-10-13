@@ -1,0 +1,398 @@
+﻿@using Mzh.Public.Model.Model;
+@{
+    int coupontypeid = ViewBag.coupontypeid;
+    ShowCouponTypeInfo coupontype = ViewBag.coupontype as ShowCouponTypeInfo;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/wwwroot/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/wwwroot/css/public.css" media="all">
+</head>
+<body>
+    <div class="layuimini-main">
+        <div class="layui-form-item" style="display:none">
+            <label class="layui-form-label required">优惠券id</label>
+            <div class="layui-input-block">
+                <input type="text" name="coupontypeid" id="coupontypeid" value="@coupontypeid" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" id="name" lay-verify="required" lay-reqtext="名称不能为空" placeholder="请输入名称" value="@(coupontype == null?"":coupontype.ct_name)" class="layui-input">
+                <tip>不能与其他优惠券名称重复。</tip>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">优惠券类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="type" value="1" title="满减优惠券" checked>满减优惠券
+                <input type="radio" name="type" value="2" title="折扣优惠券">折扣优惠券
+            </div>
+        </div>
+        <div id="fullcut-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">满价（达到满价才会计算优惠）</label>
+                <div class="layui-input-block">
+                    <input type="number" name="fullmoney" id="fullmoney" placeholder="满价（达到满价才会计算优惠）" value="@(coupontype != null&&coupontype.ct_type == 1?coupontype.ct_fullmoney+"":"")" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">减价（达到满价后减少的价格）</label>
+                <div class="layui-input-block">
+                    <input type="number" name="cutmoney" id="cutmoney" placeholder="减价（达到满价后减少的价格）" value="@(coupontype != null&&coupontype.ct_type == 1?coupontype.ct_cutmoney+"":"")" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div id="discount-box" style="display:none">
+            <div class="layui-form-item">
+                <label class="layui-form-label">折扣（%）</label>
+                <div class="layui-input-block">
+                    <input type="number" name="discount" id="discount" placeholder="折扣（%）" value="@(coupontype != null&&coupontype.ct_type == 2?coupontype.ct_discount+"":"")" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始发放日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sendstarttime" id="sendstarttime" lay-verify="date" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束发放日期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sendendtime" id="sendendtime" lay-verify="date" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否指定优惠券有效时间</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isuseexpiretime" value="1" title="是">是
+                <input type="radio" name="isuseexpiretime" value="0" title="否" checked>否
+            </div>
+        </div>
+        <div id="useexpiretime-box" style="display:none">
+            <div class="layui-form-item">
+                <label class="layui-form-label">有效开始时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="usestarttime" id="usestarttime" lay-verify="date" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">有效结束时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="useendtime" id="useendtime" lay-verify="date" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div id="nouseexpiretime-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">有效天数（自用户领用起开始计算天数）</label>
+                <div class="layui-input-block">
+                    <input type="number" name="expireday" id="expireday" placeholder="有效天数（自用户领用起开始计算天数）" value="@(coupontype != null&&coupontype.ct_useexpiretime>1?coupontype.ct_useexpiretime/(3600*24)+"":"")" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否可以叠加（多张优惠券最多只能存在一张不可叠加的优惠券）</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isstack" value="1" title="是">是
+                <input type="radio" name="isstack" value="0" title="否" checked>否
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" id="submitBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="~/Scripts/mzhconfig.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+        $(document).ready(function () {
+            $('input[type=radio][name=type]').change(function () {
+                if (this.value == '1') {
+                    $("#fullcut-box").show();
+                    $("#discount-box").hide();
+                }
+                else if (this.value == '2') {
+                    $("#fullcut-box").hide();
+                    $("#discount-box").show();
+                }
+            });
+            $('input[type=radio][name=isuseexpiretime]').change(function () {
+                if (this.value == '1') {
+                    $("#useexpiretime-box").show();
+                    $("#nouseexpiretime-box").hide();
+                }
+                else if (this.value == '0') {
+                    $("#useexpiretime-box").hide();
+                    $("#nouseexpiretime-box").show();
+                }
+            });
+
+            $('#submitBtn').click(function () {
+                console.log($('input:radio[name="isuseexpiretime"]:checked').val())
+                var coupontypeid = $("#coupontypeid").val()
+                //检验
+                if ($("#name").val() == '') {
+                    alert("优惠券名称不能为空");
+                    return;
+                }
+                if ($("#name").val() == '') {
+                    alert("优惠券名称不能为空");
+                    return;
+                }
+                if ($("#sendstarttime").val() == '') {
+                    alert("开始发放时间不能为空");
+                    return;
+                }
+                if ($("#sendendtime").val() == '') {
+                    alert("结束发放时间不能为空");
+                    return;
+                }
+                if ($('input:radio[name="isuseexpiretime"]:checked').val() == 1) {
+                    if ($("#usestarttime").val() == '') {
+                        alert("有效开始时间不能为空");
+                        return;
+                    }
+                    if ($("#useendtime").val() == '') {
+                        alert("有效结束时间不能为空");
+                        return;
+                    }
+                } else {
+                    if ($("#expireday").val() == '') {
+                        alert("有效天数不能为空");
+                        return;
+                    }
+                    if ($("#expireday").val() <= 0) {
+                        alert("有效天数必须大于0");
+                        return;
+                    }
+                }
+                if ($('input:radio[name="type"]:checked').val() == '1') {
+                    if ($("#fullmoney").val() == '') {
+                        alert("满价不能为空");
+                        return;
+                    }
+                    if ($("#fullmoney").val() <= 0) {
+                        alert("满价必须大于0");
+                        return;
+                    }
+                    if ($("#cutmoney").val() == '') {
+                        alert("减价不能为空");
+                        return;
+                    }
+                    if ($("#cutmoney").val() <= 0) {
+                        alert("减价必须大于0");
+                        return;
+                    }
+                    //if ($("#cutmoney").val() > $("#fullmoney").val()) {
+                    //    alert("减价必须小于满价");
+                    //    return;
+                    //}
+                }
+                else {
+                    if ($("#discount").val() == '') {
+                        alert("折扣不允许为空");
+                        return;
+                    }
+                    if ($("#discount").val() < 0 || $("#discount").val() >100) {
+                        alert("折扣取值有误");
+                        return;
+                    }
+                }
+
+                if (coupontypeid == 0) {
+                    requestdata = {
+                        "ct_coupontypeid": coupontypeid,
+                        "ct_state": 0,
+                        "ct_name": $("#name").val(),
+                        "ct_getmode": 0,
+                        "ct_usemode": 0,
+                        "ct_sendstarttime": $("#sendstarttime").val(),
+                        "ct_sendendtime": $("#sendendtime").val(),
+                        "ct_useexpiretime": $('input:radio[name="isuseexpiretime"]:checked').val() == 1 ? 1 : $("#expireday").val() * 3600 * 24,
+                        "ct_usestarttime": $("#usestarttime").val(),
+                        "ct_useendtime": $("#useendtime").val(),
+                        "ct_type": $('input:radio[name="type"]:checked').val(),
+                        "ct_isstack": $('input:radio[name="isstack"]:checked').val(),
+                        "ct_fullmoney": $("#fullmoney").val(),
+                        "ct_cutmoney": $("#cutmoney").val(),
+                        "ct_discount": $("#discount").val(),
+                        "ct_pid": 0
+                    }
+                    console.log('requestdata')
+                    console.log(requestdata)
+                    //新增
+                    $.ajax({
+                        url: domain + '/Coupon/AddCouponType',
+                        data: requestdata,
+                        dataType: 'json',
+                        async: false,
+                        type: 'post',
+                        beforeSend: function () {
+                            showloading(true);
+                        },
+                        success: function (res) {
+                            showloading(false);
+                            var index = layer.alert(res.msg, {
+                                title: '结果'
+                            }, function () {
+                                // 关闭弹出层
+                                layer.close(index);
+                                if (res.state == 1) {
+                                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(iframeIndex);
+                                    parent.location.reload(); //刷新父页面
+                                }
+
+                            });
+                        }
+                    })
+                }
+                else {
+                    //编辑=
+                    $.ajax({
+                        url: domain + '/Product/UpdateCateGory?name=' + username + (data.displayorder == '' ? '' : ('&displayorder=' + displayorder)) + '&cateid=' + cateid,
+                        data: {},
+                        dataType: 'json',
+                        async: false,
+                        type: 'post',
+                        beforeSend: function () {
+                            showloading(true);
+                        },
+                        success: function (res) {
+                            showloading(false);
+                            console.log(res);
+
+                            var index = layer.alert(res.msg, {
+                                title: '结果'
+                            }, function () {
+                                // 关闭弹出层
+                                layer.close(index);
+                                if (res.state == 1) {
+                                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(iframeIndex);
+                                    parent.location.reload(); //刷新父页面
+                                }
+                            });
+                        }
+                    })
+                }
+                return false
+            })
+        });
+
+        layui.use(['form', 'laydate'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                $ = layui.$, laydate = layui.laydate;;
+
+            laydate.render({
+                elem: '#usestarttime'
+            });
+            laydate.render({
+                elem: '#useendtime'
+            });
+            laydate.render({
+                elem: '#sendendtime'
+            });
+            laydate.render({
+                elem: '#sendstarttime'
+            });
+
+            //监听提交
+            //form.on('submit(saveBtn)', function (data) {
+            //    var data = data.field;
+            //    var coupontypeid = data.coupontypeid;
+            //    if (coupontypeid == 0) {
+            //        requestdata = {
+            //            "ct_coupontypeid": data.coupontypeid,
+            //            "ct_state": 0,
+            //            "ct_name": data.coupontypeid.name,
+            //            "ct_getmode": 0,
+            //            "ct_usemode": 0,
+            //            "ct_sendstarttime": data.sendstarttime,
+            //            "ct_sendendtime": data.sendendtime,
+            //            "ct_useexpiretime": data.isuseexpiretime == 1 ? data.expireday*3600*24:1,
+            //            "ct_usestarttime": data.usestarttime,
+            //            "ct_useendtime": data.useendtime,
+            //            "ct_type": data.type,
+            //            "ct_isstack": data.isstack,
+            //            "ct_fullmoney": data.fullmoney,
+            //            "ct_cutmoney": data.ct_cutmoney,
+            //            "ct_discount": data.discount,
+            //            "ct_pid": 0
+            //        }
+            //        //新增
+            //        $.ajax({
+            //            url: domain + '/Coupon/AddCoupon',
+            //            data: requestdata,
+            //            dataType: 'json',
+            //            async: false,
+            //            type: 'post',
+            //            beforeSend: function () {
+            //                showloading(true);
+            //            },
+            //            success: function (res) {
+            //                showloading(false);
+            //                var index = layer.alert(res.msg, {
+            //                    title: '结果'
+            //                }, function () {
+            //                    // 关闭弹出层
+            //                    layer.close(index);
+            //                    if (res.state == 1) {
+            //                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+            //                        parent.layer.close(iframeIndex);
+            //                        parent.location.reload(); //刷新父页面
+            //                    }
+
+            //                });
+            //            }
+            //        })
+            //    } else {
+            //        //编辑=
+            //        $.ajax({
+            //            url: domain + '/Product/UpdateCateGory?name=' + username + (data.displayorder == '' ? '' : ('&displayorder=' + displayorder)) + '&cateid=' + cateid,
+            //            data: {},
+            //            dataType: 'json',
+            //            async: false,
+            //            type: 'post',
+            //            beforeSend: function () {
+            //                showloading(true);
+            //            },
+            //            success: function (res) {
+            //                showloading(false);
+            //                console.log(res);
+
+            //                var index = layer.alert(res.msg, {
+            //                    title: '结果'
+            //                }, function () {
+            //                    // 关闭弹出层
+            //                    layer.close(index);
+            //                    if (res.state == 1) {
+            //                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+            //                        parent.layer.close(iframeIndex);
+            //                        parent.location.reload(); //刷新父页面
+            //                    }
+            //                });
+            //            }
+            //        })
+            //    }
+
+            //    return false;
+            //});
+
+        });
+    </script>
+</body>
+</html>

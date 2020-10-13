@@ -93,10 +93,12 @@ namespace Mzh.Public.Model.Model
         /// 优惠券开始发放时间
         /// </summary>
         public System.DateTime ct_sendstarttime { get; set; }
+        public string t_ct_sendstarttime { get; set; }
         /// <summary>
         /// 优惠券结束发放时间
         /// </summary>
         public System.DateTime ct_sendendtime { get; set; }
+        public string t_ct_sendendtime { get; set; }
         /// <summary>
         /// 优惠券是否指定过期时间（为1为指定时间，否则表示过期的秒数）
         /// </summary>
@@ -113,10 +115,12 @@ namespace Mzh.Public.Model.Model
         /// 优惠券类型
         /// </summary>
         public int ct_type { get; set; }
+        public string t_ct_type { get; set; }
         /// <summary>
         /// 是否可以和其他优惠券叠加（多张优惠券最多只能存在一张不可叠加的优惠券）
         /// </summary>
         public int ct_isstack { get; set; }
+        public string t_ct_isstack { get; set; }
         /// <summary>
         /// 为满减时的满价
         /// </summary>
@@ -125,6 +129,11 @@ namespace Mzh.Public.Model.Model
         /// 为满减时的减价
         /// </summary>
         public decimal ct_cutmoney { get; set; }
+
+        /// <summary>
+        /// 100(满价)/20(减价)
+        /// </summary>
+        public string t_ct_fullcut { get; set; }
         /// <summary>
         /// 为折扣时的折扣
         /// </summary>

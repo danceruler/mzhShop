@@ -70,5 +70,34 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 获取所有的优惠券类型（用于后台配置）
+        /// </summary>
+        /// <returns></returns>
+        public LayuiTableApiResult GetCouponType()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 结束发放优惠券
+        /// </summary>
+        /// <param name="coupontypeids"></param>
+        /// <returns></returns>
+        public ResultModel StopCoupon(int[] coupontypeids)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 新增优惠券（后台）
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ResultModel AddCouponType(ShowCouponTypeInfo model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
