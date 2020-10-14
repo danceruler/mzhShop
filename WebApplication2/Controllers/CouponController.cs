@@ -39,10 +39,10 @@ namespace WebApplication2.Controllers
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
-        public List<ShowCouponInfo> GetCanUseCoupons(int uid)
+        public List<ShowCouponTypeInfo> GetCanUseCoupons(int uid)
         {
             COUPON coupon = RemotingHelp.GetModelObject<COUPON>();
-            return coupon.GetCanUseCoupons(uid);
+            return coupon.GetRecpientCoupon(uid);
         }
     }
 }

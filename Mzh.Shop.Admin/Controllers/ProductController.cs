@@ -83,7 +83,7 @@ namespace Mzh.Shop.Admin.Controllers
         /// 添加编辑属性值
         /// </summary>
         /// <returns></returns>
-        public ActionResult SkuAddValue(int attrid,string attributename,int valueid = 0,string value = "", int price = -1, int stock = -1)
+        public ActionResult SkuAddValue(int attrid,string attributename,int valueid = 0,string value = "", string price = "-1", string stock = "-1")
         {
             SKU sku = RemotingHelp.GetModelObject<SKU>();
             ViewBag.attrid = attrid;

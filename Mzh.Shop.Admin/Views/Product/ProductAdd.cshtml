@@ -481,16 +481,17 @@
                 + '<div class="layui-input-block layui-row">'
                 + '</div></div></div>';
             $("#sku-div").append(newdiv);
-            $("#sku-div").load();
+            //$("#sku-div").load();
         }
 
         //提供给弹出层调用的方法,新增属性值
         function AddAttributeValue(attrid, id, name, value, price, stock) {
+            
             var newdiv = '<div class="layui-col-md2 value-div" data-attrid=' + attrid + ' data-id="' + id + '" data-name="' + name + '" data-value="' + value + '" data-price="' + price + '" data-stock="' + stock + '" onclick="EditValue(this); return false;">'
                 + '<a class="layui-btn layui-btn-normal valuebtn">' + value + '</a>'
                 + '</div>';
             $(addvalueDiv).append(newdiv);
-            $(addvalueDiv).load();
+            //$(addvalueDiv).load();
         }
 
         //提供给弹出层调用的方法,编辑属性值

@@ -60,13 +60,13 @@
                 <div class="layui-form-item" style="display:none">
                     <label class="layui-form-label">价格</label>
                     <div class="layui-input-inline">
-                        <input type="number" name="price" id="price" placeholder="不填为商品默认价格" value="@(ViewBag.price == -1?"":ViewBag.price)" class="layui-input">
+                        <input type="number" name="price" id="price" placeholder="不填为商品默认价格" value="@(ViewBag.price == "-1"?"":ViewBag.price)" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item" style="display:none">
                     <label class="layui-form-label">库存</label>
                     <div class="layui-input-inline">
-                        <input type="number" name="stock" id="stock" placeholder="不填默认为商品库存" value="@(ViewBag.stock == -1?"":ViewBag.stock)" class="layui-input">
+                        <input type="number" name="stock" id="stock" placeholder="不填默认为商品库存" value="@(ViewBag.stock == "-1"?"":ViewBag.stock)" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
