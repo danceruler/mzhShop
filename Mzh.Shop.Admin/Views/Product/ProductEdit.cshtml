@@ -298,7 +298,6 @@
                     return false;
                 }
 
-
                 var showimg = '';
                 var mainimgs = [];
                 var detailimgs = [];
@@ -308,7 +307,7 @@
                     return false;
                 }
                 showloading(true);
-                if (cuploadproshowimg.imageInput[cuploadproshowimg.imageInput.length-1].value.indexOf("shopapi") != -1) {
+                if (cuploadproshowimg.imageInput[cuploadproshowimg.imageInput.length - 1].value.indexOf("boiledchicken") != -1) {
                     showimg = cuploadproshowimg.imageInput[cuploadproshowimg.imageInput.length-1].value;
                 } else {
                     $.ajax({
@@ -327,9 +326,9 @@
                         }
                     })
                 }
-                console.log($(cuploadpromainimgs.imageList.children[0]).children('.cupload-image-preview')[0].src);
+                console.log($(cuploadpromainimgs.imageList.children[0]).children('.cupload-image-preview')[0]);
                 for (var i = 0; i < cuploadpromainimgs.imageList.children.length; i++) {
-                    if ($(cuploadpromainimgs.imageList.children[i]).children('.cupload-image-preview')[0].src.indexOf("shopapi") != -1) {
+                    if ($(cuploadpromainimgs.imageList.children[i]).children('.cupload-image-preview')[0].src.indexOf("boiledchicken") != -1) {
                         var newimg = {
                             "showimg": $(cuploadpromainimgs.imageList.children[i]).children('.cupload-image-preview')[0].src,
                             "displayorder": i + 1
@@ -358,7 +357,7 @@
                     }
                 }
                 for (var i = 0; i < cuploadprodetailimgs.imageList.children.length; i++) {
-                    if ($(cuploadprodetailimgs.imageList.children[i]).children('.cupload-image-preview')[0].src.indexOf("shopapi") != -1) {
+                    if ($(cuploadprodetailimgs.imageList.children[i]).children('.cupload-image-preview')[0].src.indexOf("boiledchicken") != -1) {
                         var newimg = {
                             "showimg": $(cuploadprodetailimgs.imageList.children[i]).children('.cupload-image-preview')[0].src,
                             "displayorder": i + 1

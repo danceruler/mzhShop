@@ -44,8 +44,9 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
-        public ActionResult ProductEdit(int cateid,int pid)
+        public ActionResult ProductEdit(int cateid = 0,int pid = 0)
         {
+            if (cateid == 0) return null;
             ProductCache pcache = RemotingHelp.GetModelObject<ProductCache>();
             ViewBag.ProductInfo = pcache.GetProductInfoFromCache(cateid, pid);
             PRODUCT product = RemotingHelp.GetModelObject<PRODUCT>();

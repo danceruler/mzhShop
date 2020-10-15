@@ -187,4 +187,19 @@ namespace Mzh.Public.Model.Model
         public decimal price { get; set; }
         public int stock { get; set; }
     }
+
+    /// <summary>
+    /// 用于新增轮播图的类
+    /// </summary>
+    [Serializable]
+    public class AddBannerModel
+    {
+        public BannerType bannerType { get; set; }
+        public DateTime starttime { get; set; }
+        public DateTime endtime { get; set; }
+        public string img { get; set; }
+        public string url { get; set; }
+        public int displayorder { get; set; }
+        public int bannerid { get; set; }
+    }
 }

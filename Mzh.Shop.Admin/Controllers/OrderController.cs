@@ -106,6 +106,43 @@ namespace Mzh.Shop.Admin.Controllers
                 order.SendOrder(oid),
                 JsonRequestBehavior.AllowGet);
         }
+
+
+        /// <summary>
+        /// 获取今日统计数据
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetDayStatistics()
+        {
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            return Json(
+                order.GetDayStatistics(),
+                JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 获取周统计数据
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetWeekStatistics()
+        {
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            return Json(
+                order.GetWeekStatistics(),
+                JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 获取月统计数据
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetMonthStatistics()
+        {
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            return Json(
+                order.GetMonthStatistics(),
+                JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

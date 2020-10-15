@@ -135,7 +135,11 @@ namespace Mzh.Public.Model
         /// <summary>
         /// 前往指定网页链接
         /// </summary>
-        ToLinkUrl = 2
+        ToLinkUrl = 2,
+        /// <summary>
+        /// 仅用于展示
+        /// </summary>
+        OnlyShow = 3,
     }
 
     public static class EnumToText
