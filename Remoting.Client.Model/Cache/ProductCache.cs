@@ -36,6 +36,15 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 仅获取商品列表（不分类，不重复）
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowProductInfo> GetNoRepeatProducts()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 从内存获取商品详情
         /// </summary>
         /// <returns></returns>

@@ -197,6 +197,7 @@ namespace Mzh.Public.Model.Model
         public BannerType bannerType { get; set; }
         public DateTime starttime { get; set; }
         public DateTime endtime { get; set; }
+        public string title { get; set; }
         public string img { get; set; }
         public string url { get; set; }
         public int displayorder { get; set; }

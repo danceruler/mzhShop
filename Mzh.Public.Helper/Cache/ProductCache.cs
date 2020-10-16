@@ -48,6 +48,26 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 仅获取商品列表（不分类，不重复）
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowProductInfo> GetNoRepeatProducts()
+        {
+            List<ShowProductInfo> lst = new List<ShowProductInfo>();
+            foreach(var i in ProductList)
+            {
+                foreach (var p in i.productInfos)
+                {
+                    if(!lst.Exists(t => t.pid == p.pid))
+                    {
+                        lst.Add(p);
+                    }
+                }
+            }
+            return lst;
+        }
+
+        /// <summary>
         /// 从内存获取商品详情
         /// </summary>
         /// <returns></returns>

@@ -15,7 +15,12 @@ namespace Remoting
             throw new NotImplementedException();
         }
 
-        public List<bsp_banners> GetBanners()
+        public LayuiTableApiResult GetBannersForAdmin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ShowBannerInfo> GetBanners()
         {
             throw new NotImplementedException();
         }
@@ -34,7 +39,7 @@ namespace Remoting
         /// 删除轮播图
         /// </summary>
         /// <returns></returns>
-        public ResultModel DeleteBanner(int id)
+        public ResultModel DeleteBanner(int[] ids)
         {
             throw new NotImplementedException();
         }

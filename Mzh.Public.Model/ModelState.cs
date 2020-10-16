@@ -232,5 +232,20 @@ namespace Mzh.Public.Model
                     return "";
             }
         }
+
+        public static string ToText(this BannerType enumModel)
+        {
+            switch (enumModel)
+            {
+                case BannerType.OnlyShow:
+                    return "仅用于展示";
+                case BannerType.ToLinkUrl:
+                    return "跳转到指定的网页链接";
+                case BannerType.ToProduct:
+                    return "跳转到指定的商品详情页";
+                default:
+                    return "";
+            }
+        }
     }
 }

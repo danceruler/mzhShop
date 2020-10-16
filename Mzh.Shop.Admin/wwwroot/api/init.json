@@ -67,6 +67,12 @@
           "href": "Coupon/Index",
           "icon": "fa fa-ticket",
           "target": "_self"
+        },
+        {
+          "title": "轮播图管理",
+          "href": "Banner/Banner",
+          "icon": "fa fa-indent",
+          "target": "_self"
         }
       ]
     }

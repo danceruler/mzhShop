@@ -1,6 +1,7 @@
 ﻿using Mzh.Public.Base;
 using Mzh.Public.BLL.Cache;
 using Mzh.Public.DAL;
+using Mzh.Public.Model;
 using Mzh.Public.Model.Model;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,23 @@ namespace Remoting
     /// </summary>
     public class BannerCache:MarshalByRefObject, ICache
     {
-        public static List<bsp_banners> banners = new List<bsp_banners>();
+        public static List<ShowBannerInfo> banners = new List<ShowBannerInfo>();
         public void Init() 
         {
             InitBanners();
         }
 
-        public List<bsp_banners> GetBanners()
+        public LayuiTableApiResult GetBannersForAdmin()
+        {
+            return new LayuiTableApiResult() {
+                code = 0,
+                count = banners.Count,
+                data = banners,
+                msg = ""
+            };
+        }
+
+        public List<ShowBannerInfo> GetBanners()
         {
             return banners;
         }
@@ -36,7 +47,13 @@ namespace Remoting
                             ORDER BY displayorder";
             SqlCommand cmd = new SqlCommand(sql);
             DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, cmd);
-            banners = dt.GetList<bsp_banners>("");
+            banners = dt.GetList<ShowBannerInfo>("");
+            banners.ForEach(t =>
+            {
+                t.ttype = ((BannerType)t.type).ToText();
+                t.tstarttime = t.starttime.ToString("yyyy-MM-dd");
+                t.tendtime = t.endtime.ToString("yyyy-MM-dd");
+            });
         }
 
         /// <summary>
@@ -59,7 +76,7 @@ namespace Remoting
                         newbanner.img = model.img;
                         newbanner.isshow = 1;
                         newbanner.starttime = model.starttime;
-                        newbanner.title = "";
+                        newbanner.title = model.title;
                         newbanner.type = (byte)model.bannerType;
                         newbanner.url = model.url;
                         context.bsp_banners.Add(newbanner);
@@ -73,6 +90,7 @@ namespace Remoting
                         banner.img = model.img;
                         banner.starttime = model.starttime;
                         banner.type = (byte)model.bannerType;
+                        banner.title = model.title;
                         banner.url = model.url;
                     }
                     context.SaveChanges();
@@ -94,15 +112,16 @@ namespace Remoting
         /// 删除轮播图
         /// </summary>
         /// <returns></returns>
-        public ResultModel DeleteBanner(int id)
+        public ResultModel DeleteBanner(int[] ids)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
                 try
                 {
-                    var banner = context.bsp_banners.SingleOrDefault(t => t.id == id);
-                    context.bsp_banners.Remove(banner);
+                    var banners = context.bsp_banners.Where(t => ids.Contains(t.id)).ToList();
+                    context.bsp_banners.RemoveRange(banners);
                     context.SaveChanges();
+                    InitBanners();
                     return ResultModel.Success("删除成功");
                 }
                 catch(Exception ex)
