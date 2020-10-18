@@ -19,7 +19,7 @@ namespace Remoting
         /// <param name="state"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ResultModel UpdateBox(int boxid, BoxState state, string name)
+        public ResultModel UpdateBox(int boxid, BoxState state, string name,decimal price,decimal bookprice)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
@@ -33,6 +33,8 @@ namespace Remoting
                     }
                     box.state = (int)state;
                     box.name = name;
+                    box.price = price;
+                    box.bookprice = bookprice;
                     context.SaveChanges();
 
                     tran.Commit();
@@ -54,7 +56,7 @@ namespace Remoting
         /// <param name="code"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ResultModel AddBox(string code, string name)
+        public ResultModel AddBox(string code, string name, decimal price,decimal bookprice)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
@@ -73,6 +75,8 @@ namespace Remoting
                     newbox.oid = 0;
                     newbox.state = (int)BoxState.Empty;
                     newbox.uid = 0;
+                    newbox.price = price;
+                    newbox.bookprice = bookprice;
                     context.bsp_boxes.Add(newbox);
                     context.SaveChanges();
 

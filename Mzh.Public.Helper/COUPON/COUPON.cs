@@ -156,7 +156,7 @@ namespace Remoting
                     newcoupon.uid = uid;
                     newcoupon.activateip = WXPayHelper.GetPublicIp();
                     newcoupon.activatetime = DateTime.Now;
-                    newcoupon.couponsn = "";
+                    newcoupon.couponsn = WXPayHelper.GetTimeStamp();
                     newcoupon.coupontypeid = couponTypeid;
                     newcoupon.createip = "";
                     newcoupon.createoid = 0;
@@ -173,6 +173,8 @@ namespace Remoting
                     {
                         newcoupon.expiretime = DateTime.Now.AddSeconds(coupontype.useexpiretime);
                     }
+                    context.bsp_coupons.Add(newcoupon);
+                    context.SaveChanges();
 
                     return ResultModel.Success();
                 }

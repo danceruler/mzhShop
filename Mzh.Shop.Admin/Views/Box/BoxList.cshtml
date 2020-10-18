@@ -7,7 +7,7 @@
         {
             if (box.state == (int)Mzh.Public.Model.BoxState.Book)
             {
-                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state">
+                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state" data-price="@box.price" data-bookprice="@box.bookprice">
                     <div class="col-xs-6 col-md-3">
                         <div class="panel layui-bg-blue">
                             <div class="panel-body" style="height:100px">
@@ -27,7 +27,7 @@
             }
             if (box.state == (int)Mzh.Public.Model.BoxState.Use)
             {
-                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state">
+                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state"  data-price="@box.price" data-bookprice="@box.bookprice">
                     <div class="col-xs-6 col-md-3">
                         <div class="panel layui-bg-red">
                             <div class="panel-body" style="height:100px">
@@ -47,7 +47,7 @@
             }
             if (box.state == (int)Mzh.Public.Model.BoxState.Empty)
             {
-                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state">
+                <div class="layui-col-md3 boxpanel" data-id="@box.boxid" data-code="@box.code" data-name="@box.name" data-state="@box.state" data-price="@box.price" data-bookprice="@box.bookprice">
                     <div class="col-xs-6 col-md-3">
                         <div class="panel layui-bg-green">
                             <div class="panel-body" style="height:100px">
@@ -83,7 +83,7 @@
                 maxmin: true,
                 shadeClose: true,
                 area: ['50%', '50%'],
-                content: '/Box/BoxDetail?boxid=' + $(this).data("id") + '&code=' + $(this).data("code") + '&name=' + $(this).data("name") + '&state=' + $(this).data("state"),
+                content: '/Box/BoxDetail?boxid=' + $(this).data("id") + '&code=' + $(this).data("code") + '&name=' + $(this).data("name") + '&state=' + $(this).data("state")+ '&price=' + $(this).data("price")+ '&bookprice=' + $(this).data("bookprice"),
             });
             $(window).on("resize", function () {
                 layer.full(index);

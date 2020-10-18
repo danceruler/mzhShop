@@ -45,13 +45,25 @@
                 <div class="layui-form-item" id="attribute-div">
                     <label class="layui-form-label">包厢编号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="boxcode" id="boxcode" @(ViewBag.boxid == 0?"":"disabled")  placeholder="" value="@ViewBag.code" class="layui-input">
+                        <input type="text" name="boxcode" id="boxcode" @(ViewBag.boxid == 0 ? "" : "disabled") placeholder="" value="@ViewBag.code" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item" id="attribute-div">
                     <label class="layui-form-label">包厢名称</label>
                     <div class="layui-input-inline">
                         <input type="text" name="boxname" id="boxname" placeholder="" value="@ViewBag.name" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">包厢费</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="price" id="price" placeholder="" value="@ViewBag.price" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">预定费</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="bookprice" id="bookprice" placeholder="" value="@ViewBag.bookprice" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -101,6 +113,24 @@
                     });
                     return false;
                 }
+                if ($("#price").val() < 0) {
+                    var index = layer.alert("包厢费不允许小于0", {
+                        title: "请你注意"
+                    }, function () {
+                        // 关闭弹出层
+                        layer.close(index);
+                    });
+                    return false;
+                }
+                if ($("#bookprice").val() < 0) {
+                    var index = layer.alert("预定费不允许小于0", {
+                        title: "请你注意"
+                    }, function () {
+                        // 关闭弹出层
+                        layer.close(index);
+                    });
+                    return false;
+                }
 
                 //新增
                 if (boxid == 0) {
@@ -110,6 +140,8 @@
                         data: {
                             code: $("#boxcode").val(),
                             name: $("#boxname").val(),
+                            price: $("#price").val(),
+                            bookprice: $("#bookprice").val(),
                         },
                         async: false,
                         success: function (res) {
@@ -136,7 +168,9 @@
                         data: {
                             boxid: boxid,
                             name: $("#boxname").val(),
-                            state: $("#boxstate").val()
+                            state: $("#boxstate").val(),
+                            price: $("#price").val(),
+                            bookprice: $("#bookprice").val(),
                         },
                         async: false,
                         success: function (res) {

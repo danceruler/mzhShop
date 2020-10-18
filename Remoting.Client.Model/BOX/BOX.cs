@@ -17,7 +17,7 @@ namespace Remoting
         /// <param name="state"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ResultModel UpdateBox(int boxid, BoxState state, string name)
+        public ResultModel UpdateBox(int boxid, BoxState state, string name, decimal price, decimal bookprice)
         {
             throw new NotImplementedException();
         }
@@ -28,7 +28,7 @@ namespace Remoting
         /// <param name="code"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ResultModel AddBox(string code, string name)
+        public ResultModel AddBox(string code, string name, decimal price, decimal bookprice)
         {
             throw new NotImplementedException();
         }
