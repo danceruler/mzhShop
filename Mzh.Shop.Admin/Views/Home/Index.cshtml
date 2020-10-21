@@ -129,41 +129,67 @@
     </div>
     <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/wwwroot/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
-    <script>layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
-        var $ = layui.jquery,
-            layer = layui.layer,
-            miniAdmin = layui.miniAdmin,
-            miniTongji = layui.miniTongji;
+    <script src="~/wwwroot/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="~/Scripts/mzhconfig.js"></script>
+    <script>
+        
+        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji'], function () {
+            
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniAdmin = layui.miniAdmin,
+                miniTongji = layui.miniTongji;
 
-        var options = {
-            //iniUrl:'http://localhost:44346/api/Values/Menus',
-            iniUrl: "../../wwwroot/api/init.json",    // 初始化接口
-            clearUrl: "../../wwwroot/api/clear.json", // 缓存清理接口
-            urlHashLocation: true,      // 是否打开hash定位
-            bgColorDefault: false,      // 主题默认配置
-            multiModule: true,          // 是否开启多模块
-            menuChildOpen: false,       // 是否默认展开菜单
-            loadingTime: 0,             // 初始化加载时间
-            pageAnim: true,             // iframe窗口动画
-            maxTabNum: 20,              // 最大的tab打开数量
-        };
-        miniAdmin.render(options);
+            var options = {
+                //iniUrl:'http://localhost:44346/api/Values/Menus',
+                iniUrl: "../../wwwroot/api/init.json",    // 初始化接口
+                clearUrl: "../../wwwroot/api/clear.json", // 缓存清理接口
+                urlHashLocation: true,      // 是否打开hash定位
+                bgColorDefault: false,      // 主题默认配置
+                multiModule: true,          // 是否开启多模块
+                menuChildOpen: false,       // 是否默认展开菜单
+                loadingTime: 0,             // 初始化加载时间
+                pageAnim: true,             // iframe窗口动画
+                maxTabNum: 20,              // 最大的tab打开数量
+            };
+            miniAdmin.render(options);
 
-        // 百度统计代码，只统计指定域名
-        miniTongji.render({
-            specific: true,
-            domains: [
-                '99php.cn',
-                'layuimini.99php.cn',
-                'layuimini-onepage.99php.cn',
-            ],
-        });
-
-        $('.login-out').on("click", function () {
-            layer.msg('退出登录成功', function () {
-                window.location = 'page/login-1.html';
+            // 百度统计代码，只统计指定域名
+            miniTongji.render({
+                specific: true,
+                domains: [
+                    '99php.cn',
+                    'layuimini.99php.cn',
+                    'layuimini-onepage.99php.cn',
+                ],
             });
+
+            $('.login-out').on("click", function () {
+                layer.msg('退出登录成功', function () {
+                    window.location = 'page/login-1.html';
+                });
+            });
+
+            var t2 = window.setInterval(function () {
+
+                layer.open({
+                    type: 1
+                    , offset: 'rb' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    , id: 'layerDemorb' //防止重复弹出
+                    , content: '<div style="padding: 20px 100px;">' + '您有一笔新订单' + '</div>'
+                    , btn: '确定'
+                    , btnAlign: 'c' //按钮居中
+                    , shade: 0 //不显示遮罩
+                    , yes: function () {
+                        layer.closeAll();
+                    }
+                });
+
+            }, 5000)
         });
-    });</script>
+
+       
+
+    </script>
 </body>
 </html>

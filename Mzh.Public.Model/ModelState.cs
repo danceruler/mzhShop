@@ -34,7 +34,7 @@ namespace Mzh.Public.Model
         /// </summary>
         Sending = 3,
         /// <summary>
-        /// 堂食订单待使用
+        /// 堂食订单制作中或者预定中
         /// </summary>
         Booking = 4,
         /// <summary>
@@ -97,7 +97,8 @@ namespace Mzh.Public.Model
     public enum OrderType
     {
         Ship = 1,
-        InShop = 2
+        InShop = 2,
+        Order = 3
     }
 
     /// <summary>
@@ -168,7 +169,7 @@ namespace Mzh.Public.Model
                 case OrderState.Sending:
                     return "配送中";
                 case OrderState.Booking:
-                    return "待使用";
+                    return "制作中/预定中";
                 case OrderState.WaitReview:
                     return "待评价";
                 case OrderState.ApplyRefund:
@@ -192,6 +193,8 @@ namespace Mzh.Public.Model
                     return "堂食";
                 case OrderType.Ship:
                     return "外卖";
+                case OrderType.Order:
+                    return "预定";
                 default:
                     return "";
             }

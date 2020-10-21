@@ -136,5 +136,15 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 商家同意退款
+        /// </summary>
+        /// <param name="oid"></param>
+        /// <returns></returns>
+        public ResultModel QueryRefund(int oid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

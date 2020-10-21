@@ -143,6 +143,18 @@ namespace Mzh.Shop.Admin.Controllers
                 order.GetMonthStatistics(),
                 JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// 商家同意退款
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QueryRefund(int oid)
+        {
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            return Json(
+                order.QueryRefund(oid),
+                JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

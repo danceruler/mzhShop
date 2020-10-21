@@ -425,6 +425,7 @@
     <ProjectReference Include="..\Remoting.Client.Model\Remoting.Client.Model.csproj">
       <Project>{edd46301-c768-4935-82f2-7052b301eb48}</Project>
       <Name>Remoting.Client.Model</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

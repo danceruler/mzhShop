@@ -111,7 +111,7 @@ namespace Remoting
                     #endregion
 
                     #region 修改包厢信息
-                    if(neworder.type == (int)OrderType.InShop && neworder.boxid > 0)
+                    if((neworder.type == (int)OrderType.InShop || neworder.type == (int)OrderType.Order) && neworder.boxid > 0)
                     {
                         var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == neworder.boxid);
                         if(box.state != (int)BoxState.Empty)
@@ -122,7 +122,7 @@ namespace Remoting
                         box.booktime = DateTime.Now;
                         box.oid = neworder.oid;
                         box.phone = neworder.mobile;
-                        box.state = (int)BoxState.Book;
+                        box.state = neworder.type == (int)OrderType.InShop ? (int)BoxState.Use : (int)BoxState.Book;
                         box.uid = neworder.uid;
                         context.SaveChanges();
                     }
@@ -431,15 +431,14 @@ namespace Remoting
                         if (order.type == (int)OrderType.InShop)
                         {
                             order.orderstate = (int)OrderState.Booking;
-                            //if(order.boxid > 0)
-                            //{
-                            //    var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
-                            //    box.
-                            //}
                         }
-                        else
+                        else if(order.type == (int)OrderType.Ship)
                         {
                             order.orderstate = (int)OrderState.WaitSend;
+                        }
+                        else if(order.type == (int)OrderType.Order)
+                        {
+                            order.orderstate = (int)OrderState.Booking;
                         }
                         context.SaveChanges();
 
@@ -593,15 +592,13 @@ namespace Remoting
                     {
                         //修改订单状态
                         order.orderstate = (int)OrderState.ApplyRefund;
-                        var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == order.boxid);
-                        box.state = (int)BoxState.Use;
                         context.SaveChanges();
                         tran.Commit();
                         return ResultModel.Success("申请成功，请等待商家确认");
                     }
                     else if(order.orderstate == (int)OrderState.WaitReview)
                     {
-                        return ResultModel.Fail("当前订单已确认，不允许退款");
+                        return ResultModel.Fail("当前订单已完成，不允许退款");
                     }else 
                     //if(order.orderstate == (int)OrderState.ApplyRefund|| order.orderstate == (int)OrderState.Refunded|| order.orderstate == (int)OrderState.WaitPay)
                     {
@@ -771,6 +768,33 @@ namespace Remoting
                 monthStat.shopordersum += order.type == (int)OrderType.InShop ? order.payfee : 0;
             }
             context.SaveChanges();
+        }
+
+        /// <summary>
+        /// 商家同意退款
+        /// </summary>
+        /// <param name="oid"></param>
+        /// <returns></returns>
+        public ResultModel QueryRefund(int oid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    var order = context.bsp_orders.SingleOrDefault(t => t.oid == oid);
+                    order.orderstate = (int)OrderState.Refunded;
+                    context.SaveChanges();
+                    tran.Commit();
+                    return ResultModel.Success("修改成功");
+                }
+                catch (Exception ex)
+                {
+                    Logger._.Error(ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
         }
 
         #region 定时任务
