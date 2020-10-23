@@ -34,6 +34,9 @@
     <Reference Include="Aliyun.OSS, Version=2.10.0.0, Culture=neutral, PublicKeyToken=0ad4175f0dac0b9b, processorArchitecture=MSIL">
       <HintPath>..\packages\Aliyun.OSS.SDK.2.10.0\lib\Aliyun.OSS.dll</HintPath>
     </Reference>
+    <Reference Include="Fleck, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fleck.1.1.0\lib\net45\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="LitJson">
       <HintPath>..\DLL\cs_sdk_v3.0.9\WxPayAPI\bin\LitJson.dll</HintPath>
     </Reference>
@@ -74,6 +77,7 @@
     <Compile Include="SqlManager.cs" />
     <Compile Include="StreamFileHelper.cs" />
     <Compile Include="TEMP.cs" />
+    <Compile Include="WebSocketHelper.cs" />
     <Compile Include="WXPayHelper.cs" />
     <Compile Include="XMLHelper.cs" />
   </ItemGroup>

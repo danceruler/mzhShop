@@ -10,6 +10,7 @@ using System.Runtime.Remoting.Channels.Tcp;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Fleck;
 using Mzh.Public.Base;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -56,30 +57,79 @@ namespace RemotingTest.Server
             StartJob();
             #endregion
 
+            #region 启动socket服务
+            StartWebSocket();
+            #endregion
+
             Console.WriteLine("按任意键退出");
             Console.ReadKey();
         }
 
         public static async void StartJob()
         {
-            //1、调度器
-            ISchedulerFactory sf = new StdSchedulerFactory();
-            IScheduler sched = await sf.GetScheduler();
-            //2、创建一个任务
-            IJobDetail orderjob = JobBuilder.Create<OrderJob>()
-              .WithIdentity("OrderJob", "group1")
-              .Build();
+            try
+            {
+                //1、调度器
+                ISchedulerFactory sf = new StdSchedulerFactory();
+                IScheduler sched = await sf.GetScheduler();
+                //2、创建一个任务
+                IJobDetail orderjob = JobBuilder.Create<OrderJob>()
+                  .WithIdentity("OrderJob", "group1")
+                  .Build();
 
-            //3、创建一个触发器
-            //DateTimeOffset runTime = DateBuilder.EvenMinuteDate(DateTimeOffset.UtcNow);
-            ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity("OrderJobTrigger", "group1")
-                .WithCronSchedule("0/30 * * * * ?")     //30秒执行一次                                                      
-                .Build();
+                //3、创建一个触发器
+                //DateTimeOffset runTime = DateBuilder.EvenMinuteDate(DateTimeOffset.UtcNow);
+                ITrigger trigger = TriggerBuilder.Create()
+                    .WithIdentity("OrderJobTrigger", "group1")
+                    .WithCronSchedule("0/30 * * * * ?")     //30秒执行一次                                                      
+                    .Build();
 
-            await sched.ScheduleJob(orderjob, trigger);
-            //启动任务
-            await sched.Start();
+                await sched.ScheduleJob(orderjob, trigger);
+                //启动任务
+                await sched.Start();
+            }
+            catch(Exception ex)
+            {
+                Logger._.Error("定时任务启动失败，错误原因：" + ex.ToString());
+                Console.WriteLine("定时任务启动失败");
+            }
+        }
+
+        public static void StartWebSocket()
+        {
+            try
+            {
+                WebSocketHelper.Init("ws://127.0.0.1:6868");
+                WebSocketHelper.wsServer.Start(socket =>
+                {
+                    socket.OnOpen = () =>
+                    {
+                        Console.WriteLine("Open");
+                        WebSocketHelper.allSockets.Add(socket);
+                    };
+                    socket.OnClose = () =>
+                    {
+                        Console.WriteLine("Close!");
+                        WebSocketHelper.allSockets.Remove(socket);
+                    };
+                    socket.OnMessage = message =>
+                    {
+                        Console.WriteLine(message);
+                        WebSocketHelper.allSockets.ToList().ForEach(s => s.Send("Echo: " + message));
+                    };
+                });
+                var input = Console.ReadLine();
+                while (input != "exit")
+                {
+                    WebSocketHelper.Send(input);
+                    input = Console.ReadLine();
+                }
+            }catch(Exception ex)
+            {
+                Logger._.Error("websoket服务启动失败，错误原因：" + ex.ToString());
+                Console.WriteLine("websoket服务启动失败");
+            }
+            
         }
     }
 

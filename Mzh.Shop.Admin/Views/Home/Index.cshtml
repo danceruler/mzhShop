@@ -132,7 +132,7 @@
     <script src="~/wwwroot/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
     <script src="~/Scripts/mzhconfig.js"></script>
     <script>
-        
+        var lastopendialog = 0
         layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji'], function () {
             
             var $ = layui.jquery,
@@ -170,13 +170,19 @@
                 });
             });
 
-            var t2 = window.setInterval(function () {
-
-                layer.open({
+            ws = new WebSocket("ws://127.0.0.1:6868");
+            ws.onopen = function () {
+                //ws.send('websocekt测试');
+            };
+            ws.onmessage = async function (e) {
+                if (lastopendialog != 0) {
+                    layer.close(lastopendialog)
+                }
+                lastopendialog = layer.open({
                     type: 1
                     , offset: 'rb' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                    , id: 'layerDemorb' //防止重复弹出
-                    , content: '<div style="padding: 20px 100px;">' + '您有一笔新订单' + '</div>'
+                    //, id: 'layerDemorb' //防止重复弹出
+                    , content: '<div style="padding: 20px 100px;">' + e.data + '</div>'
                     , btn: '确定'
                     , btnAlign: 'c' //按钮居中
                     , shade: 0 //不显示遮罩
@@ -184,8 +190,7 @@
                         layer.closeAll();
                     }
                 });
-
-            }, 5000)
+            };
         });
 
        

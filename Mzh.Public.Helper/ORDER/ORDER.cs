@@ -431,14 +431,17 @@ namespace Remoting
                         if (order.type == (int)OrderType.InShop)
                         {
                             order.orderstate = (int)OrderState.Booking;
+                            WebSocketHelper.Send("收到一笔新的堂食订单!");
                         }
                         else if(order.type == (int)OrderType.Ship)
                         {
                             order.orderstate = (int)OrderState.WaitSend;
+                            WebSocketHelper.Send("收到一笔新的外卖订单!");
                         }
                         else if(order.type == (int)OrderType.Order)
                         {
                             order.orderstate = (int)OrderState.Booking;
+                            WebSocketHelper.Send("收到一笔新的预定订单!");
                         }
                         context.SaveChanges();
 
@@ -594,6 +597,7 @@ namespace Remoting
                         order.orderstate = (int)OrderState.ApplyRefund;
                         context.SaveChanges();
                         tran.Commit();
+                        WebSocketHelper.Send("收到一笔退款申请!");
                         return ResultModel.Success("申请成功，请等待商家确认");
                     }
                     else if(order.orderstate == (int)OrderState.WaitReview)
