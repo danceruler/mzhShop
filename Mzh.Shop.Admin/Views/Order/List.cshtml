@@ -692,11 +692,15 @@
                             var optionHtml = '';
                             if (res[index].orderstate == 2) {
                                 optionHtml = '<div class="layui-col-md4" style="line-height:120px;height:120px">'
-                                    + '<a class="layui-btn layui-btn-danger order-sender" data-oid='+res[index].oid+'>发货</a>'
+                                    + '<a class="layui-btn layui-btn-danger order-sender" data-oid=' + res[index].oid + '>发货</a>'
                                     + '</div>';
-                            } else if(res[index].orderstate == 4){
+                            } else if (res[index].orderstate == 4) {
                                 optionHtml = '<div class="layui-col-md4" style="line-height:120px;height:120px">'
-                                    + '<a class="layui-btn layui-btn-danger order-use" data-oid='+res[index].oid+'>预定使用</a>'
+                                    + '<a class="layui-btn layui-btn-danger order-use" data-oid=' + res[index].oid + '>预定使用</a>'
+                                    + '</div>'
+                            } else if (res[index].orderstate == 6) {
+                                optionHtml = '<div class="layui-col-md4" style="line-height:120px;height:120px">'
+                                    + '<a class="layui-btn layui-btn-danger order-refund" data-oid=' + res[index].oid + '>完成退款</a>'
                                     + '</div>'
                             }
 
@@ -748,6 +752,20 @@
                             $.ajax({
                                 type: 'post',
                                 url: '/Order/UseShopOder?oid=' + $(this).data('oid'),
+                                dataType: 'json',
+                                success: function (res) {
+                                    if (res.state == 1) {
+                                        $(".query").click()
+                                    }
+                                }
+                            })
+                        });
+
+                        $(".order-refund").unbind()
+                        $(".order-refund").click(function () {
+                            $.ajax({
+                                type: 'post',
+                                url: '/Order/QueryRefund?oid=' + $(this).data('oid'),
                                 dataType: 'json',
                                 success: function (res) {
                                     if (res.state == 1) {

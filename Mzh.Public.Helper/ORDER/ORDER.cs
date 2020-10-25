@@ -129,35 +129,39 @@ namespace Remoting
                     #endregion
 
                     #region 创建预支付订单
-                    var user = context.bsp_users.SingleOrDefault(t => t.uid == neworder.uid);
-                    WXPayHelper wXPayHelper = new WXPayHelper();
-                    var unifiedResult = wXPayHelper.unifiedorder(neworder.oid, 0, probody, user.openid, neworder.orderamount);
-                    if (!unifiedResult.Item1)
+                    if(neworder.orderamount > 0)
                     {
-                        return ResultModel.Fail("调用微信下单接口失败，详情见日志");
+                        var user = context.bsp_users.SingleOrDefault(t => t.uid == neworder.uid);
+                        WXPayHelper wXPayHelper = new WXPayHelper();
+                        var unifiedResult = wXPayHelper.unifiedorder(neworder.oid, 0, probody == ""?"预定包厢":probody, user.openid, neworder.orderamount);
+                        if (!unifiedResult.Item1)
+                        {
+                            return ResultModel.Fail("调用微信下单接口失败，详情见日志");
+                        }
+                        var timestamp = WXPayHelper.GetTimeStamp();
+                        bsp_orderprepays newprepay = new bsp_orderprepays();
+                        newprepay.addtime = DateTime.Now;
+                        newprepay.appid = unifiedResult.Item2["appid"].ToString();
+                        newprepay.device_info = "";
+                        newprepay.ispay = false;
+                        newprepay.mch_id = "";
+                        newprepay.nonce_str = unifiedResult.Item2["nonce_str"].ToString();
+                        newprepay.notify_url = WXPayHelper.notify_url;
+                        newprepay.oid = neworder.oid;
+                        newprepay.openid = user.openid;
+                        newprepay.paytime = null;
+                        newprepay.prepayexpiretime = DateTime.Now.AddMinutes(120);
+                        newprepay.prepayid = unifiedResult.Item2["prepay_id"].ToString();
+                        newprepay.sign = unifiedResult.Item2["sign"].ToString();
+                        newprepay.signType = WxPayData.SIGN_TYPE_MD5;
+                        newprepay.spbill_create_ip = WXPayHelper.GetLocalIp();
+                        newprepay.timeStamp = timestamp;
+                        newprepay.total_fee = neworder.orderamount;
+                        newprepay.transaction_id = "";
+                        context.bsp_orderprepays.Add(newprepay);
+                        context.SaveChanges();
                     }
-                    var timestamp = WXPayHelper.GetTimeStamp();
-                    bsp_orderprepays newprepay = new bsp_orderprepays();
-                    newprepay.addtime = DateTime.Now;
-                    newprepay.appid = unifiedResult.Item2["appid"].ToString();
-                    newprepay.device_info = "";
-                    newprepay.ispay = false;
-                    newprepay.mch_id = "";
-                    newprepay.nonce_str = unifiedResult.Item2["nonce_str"].ToString();
-                    newprepay.notify_url = WXPayHelper.notify_url;
-                    newprepay.oid = neworder.oid;
-                    newprepay.openid = user.openid;
-                    newprepay.paytime = null;
-                    newprepay.prepayexpiretime = DateTime.Now.AddMinutes(120);
-                    newprepay.prepayid = unifiedResult.Item2["prepay_id"].ToString();
-                    newprepay.sign = unifiedResult.Item2["sign"].ToString();
-                    newprepay.signType = WxPayData.SIGN_TYPE_MD5;
-                    newprepay.spbill_create_ip = WXPayHelper.GetLocalIp();
-                    newprepay.timeStamp = timestamp;
-                    newprepay.total_fee = neworder.orderamount;
-                    newprepay.transaction_id = "";
-                    context.bsp_orderprepays.Add(newprepay);
-                    context.SaveChanges();
+                    
                     #endregion
 
                     #region 写入统计数据

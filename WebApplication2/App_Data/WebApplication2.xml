@@ -481,6 +481,12 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:WebApplication2.Controllers.BannerController.GetBanners">
+            <summary>
+            获取首页轮播图
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication2.Controllers.BoxController.GetBoxes">
             <summary>
             获取包厢列表
