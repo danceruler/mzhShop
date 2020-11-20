@@ -456,6 +456,49 @@
           <Property Name="number" Type="int" Nullable="false" />
           <Property Name="pid" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="bsp_groupdetails">
+          <Key>
+            <PropertyRef Name="groupdetailid" />
+          </Key>
+          <Property Name="groupdetailid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groupid" Type="int" Nullable="false" />
+          <Property Name="uid" Type="int" Nullable="false" />
+          <Property Name="sno" Type="int" Nullable="false" />
+          <Property Name="paytime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="bsp_groupinfos">
+          <Key>
+            <PropertyRef Name="groupinfoid" />
+          </Key>
+          <Property Name="groupinfoid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="grouptype" Type="int" Nullable="false" />
+          <Property Name="groupoid" Type="int" Nullable="false" />
+          <Property Name="starttime" Type="datetime" />
+          <Property Name="endtime" Type="datetime" />
+          <Property Name="groupprice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="shopprice" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="needcount" Type="int" Nullable="false" />
+          <Property Name="maxtime" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bsp_groups">
+          <Key>
+            <PropertyRef Name="groupid" />
+          </Key>
+          <Property Name="groupid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="grouptype" Type="int" Nullable="false" />
+          <Property Name="groupoid" Type="int" Nullable="false" />
+          <Property Name="starttime" Type="datetime" />
+          <Property Name="endtime" Type="datetime" />
+          <Property Name="startuid" Type="int" Nullable="false" />
+          <Property Name="groupprice" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="shopprice" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="isfinish" Type="bit" />
+          <Property Name="needcount" Type="int" Nullable="false" />
+          <Property Name="nowcount" Type="int" Nullable="false" />
+          <Property Name="isfail" Type="bit" />
+          <Property Name="failtype" Type="int" Nullable="false" />
+          <Property Name="maxtime" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="bsp_helps">
           <Key>
             <PropertyRef Name="id" />
@@ -1085,6 +1128,18 @@
           <Property Name="openid" Type="nvarchar" MaxLength="200" />
           <Property Name="gender" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_group_groupdetail">
+          <End Role="bsp_groups" Type="Self.bsp_groups" Multiplicity="1" />
+          <End Role="bsp_groupdetails" Type="Self.bsp_groupdetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="bsp_groups">
+              <PropertyRef Name="groupid" />
+            </Principal>
+            <Dependent Role="bsp_groupdetails">
+              <PropertyRef Name="groupdetailid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="brnshopModelStoreContainer">
           <EntitySet Name="bsp_adminactions" EntityType="Self.bsp_adminactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_admingroups" EntityType="Self.bsp_admingroups" Schema="dbo" store:Type="Tables" />
@@ -1122,6 +1177,9 @@
           <EntitySet Name="bsp_fullsendpromotions" EntityType="Self.bsp_fullsendpromotions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_giftpromotions" EntityType="Self.bsp_giftpromotions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_gifts" EntityType="Self.bsp_gifts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bsp_groupdetails" EntityType="Self.bsp_groupdetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bsp_groupinfos" EntityType="Self.bsp_groupinfos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bsp_groups" EntityType="Self.bsp_groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_helps" EntityType="Self.bsp_helps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_loginfaillogs" EntityType="Self.bsp_loginfaillogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="bsp_navs" EntityType="Self.bsp_navs" Schema="dbo" store:Type="Tables" />
@@ -1169,6 +1227,10 @@
     [bsp_pvstats].[count] AS [count]
     FROM [dbo].[bsp_pvstats] AS [bsp_pvstats]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_group_groupdetail" Association="Self.FK_group_groupdetail">
+            <End Role="bsp_groups" EntitySet="bsp_groups" />
+            <End Role="bsp_groupdetails" EntitySet="bsp_groupdetails" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -2166,6 +2228,13 @@
           <EntitySet Name="bsp_users" EntityType="brnshopModel.bsp_users" />
           <EntitySet Name="bsp_orderstatistics" EntityType="brnshopModel.bsp_orderstatistics" />
           <EntitySet Name="bsp_orderprepays" EntityType="brnshopModel.bsp_orderprepays" />
+          <EntitySet Name="bsp_groupdetails" EntityType="brnshopModel.bsp_groupdetails" />
+          <EntitySet Name="bsp_groupinfos" EntityType="brnshopModel.bsp_groupinfos" />
+          <EntitySet Name="bsp_groups" EntityType="brnshopModel.bsp_groups" />
+          <AssociationSet Name="FK_group_groupdetail" Association="brnshopModel.FK_group_groupdetail">
+            <End Role="bsp_groups" EntitySet="bsp_groups" />
+            <End Role="bsp_groupdetails" EntitySet="bsp_groupdetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="bsp_navs">
           <Key>
@@ -2331,6 +2400,63 @@
           <Property Name="transaction_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="prepayexpiretime" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="bsp_groupdetails">
+          <Key>
+            <PropertyRef Name="groupdetailid" />
+          </Key>
+          <Property Name="groupdetailid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groupid" Type="Int32" Nullable="false" />
+          <Property Name="uid" Type="Int32" Nullable="false" />
+          <Property Name="sno" Type="Int32" Nullable="false" />
+          <Property Name="paytime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="bsp_groups" Relationship="brnshopModel.FK_group_groupdetail" FromRole="bsp_groupdetails" ToRole="bsp_groups" />
+        </EntityType>
+        <EntityType Name="bsp_groupinfos">
+          <Key>
+            <PropertyRef Name="groupinfoid" />
+          </Key>
+          <Property Name="groupinfoid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="grouptype" Type="Int32" Nullable="false" />
+          <Property Name="groupoid" Type="Int32" Nullable="false" />
+          <Property Name="starttime" Type="DateTime" Precision="3" />
+          <Property Name="endtime" Type="DateTime" Precision="3" />
+          <Property Name="groupprice" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="shopprice" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="needcount" Type="Int32" Nullable="false" />
+          <Property Name="maxtime" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bsp_groups">
+          <Key>
+            <PropertyRef Name="groupid" />
+          </Key>
+          <Property Name="groupid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="grouptype" Type="Int32" Nullable="false" />
+          <Property Name="groupoid" Type="Int32" Nullable="false" />
+          <Property Name="starttime" Type="DateTime" Precision="3" />
+          <Property Name="endtime" Type="DateTime" Precision="3" />
+          <Property Name="startuid" Type="Int32" Nullable="false" />
+          <Property Name="groupprice" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="shopprice" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="isfinish" Type="Boolean" />
+          <Property Name="needcount" Type="Int32" Nullable="false" />
+          <Property Name="nowcount" Type="Int32" Nullable="false" />
+          <Property Name="isfail" Type="Boolean" />
+          <Property Name="failtype" Type="Int32" Nullable="false" />
+          <Property Name="maxtime" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="bsp_groupdetails" Relationship="brnshopModel.FK_group_groupdetail" FromRole="bsp_groups" ToRole="bsp_groupdetails" />
+        </EntityType>
+        <Association Name="FK_group_groupdetail">
+          <End Type="brnshopModel.bsp_groups" Role="bsp_groups" Multiplicity="1" />
+          <End Type="brnshopModel.bsp_groupdetails" Role="bsp_groupdetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="bsp_groups">
+              <PropertyRef Name="groupid" />
+            </Principal>
+            <Dependent Role="bsp_groupdetails">
+              <PropertyRef Name="groupdetailid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3487,6 +3613,52 @@
                 <ScalarProperty Name="appid" ColumnName="appid" />
                 <ScalarProperty Name="oid" ColumnName="oid" />
                 <ScalarProperty Name="prepayid" ColumnName="prepayid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bsp_groupdetails">
+            <EntityTypeMapping TypeName="brnshopModel.bsp_groupdetails">
+              <MappingFragment StoreEntitySet="bsp_groupdetails">
+                <ScalarProperty Name="paytime" ColumnName="paytime" />
+                <ScalarProperty Name="sno" ColumnName="sno" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="groupid" ColumnName="groupid" />
+                <ScalarProperty Name="groupdetailid" ColumnName="groupdetailid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bsp_groupinfos">
+            <EntityTypeMapping TypeName="brnshopModel.bsp_groupinfos">
+              <MappingFragment StoreEntitySet="bsp_groupinfos">
+                <ScalarProperty Name="maxtime" ColumnName="maxtime" />
+                <ScalarProperty Name="needcount" ColumnName="needcount" />
+                <ScalarProperty Name="shopprice" ColumnName="shopprice" />
+                <ScalarProperty Name="groupprice" ColumnName="groupprice" />
+                <ScalarProperty Name="endtime" ColumnName="endtime" />
+                <ScalarProperty Name="starttime" ColumnName="starttime" />
+                <ScalarProperty Name="groupoid" ColumnName="groupoid" />
+                <ScalarProperty Name="grouptype" ColumnName="grouptype" />
+                <ScalarProperty Name="groupinfoid" ColumnName="groupinfoid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bsp_groups">
+            <EntityTypeMapping TypeName="brnshopModel.bsp_groups">
+              <MappingFragment StoreEntitySet="bsp_groups">
+                <ScalarProperty Name="maxtime" ColumnName="maxtime" />
+                <ScalarProperty Name="failtype" ColumnName="failtype" />
+                <ScalarProperty Name="isfail" ColumnName="isfail" />
+                <ScalarProperty Name="nowcount" ColumnName="nowcount" />
+                <ScalarProperty Name="needcount" ColumnName="needcount" />
+                <ScalarProperty Name="isfinish" ColumnName="isfinish" />
+                <ScalarProperty Name="shopprice" ColumnName="shopprice" />
+                <ScalarProperty Name="groupprice" ColumnName="groupprice" />
+                <ScalarProperty Name="startuid" ColumnName="startuid" />
+                <ScalarProperty Name="endtime" ColumnName="endtime" />
+                <ScalarProperty Name="starttime" ColumnName="starttime" />
+                <ScalarProperty Name="groupoid" ColumnName="groupoid" />
+                <ScalarProperty Name="grouptype" ColumnName="grouptype" />
+                <ScalarProperty Name="groupid" ColumnName="groupid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

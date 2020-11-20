@@ -56,6 +56,7 @@
     <Compile Include="Model\CreateModel.cs" />
     <Compile Include="Model\DistinctModel.cs" />
     <Compile Include="Model\FileCacheModel.cs" />
+    <Compile Include="Model\GROUOModel.cs" />
     <Compile Include="Model\ResultModel.cs" />
     <Compile Include="Model\ShowBannerInfo.cs" />
     <Compile Include="Model\ShowCouponInfo.cs" />

@@ -82,6 +82,10 @@
         <EntityTypeShape EntityType="brnshopModel.bsp_users" Width="1.5" PointX="23.375" PointY="13.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_orderstatistics" Width="1.5" PointX="9.375" PointY="25.75" />
         <EntityTypeShape EntityType="brnshopModel.bsp_orderprepays" Width="1.5" PointX="25.375" PointY="11.75" />
+        <EntityTypeShape EntityType="brnshopModel.bsp_groupdetails" Width="1.5" PointX="13.625" PointY="26.875" />
+        <EntityTypeShape EntityType="brnshopModel.bsp_groupinfos" Width="1.5" PointX="24.375" PointY="25.75" />
+        <EntityTypeShape EntityType="brnshopModel.bsp_groups" Width="1.5" PointX="11.375" PointY="26" />
+        <AssociationConnector Association="brnshopModel.FK_group_groupdetail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

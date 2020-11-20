@@ -161,6 +161,15 @@
     <Compile Include="bsp_gifts.cs">
       <DependentUpon>mzhshop.tt</DependentUpon>
     </Compile>
+    <Compile Include="bsp_groupdetails.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_groupinfos.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bsp_groups.cs">
+      <DependentUpon>mzhshop.tt</DependentUpon>
+    </Compile>
     <Compile Include="bsp_helps.cs">
       <DependentUpon>mzhshop.tt</DependentUpon>
     </Compile>
