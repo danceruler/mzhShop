@@ -98,7 +98,9 @@ namespace Mzh.Public.Model
     {
         Ship = 1,
         InShop = 2,
-        Order = 3
+        Order = 3,
+        SECKILL = 4,
+        GROUP = 5
     }
 
     /// <summary>

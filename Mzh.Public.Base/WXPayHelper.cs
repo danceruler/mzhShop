@@ -41,8 +41,8 @@ namespace Mzh.Public.Base
                 { "openid", openid},
                 { "out_trade_no", oid.ToString()},
                 { "spbill_create_ip", GetPublicIp()},
-                //{ "total_fee", ((int)(totalfee*100)).ToString() },
-                { "total_fee", "1" },
+                { "total_fee", ((int)(totalfee*100)).ToString() },
+                //{ "total_fee", "1" },
                 { "trade_type", "JSAPI" },
             };
             var requestXML = $@"<xml>
@@ -69,8 +69,8 @@ namespace Mzh.Public.Base
             data.SetValue("out_trade_no", oid.ToString());//商家订单号
             data.SetValue("sign", GetSignString(dic));
             data.SetValue("spbill_create_ip", GetPublicIp());
-            //data.SetValue("total_fee", ((int)(totalfee * 100)).ToString());//交易金额
-            data.SetValue("total_fee", "1");//交易金额
+            data.SetValue("total_fee", ((int)(totalfee * 100)).ToString());//交易金额
+            //data.SetValue("total_fee", "1");//交易金额
             data.SetValue("trade_type", "JSAPI");
             //data.SetValue("product_id", pid.ToString());//商品ID
             

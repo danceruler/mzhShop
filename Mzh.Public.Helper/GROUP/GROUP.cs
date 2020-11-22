@@ -72,25 +72,54 @@ namespace Mzh.Public.BLL.GROUP
         /// 用户开团
         /// </summary>
         /// <returns></returns>
-        //public ResultModel StartGroup(int groupInfoId,int uid)
-        //{
-        //    using (brnshopEntities context = new brnshopEntities())
-        //    {
-        //        try
-        //        {
-        //            bsp_groupinfos GroupInfo = context.bsp_groupinfos.SingleOrDefault(t => t.groupinfoid == groupInfoId);
-        //            bsp_groups newGroup = new bsp_groups();
-        //            newGroup.endtime = GroupInfo.endtime;
-        //            context.bsp_groupinfos.Remove(newGroupInfo);
-        //            context.SaveChanges();
-        //            return ResultModel.Success("删除成功");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Log.Error("StartGroup方法," + ex.ToString());
-        //            return ResultModel.Error(ex.ToString());
-        //        }
-        //    }
-        //}
+        public ResultModel StartGroup(int groupInfoId, int uid)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    bsp_groupinfos GroupInfo = context.bsp_groupinfos.SingleOrDefault(t => t.groupinfoid == groupInfoId);
+                    bsp_groups newGroup = new bsp_groups();
+                    newGroup.endtime = DateTime.Now.AddSeconds(GroupInfo.maxtime);
+                    newGroup.failtype = 0;
+                    newGroup.groupoid = GroupInfo.groupoid;
+                    newGroup.groupprice = GroupInfo.groupprice;
+                    newGroup.grouptype = GroupInfo.grouptype;
+                    newGroup.isfail = false;
+                    newGroup.isfinish = false;
+                    newGroup.maxtime = GroupInfo.maxtime;
+                    newGroup.needcount = GroupInfo.needcount;
+                    newGroup.nowcount = 1;
+                    newGroup.shopprice = GroupInfo.shopprice;
+                    newGroup.starttime = DateTime.Now;
+                    newGroup.startuid = uid;
+                    context.bsp_groups.Add(newGroup);
+                    context.SaveChanges();
+
+                    bsp_groupdetails newGroupetail = new bsp_groupdetails();
+                    newGroupetail.groupid = newGroup.groupid;
+                    newGroupetail.paytime = DateTime.Now;
+                    newGroupetail.sno = 1;
+                    newGroupetail.uid = uid;
+                    context.bsp_groupdetails.Add(newGroupetail);
+                    context.SaveChanges();
+
+                    tran.Commit();
+                    return ResultModel.Success("开团成功");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("StartGroup方法," + ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        public ResultModel JoinGroup()
+        {
+
+        }
     }
 }
