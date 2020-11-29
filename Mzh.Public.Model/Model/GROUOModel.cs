@@ -53,6 +53,9 @@ namespace Mzh.Public.Model.Model
         /// 超时时间（s）
         /// </summary>
         public int maxtime { get; set; }
+
+        public ShowProductInfo productInfo { get; set; }
+        public ShowCouponTypeInfo couponTypeInfo { get; set; }
     }
 
     /// <summary>
@@ -61,6 +64,10 @@ namespace Mzh.Public.Model.Model
     [Serializable]
     public class GroupModel
     {
+        /// <summary>
+        /// 拼团信息id
+        /// </summary>
+        public int groupinfoid { get; set; }
         /// <summary>
         /// 拼团id
         /// </summary>
@@ -130,6 +137,7 @@ namespace Mzh.Public.Model.Model
     /// <summary>
     /// 拼团明细（参与人信息）
     /// </summary>
+    [Serializable]
     public class GroupDetailModel
     {
         /// <summary>

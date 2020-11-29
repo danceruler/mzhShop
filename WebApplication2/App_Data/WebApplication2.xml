@@ -513,6 +513,51 @@
             <param name="uid"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication2.Controllers.GroupController.CreateGroupInfo(Mzh.Public.Model.Model.GroupInfoModel)">
+            <summary>
+            新增拼团活动
+            </summary>
+        </member>
+        <member name="M:WebApplication2.Controllers.GroupController.DeleteGroupInfo(System.Int32)">
+            <summary>
+            删除拼团活动
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication2.Controllers.GroupController.StartGroup(System.Int32,System.Int32)">
+            <summary>
+            用户开团（支付回调时调用）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication2.Controllers.GroupController.JoinGroup(System.Int32,System.Int32)">
+            <summary>
+            用户参团（支付回调时调用）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication2.Controllers.GroupController.GroupInfoList">
+            <summary>
+            获取首页拼团列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication2.Controllers.GroupController.GetRunningGroupListByInfo(System.Int32)">
+            <summary>
+            获取当前拼团活动正在进行的团
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication2.Controllers.GroupController.PayGroup(System.Int32,System.Int32,System.Int32,System.Decimal)">
+            <summary>
+            用户发起拼团支付
+            </summary>
+            <param name="isstart">1开团 2参团</param>
+            <param name="gid"></param>
+            <param name="uid"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication2.Controllers.OrderController.CreatOrder(Mzh.Public.Model.Model.CreateOrderModel)">
             <summary>
             创建订单
@@ -553,6 +598,13 @@
             <param name="orderstate"></param>
             <param name="page"></param>
             <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication2.Controllers.OrderController.GroupPayNotify">
+            <summary>
+            微信支付回调(拼团)
+            </summary>
+            <param name="notifyxml"></param>
             <returns></returns>
         </member>
         <member name="M:WebApplication2.Controllers.ProductController.GetProductListFromCache">

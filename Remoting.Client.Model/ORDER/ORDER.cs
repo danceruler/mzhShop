@@ -146,5 +146,16 @@ namespace Remoting
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 微信支付回调(拼团)
+        /// </summary>
+        /// <param name="notifyxml"></param>
+        /// <returns></returns>
+        public string GroupPayNotify(string notifyxml)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

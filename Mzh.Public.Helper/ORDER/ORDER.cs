@@ -17,6 +17,7 @@ namespace Remoting
     public class ORDER : MarshalByRefObject
     {
         COUPON Coupon = new COUPON();
+        GROUP Group = new GROUP();
 
         /// <summary>
         /// 创建订单
@@ -476,6 +477,67 @@ namespace Remoting
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 微信支付回调(拼团)
+        /// </summary>
+        /// <param name="notifyxml"></param>
+        /// <returns></returns>
+        public string GroupPayNotify(string notifyxml)
+        {
+            Logger._.Info("微信支付回调数据:" + notifyxml);
+            try
+            {
+                var notifydata = XMLHelper.FromXml(notifyxml);
+                if (notifydata["result_code"].ToString() == "SUCCESS")
+                {
+                    string out_trade_no = notifydata["out_trade_no"].ToString();
+                    string[] out_trade_no_array = out_trade_no.Split('a');
+                    int isstart = int.Parse(out_trade_no_array[0].ToString());
+                    int gid = int.Parse(out_trade_no_array[1].ToString());
+                    int uid = int.Parse(out_trade_no_array[2].ToString());
+
+                    
+                    //开团
+                    if(isstart == 1)
+                    {
+                        var sql = $@"select * from bsp_groups where startuid = {uid} and groupinfoid = {gid}";
+                        DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                        if(dt != null && dt.Rows.Count == 0)
+                        {
+                            Group.StartGroup(gid, uid);
+                        }
+                    }
+                    else
+                    {
+                        var sql = $@"select * from bsp_groupdetails where uid = {uid} and groupid = {gid}";
+                        DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                        if (dt != null && dt.Rows.Count == 0)
+                        {
+                            Group.JoinGroup(gid, uid);
+                        }
+                        
+                    }
+
+                    return $@"<xml>
+                                      <return_code><![CDATA[SUCCESS]]></return_code>
+                                      <return_msg><![CDATA[OK]]></return_msg>
+                                    </xml>";
+                }
+                return $@"<xml>
+                                  <return_code><![CDATA[FAIL]]></return_code>
+                                  <return_msg><![CDATA[]]></return_msg>
+                                </xml>";
+            }
+            catch (Exception ex)
+            {
+                Logger._.Error("GroupPayNotify,"+ex.ToString());
+                return $@"<xml>
+                                  <return_code><![CDATA[FAIL]]></return_code>
+                                  <return_msg><![CDATA[数据操作失败]]></return_msg>
+                                </xml>";
+            }
         }
 
         /// <summary>

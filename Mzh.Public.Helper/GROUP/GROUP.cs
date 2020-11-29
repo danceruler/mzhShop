@@ -1,19 +1,25 @@
-﻿using Mzh.Public.DAL;
+﻿using Mzh.Public.Base;
+using Mzh.Public.DAL;
 using Mzh.Public.Model.Model;
 using NLog.Fluent;
+using Remoting;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mzh.Public.BLL.GROUP
+namespace Remoting
 {
     /// <summary>
     /// 拼团
     /// </summary>
     public class GROUP : MarshalByRefObject
     {
+        COUPON coupon = new COUPON();
+
         /// <summary>
         /// 新增拼团活动
         /// </summary>
@@ -69,7 +75,7 @@ namespace Mzh.Public.BLL.GROUP
         }
 
         /// <summary>
-        /// 用户开团
+        /// 用户开团（支付回调时调用）
         /// </summary>
         /// <returns></returns>
         public ResultModel StartGroup(int groupInfoId, int uid)
@@ -94,6 +100,7 @@ namespace Mzh.Public.BLL.GROUP
                     newGroup.shopprice = GroupInfo.shopprice;
                     newGroup.starttime = DateTime.Now;
                     newGroup.startuid = uid;
+                    newGroup.groupinfoid = groupInfoId;
                     context.bsp_groups.Add(newGroup);
                     context.SaveChanges();
 
@@ -102,6 +109,8 @@ namespace Mzh.Public.BLL.GROUP
                     newGroupetail.paytime = DateTime.Now;
                     newGroupetail.sno = 1;
                     newGroupetail.uid = uid;
+                    newGroupetail.isgetcoupon = false;
+                    newGroupetail.paytime = DateTime.Parse("1997-01-27");
                     context.bsp_groupdetails.Add(newGroupetail);
                     context.SaveChanges();
 
@@ -110,16 +119,208 @@ namespace Mzh.Public.BLL.GROUP
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("StartGroup方法," + ex.ToString());
+                    Logger._.Error("StartGroup方法," + ex.ToString());
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
             }
         }
 
-        public ResultModel JoinGroup()
+        /// <summary>
+        /// 用户参团（支付回调时调用）
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel JoinGroup(int GroupId,int uid)
         {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    bsp_groups Group = context.bsp_groups.SingleOrDefault(t => t.groupid == GroupId);
+                    Group.nowcount += 1;
+                    //拼团成功，发放优惠券
+                    if (Group.needcount <= Group.nowcount)
+                    {
+                        Group.isfinish = true;
+                        Group.endtime = DateTime.Now;
+                        var groupdetails = context.bsp_groupdetails.Where(t => t.groupid == GroupId).ToList();
+                        foreach (var groupdetail in groupdetails)
+                        {
+                            if (!groupdetail.isgetcoupon.Value)
+                            {
+                                coupon.RecpientCoupon(groupdetail.uid, Group.groupoid);
+                                groupdetail.isgetcoupon = true;
+                            }
+                        }
+                    }
 
+                    bsp_groupdetails newGroupetail = new bsp_groupdetails();
+                    newGroupetail.groupid = Group.groupid;
+                    newGroupetail.paytime = DateTime.Now;
+                    newGroupetail.sno = Group.nowcount;
+                    newGroupetail.uid = uid;
+                    newGroupetail.isgetcoupon = false;
+                    newGroupetail.paytime = DateTime.Parse("1997-01-27");
+                    if (Group.needcount <= Group.nowcount)
+                    {
+                        coupon.RecpientCoupon(newGroupetail.uid, Group.groupoid);
+                        newGroupetail.isgetcoupon = true;
+                    }
+                    context.bsp_groupdetails.Add(newGroupetail);
+                    context.SaveChanges();
+
+                    tran.Commit();
+                    return ResultModel.Success("参团成功");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("JoinGroup方法," + ex.ToString());
+                    tran.Rollback();
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取首页拼团列表
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel GroupInfoList()
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                try
+                {
+                    string sql = $@"select * from bsp_groupinfos";
+                    List<GroupInfoModel> groupInfos = context.Database.SqlQuery<GroupInfoModel>(sql).ToList();
+                    var couponTypes = coupon.GetCouponTypeForGroup();
+                    foreach (var groupInfo in groupInfos)
+                    {
+                        groupInfo.couponTypeInfo = couponTypes.SingleOrDefault(t => t.ct_coupontypeid == groupInfo.groupoid);
+                        bool isfind = false;
+                        foreach(var products in ProductCache.ProductList)
+                        {
+                            
+                            foreach(var product in products.productInfos)
+                            {
+                                if(product.pid == groupInfo.couponTypeInfo.ct_pid)
+                                {
+                                    groupInfo.productInfo = product;
+                                    isfind = true;
+                                    break;
+                                }
+                            }
+                            if (isfind) break;
+                        }
+                        
+                    }
+                    return ResultModel.Success("", groupInfos);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("GroupInfoList方法," + ex.ToString());
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取当前拼团活动正在进行的团
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel GetRunningGroupListByInfo(int groupInfoId)
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                try
+                {
+                    string sql = $@"select bsp_groups.*,
+	                                       bsp_groupdetails.groupdetailid gd_groupdetailid,
+	                                       bsp_groupdetails.groupid gd_groupid,
+	                                       bsp_groupdetails.paytime gd_paytime,
+	                                       bsp_groupdetails.sno gd_sno,
+	                                       bsp_groupdetails.uid gd_uid
+                                    from bsp_groups 
+                                    left join bsp_groupdetails on bsp_groupdetails.groupid = bsp_groups.groupid
+                                    where groupinfoid = {groupInfoId} and isfinish = 0 and isfail = 0";
+                    var dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                    var groups = dt.GetList<GroupModel>("").Distinct(new DistinctModel<GroupModel>()).ToList();
+
+                    foreach(var group in groups)
+                    {
+                        //拼团信息
+                        DataTable gddt = dt.Select($"groupid = {group.groupid}").CopyToDataTable();
+                        group.details = gddt.GetList<GroupDetailModel>("");
+                    }
+
+                    return ResultModel.Success("", groups);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("GroupInfoList方法," + ex.ToString());
+                    return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 用户发起拼团支付
+        /// </summary>
+        /// <param name="isstart">1开团 2参团</param>
+        /// <param name="gid"></param>
+        /// <param name="uid"></param>
+        /// <returns></returns>
+        public ResultModel PayGroup(int isstart,int gid,int uid,decimal totalfee)
+        {
+            try
+            {
+                using (brnshopEntities context = new brnshopEntities())
+                {
+                    if(isstart == 1)
+                    {
+                        var groupCount = context.bsp_groups.Where(t => t.startuid == uid & t.groupinfoid == gid).Count();
+                        if(groupCount > 0)
+                        {
+                            return ResultModel.Fail("您已参与过该团");
+                        }
+                    }
+                    else
+                    {
+                        var groupCount = context.bsp_groupdetails.Where(t => t.uid == uid & t.groupid == gid).Count();
+                        if (groupCount > 0)
+                        {
+                            return ResultModel.Fail("您已参与过该团");
+                        }
+                    }
+
+                    var user = context.bsp_users.SingleOrDefault(t => t.uid == uid);
+                    WXPayHelper wXPayHelper = new WXPayHelper();
+                    var unifiedorderResult = wXPayHelper.unifiedorderForGroup(isstart, gid, uid, "拼团", user.openid, totalfee);
+                    if (!unifiedorderResult.Item1)
+                    {
+                        return ResultModel.Fail("拼团支付调用微信下单接口失败，详情见日志");
+                    }
+                    SortedDictionary<string, object> payDic = unifiedorderResult.Item2 as SortedDictionary<string, object>;
+
+                    var timestamp = WXPayHelper.GetTimeStamp();
+                    string aSign = $@"appId={payDic["appid"]}&nonceStr={payDic["nonce_str"].ToString()}&package=prepay_id={payDic["prepay_id"].ToString()}&signType=MD5&timeStamp={timestamp}&key={WXPayHelper.apisecret}";
+                    WxpayDataForApi model = new WxpayDataForApi();
+                    model.appId = payDic["appid"].ToString();
+                    model.nonceStr = payDic["nonce_str"].ToString();
+                    model.package = $@"prepay_id={payDic["prepay_id"].ToString()}";
+                    model.paySign = EncryptHelp.EncryptMD5(aSign);
+                    model.signType = WxPayAPI.WxPayData.SIGN_TYPE_MD5;
+                    model.timeStamp = timestamp;
+
+                    return ResultModel.Success("", model);
+                }
+            }
+            catch(Exception ex)
+            {
+                Log.Error("PayGroup方法," + ex.ToString());
+                return ResultModel.Error(ex.ToString());
+            }
         }
     }
 }

@@ -173,6 +173,7 @@ namespace Mzh.Public.Base
             }
             catch (Exception exception)
             {
+                Logger._.Error(exception.ToString());
                 return null;
             }
         }

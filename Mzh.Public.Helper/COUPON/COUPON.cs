@@ -116,7 +116,8 @@ namespace Remoting
                             FROM bsp_coupons
                             WHERE uid = {uid}) TEMP ON TEMP.coupontypeid = bsp_coupontypes.coupontypeid AND TEMP.createtime >= bsp_coupontypes.sendstarttime AND TEMP.createtime <= bsp_coupontypes.sendendtime
                             LEFT JOIN bsp_couponproducts ON bsp_couponproducts.coupontypeid = bsp_coupontypes.coupontypeid
-                            WHERE GETDATE() >= bsp_coupontypes.sendstarttime AND GETDATE() <= bsp_coupontypes.sendendtime AND TEMP.coupontypeid IS NULL
+                            WHERE GETDATE() >= bsp_coupontypes.sendstarttime AND GETDATE() <= bsp_coupontypes.sendendtime AND TEMP.coupontypeid IS NULL 
+                                  and bsp_coupontypes.coupontypeid not in (select groupoid from bsp_groupinfos where starttime < getdate() and endtime > getdate())
                             ";
                 DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
                 List<ShowCouponTypeInfo> result = dt.GetList<ShowCouponTypeInfo>("");
@@ -139,7 +140,7 @@ namespace Remoting
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="couponTypeid"></param>
-        public ResultModel RecpientCoupon(int uid, int couponTypeid)
+        public ResultModel RecpientCoupon(int uid, int couponTypeid,bool isFromGroup = false)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
@@ -148,7 +149,7 @@ namespace Remoting
                     var coupontype = context.bsp_coupontypes.SingleOrDefault(t => t.coupontypeid == couponTypeid);
                     var coupon = context.bsp_coupons.SingleOrDefault(t => t.uid == uid && t.coupontypeid == couponTypeid&t.createtime >= coupontype.sendstarttime &t.createtime <= coupontype.sendendtime);
 
-                    if(coupon != null)
+                    if(coupon != null&&!isFromGroup)
                     {
                         return ResultModel.Fail("您已经领取了该优惠券");
                     }
@@ -258,6 +259,61 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取所有的优惠券类型（用于拼团）
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowCouponTypeInfo> GetCouponTypeForGroup()
+        {
+            try
+            {
+                string sql = $@"SELECT bsp_coupontypes.coupontypeid ct_coupontypeid,
+                                   state ct_state,
+                                   name ct_name,
+                                   money ct_money,
+                                   count ct_count,
+                                   sendmode ct_sendmode,
+                                   getmode ct_getmode,
+                                   usemode ct_usemode,
+                                   userranklower ct_userranklower,
+                                   orderamountlower ct_orderamountlower,
+                                   limitcateid ct_limitcateid,
+                                   limitbrandid ct_limitbrandid,
+                                   limitproduct ct_limitproduct,
+                                   sendstarttime ct_sendstarttime,
+                                   sendendtime ct_sendendtime,
+                                   useexpiretime ct_useexpiretime,
+                                   usestarttime ct_usestarttime,
+                                   useendtime ct_useendtime,
+                                   type ct_type,
+                                   isstack ct_isstack,
+                                   fullmoney ct_fullmoney,
+                                   cutmoney ct_cutmoney,
+                                   discount ct_discount,
+                                   ISNULL(bsp_couponproducts.pid,0) ct_pid
+                            FROM bsp_coupontypes
+                            LEFT JOIN bsp_couponproducts ON bsp_couponproducts.coupontypeid = bsp_coupontypes.coupontypeid
+                            ORDER BY sendendtime DESC
+                            ";
+                DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                List<ShowCouponTypeInfo> list = dt.GetList<ShowCouponTypeInfo>("");
+                list.ForEach(t => {
+                    t.t_ct_isstack = t.ct_isstack == 1 ? "可以叠加" : "不可以叠加";
+                    t.t_ct_type = EnumToText.ToText((CouponType)t.ct_type);
+                    t.t_ct_fullcut = t.ct_fullmoney.ToString() + '/' + t.ct_cutmoney.ToString();
+                    t.t_ct_sendstarttime = t.ct_sendstarttime.ToString("yyyy-MM-dd");
+                    t.t_ct_sendendtime = t.ct_sendendtime.ToString("yyyy-MM-dd");
+                });
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                Logger._.Error(ex.ToString());
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 结束发放优惠券
         /// </summary>
         /// <param name="coupontypeids"></param>
@@ -328,6 +384,15 @@ namespace Remoting
                         newcoupontype.usestarttime = model.ct_useexpiretime == 1 ? model.ct_usestarttime : DateTime.Now;
                         context.bsp_coupontypes.Add(newcoupontype);
                         context.SaveChanges();
+
+                        if(model.ct_pid > 0)
+                        {
+                            bsp_couponproducts bsp_Couponproduct = new bsp_couponproducts();
+                            bsp_Couponproduct.coupontypeid = newcoupontype.coupontypeid;
+                            bsp_Couponproduct.pid = model.ct_pid;
+                            context.bsp_couponproducts.Add(bsp_Couponproduct);
+                            context.SaveChanges();
+                        }
                     }
                     tran.Commit();
                     return ResultModel.Success("添加成功");

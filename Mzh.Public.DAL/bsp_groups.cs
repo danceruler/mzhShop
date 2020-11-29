@@ -12,6 +12,7 @@ namespace Mzh.Public.DAL
     using System;
     using System.Collections.Generic;
     
+    [Serializable]
     public partial class bsp_groups
     {
         public int groupid { get; set; }
@@ -28,7 +29,6 @@ namespace Mzh.Public.DAL
         public Nullable<bool> isfail { get; set; }
         public int failtype { get; set; }
         public int maxtime { get; set; }
-    
-        public virtual bsp_groupdetails bsp_groupdetails { get; set; }
+        public int groupinfoid { get; set; }
     }
 }

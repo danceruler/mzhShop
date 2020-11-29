@@ -20,6 +20,7 @@ namespace Mzh.Public.Base
         public static string apisecret = ConfigurationManager.AppSettings["apisecret"];
         public static string notify_url = ConfigurationManager.AppSettings["notify_url"];
         public static string refund_notify_url = ConfigurationManager.AppSettings["refund_notify_url"];
+        public static string groupnotify_url = ConfigurationManager.AppSettings["groupnotify_url"];
 
         private static string unifiedorderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
@@ -90,6 +91,78 @@ namespace Mzh.Public.Base
             //}
             //return new Tuple<bool, WxPayData>(false, result);
             if (responseDic["return_code"].ToString() == "SUCCESS"&& responseDic["result_code"].ToString() == "SUCCESS")
+            {
+                return new Tuple<bool, SortedDictionary<string, object>>(true, responseDic);
+            }
+            return new Tuple<bool, SortedDictionary<string, object>>(false, responseDic);
+        }
+
+        /// <summary>
+        /// 调用统一下单接口(拼团)
+        /// </summary>
+        public Tuple<bool, SortedDictionary<string, object>> unifiedorderForGroup(int isstart,int oid, int uid, string body, string openid, decimal totalfee)
+        {
+            var RandomStr = GetRandomString(16);
+            body = body.Length > 20 ? body.Substring(0, 20) : body;
+            WxPayData data = new WxPayData();
+            Dictionary<string, string> dic = new Dictionary<string, string>() {
+                { "appid", appid},
+                { "body", body.Replace("\r\n","")},
+                { "mch_id", mch_id},
+                { "nonce_str", RandomStr},
+                { "notify_url", groupnotify_url},
+                { "openid", openid},
+                { "out_trade_no", isstart.ToString()+"a"+oid.ToString()+"a"+uid.ToString()+ "a"+RandomStr},
+                { "spbill_create_ip", GetPublicIp()},
+                { "total_fee", ((int)(totalfee*100)).ToString() },
+                //{ "total_fee", "1" },
+                { "trade_type", "JSAPI" },
+            };
+            var requestXML = $@"<xml>
+                                   <appid>{appid}</appid>
+                                   <body>{body.Replace("\r\n", "")}</body>
+                                   <mch_id>{mch_id}</mch_id>
+                                   <nonce_str>{RandomStr}</nonce_str>
+                                   <notify_url>http://wxpay.wxutil.com/pub_v2/pay/notify.v2.php</notify_url>
+                                   <openid>oUpF8uMuAJO_M2pxb1Q9zNjWeS6o</openid>
+                                   <out_trade_no>1415659990</out_trade_no>
+                                   <spbill_create_ip>14.23.150.211</spbill_create_ip>
+                                   <total_fee>1</total_fee>
+                                   <trade_type>JSAPI</trade_type>
+                                   <sign>0CB01533B8C1EF103065174F50BCA001</sign>
+                                </xml>";
+
+            data.SetValue("appid", appid);
+            data.SetValue("body", body.Replace("\r\n", ""));//商品描述
+            data.SetValue("mch_id", mch_id);
+            data.SetValue("nonce_str", RandomStr);
+            data.SetValue("notify_url", groupnotify_url);//支付成功回调地址
+            //data.SetValue("timestamp", GetTimeStamp());
+            data.SetValue("openid", openid);//用户openid
+            data.SetValue("out_trade_no", isstart.ToString() + "a" + oid.ToString() + "a" + uid.ToString() + "a" + RandomStr);//商家订单号
+            data.SetValue("sign", GetSignString(dic));
+            data.SetValue("spbill_create_ip", GetPublicIp());
+            data.SetValue("total_fee", ((int)(totalfee * 100)).ToString());//交易金额
+            //data.SetValue("total_fee", "1");//交易金额
+            data.SetValue("trade_type", "JSAPI");
+            //data.SetValue("product_id", pid.ToString());//商品ID
+
+            //var b = data.CheckSign(WxPayData.SIGN_TYPE_MD5);
+            //data.MakeSign(WxPayData.SIGN_TYPE_MD5);
+            var a = data.ToXml();
+            Logger._.Info("请求下单接口请求数据:" + data.ToJson());
+            //WxPayData result = WxPayApi.UnifiedOrder(data);//调用统一下单接口
+
+            var response = HttpHelper.HttpPost(unifiedorderUrl, a);
+            var responseDic = XMLHelper.FromXml(response);
+            Logger._.Info("请求下单接口返回数据:" + response);
+            //HttpService.Post(res)
+            //if(result.GetValue("return_code").ToString() == "SUCCESS"&& result.GetValue("result_code").ToString() == "SUCCESS")
+            //{
+            //    return new Tuple<bool, WxPayData>(true, result);
+            //}
+            //return new Tuple<bool, WxPayData>(false, result);
+            if (responseDic["return_code"].ToString() == "SUCCESS" && responseDic["result_code"].ToString() == "SUCCESS")
             {
                 return new Tuple<bool, SortedDictionary<string, object>>(true, responseDic);
             }

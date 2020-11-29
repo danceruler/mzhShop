@@ -12,6 +12,7 @@ namespace Mzh.Public.DAL
     using System;
     using System.Collections.Generic;
     
+    [Serializable]
     public partial class bsp_groupdetails
     {
         public int groupdetailid { get; set; }
@@ -19,7 +20,6 @@ namespace Mzh.Public.DAL
         public int uid { get; set; }
         public int sno { get; set; }
         public Nullable<System.DateTime> paytime { get; set; }
-    
-        public virtual bsp_groups bsp_groups { get; set; }
+        public Nullable<bool> isgetcoupon { get; set; }
     }
 }

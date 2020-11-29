@@ -167,6 +167,7 @@
     <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />

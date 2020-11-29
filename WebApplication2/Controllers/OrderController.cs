@@ -94,6 +94,19 @@ namespace WebApplication2.Controllers
             return order.PayNotify(xmlData);
         }
 
+        /// <summary>
+        /// 微信支付回调(拼团)
+        /// </summary>
+        /// <param name="notifyxml"></param>
+        /// <returns></returns>
+        public string GroupPayNotify()
+        {
+            String xmlData = getPostStr();
+            //保存付款成功过来的数据
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            return order.GroupPayNotify(xmlData);
+        }
+
         public static string getPostStr()
         {
             Int32 intLen = Convert.ToInt32(System.Web.HttpContext.Current.Request.InputStream.Length);

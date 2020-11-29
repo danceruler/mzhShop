@@ -31,6 +31,13 @@ namespace Mzh.Public.Model.Model
                 if (t != null && tt != null) return t.op_pid == tt.op_pid&&t.op_skuid == tt.op_skuid;
                 return false;
             }
+            else if (typeof(TModel) == typeof(GroupModel))
+            {
+                GroupModel t = x as GroupModel;
+                GroupModel tt = y as GroupModel;
+                if (t != null && tt != null) return t.groupid == tt.groupid ;
+                return false;
+            }
             return false;
         }
 

@@ -50,6 +50,7 @@
     <Compile Include="Cache\BoxCache.cs" />
     <Compile Include="Cache\ProductCache.cs" />
     <Compile Include="COUPON\COUPON.cs" />
+    <Compile Include="GROUP\GROUP.cs" />
     <Compile Include="Hello.cs" />
     <Compile Include="HELP\UPLOAD.cs" />
     <Compile Include="ORDER\ORDER.cs" />

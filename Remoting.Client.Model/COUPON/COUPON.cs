@@ -56,7 +56,7 @@ namespace Remoting
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="couponTypeid"></param>
-        public ResultModel RecpientCoupon(int uid, int couponTypeid)
+        public ResultModel RecpientCoupon(int uid, int couponTypeid, bool isFromGroup = false)
         {
             throw new NotImplementedException();
         }
