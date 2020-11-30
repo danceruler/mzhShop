@@ -322,5 +322,91 @@ namespace Remoting
                 return ResultModel.Error(ex.ToString());
             }
         }
+
+        /// <summary>
+        /// 获取用户的拼团列表
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel GroupListByUid(int uid)
+        {
+            try
+            {
+                string sql = $@"  select bsp_groups.groupid ,
+                                             bsp_groups.grouptype ,
+                                             bsp_groups.groupoid ,
+                                             bsp_groups.starttime ,
+                                             bsp_groups.endtime ,
+                                             bsp_groups.startuid ,
+                                             bsp_groups.groupprice ,
+                                             bsp_groups.shopprice ,
+                                             bsp_groups.isfinish ,
+                                             bsp_groups.needcount ,
+                                             bsp_groups.nowcount ,
+                                             bsp_groups.isfail ,
+                                             bsp_groups.failtype ,
+                                             bsp_groups.maxtime,
+		                                     bsp_groupdetails.groupdetailid gd_groupdetailid,
+                                             bsp_groupdetails.groupid gd_groupid,
+                                             bsp_groupdetails.uid gd_uid,
+                                             bsp_groupdetails.sno gd_sno,
+                                             bsp_groupdetails.paytime gd_paytime
+                                            from bsp_groups
+                                            join bsp_groupdetails on bsp_groupdetails.groupid = bsp_groups.groupid
+                                            where bsp_groups.groupid IN (SELECT groupid FROM dbo.bsp_groupdetails WHERE uid = {uid})
+                                            order by bsp_groups.starttime desc";
+                DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                List<GroupModel> groups = dt.GetList<GroupModel>("").Distinct(new DistinctModel<GroupModel>()).ToList();
+
+                foreach (var group in groups)
+                {
+                    DataTable opdt = dt.Select($"groupid = {group.groupid}").CopyToDataTable();
+                    group.details = opdt.GetList<GroupDetailModel>("").Distinct(new DistinctModel<GroupDetailModel>()).ToList();
+                }
+
+                return ResultModel.Success("成功", groups);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error("GroupListByUid方法," + ex.ToString());
+                return ResultModel.Error(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 更新拼团状态
+        /// </summary>
+        public void UpdateGroupState()
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                var tran = context.Database.BeginTransaction();
+                try
+                {
+                    //支付超时
+                    var groups = context.bsp_groups.Where(t => t.isfail == false && t.isfinish == false && t.endtime <= DateTime.Now).ToList();
+                    groups.ForEach(g =>
+                    {
+                        g.isfail = true;
+                    });
+                    context.SaveChanges();
+
+                    //确认收货超时
+                    //var maxquerytime = DateTime.Now.AddMinutes(-119);
+                    //orders = context.bsp_orders.Where(t => t.orderstate == (int)OrderState.Sending && t.shiptime.Value <= maxquerytime).ToList();
+                    //orders.ForEach(o =>
+                    //{
+                    //    o.orderstate = (int)OrderState.WaitReview;
+                    //});
+                    context.SaveChanges();
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    Logger._.Error("更新拼团状态任务执行失败：" + ex.ToString() + ex.StackTrace);
+                }
+            }
+        }
     }
 }

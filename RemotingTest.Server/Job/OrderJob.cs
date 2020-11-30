@@ -19,6 +19,9 @@ namespace RemotingTest.Server.Job
         {
             ORDER order = new ORDER();
             order.UpdateOrderState();
+
+            GROUP group = new GROUP();
+            group.UpdateGroupState();
         }
     }
 }
