@@ -1,8 +1,6 @@
 ﻿@using Mzh.Public.Model.Model;
 @{
-    int bannerid = ViewBag.bannerid;
-    var banner = ViewBag.banner as ShowBannerInfo;
-    var products = ViewBag.products as List<ShowProductInfo>;
+    GroupInfoModel GroupInfo = ViewBag.GroupInfo as GroupInfoModel;
 }
 <!DOCTYPE html>
 <html>
@@ -17,151 +15,126 @@
 </head>
 <body>
     <div class="layuimini-main">
-        <div class="layui-form-item" style="display:none">
-            <label class="layui-form-label required">轮播图id</label>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">优惠券信息</label>
             <div class="layui-input-block">
-                <input type="text" name="bannerid" id="bannerid" value="@bannerid" class="layui-input">
+                <input type="text" name="groupoid" id="groupoid" lay-verify="required" lay-reqtext="" placeholder="" value="@GroupInfo.title" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">轮播图标题（仅在后台用于区分）</label>
+            <label class="layui-form-label required">拼团超时时间限制(分钟)</label>
             <div class="layui-input-block">
-                <input type="text" name="title" id="title" lay-verify="required" lay-reqtext="名称不能为空" placeholder="" value="@(bannerid == 0?"":banner.title)" class="layui-input">
-                @*<tip>不能与其他优惠券名称重复。</tip>*@
-            </div>
-        </div>
-        <div class="layui-form-item" style="margin-top:20px">
-            <label class="layui-form-label">图片</label>
-            <div class="layui-input-block">
-                <div id="cupload-img"></div>
+                <input type="number" name="maxtime" id="maxtime" lay-verify="required" lay-reqtext="" placeholder="" value="@(GroupInfo.maxtime/60)" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">类型</label>
+            <label class="layui-form-label required">拼团价</label>
             <div class="layui-input-block">
-                <input type="radio" name="type" value="1" title="前往指定商品详情页">前往指定商品详情页
-                <input type="radio" name="type" value="3" title="仅用于展示" checked>仅用于展示
-            </div>
-        </div>
-        <div id="type-box" style="display:none">
-            <div class="layui-form-item">
-                <label class="layui-form-label">跳转商品</label>
-                <div class="layui-input-block">
-                    <select name="url" id="url" lay-filter="aihao">
-                        @foreach (var p in products)
-                        {
-                            if (bannerid > 0 && int.Parse(banner.url) == p.pid)
-                            {
-                                <option value="@p.pid" selected="">@(p.name+)</option>
-                            }
-                            else
-                            {
-                                <option value="@p.pid">@p.name</option>
-                            }
-                        }
-                    </select>
-                </div>
+                <input type="number" name="groupprice" id="groupprice" lay-verify="required" lay-reqtext="" placeholder="" value="@GroupInfo.groupprice" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">排序号</label>
+            <label class="layui-form-label required">原价</label>
             <div class="layui-input-block">
-                <input type="number" name="displayorder" id="displayorder" placeholder="" value="@(bannerid == 0?0:banner.displayorder)" class="layui-input">
+                <input type="number" name="shopprice" id="shopprice" lay-verify="required" lay-reqtext="" placeholder="" value="@GroupInfo.shopprice" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label required">需要人数</label>
+            <div class="layui-input-block">
+                <input type="number" name="needcount" id="needcount" lay-verify="required" lay-reqtext="" placeholder="" value="@GroupInfo.needcount" class="layui-input" disabled>
+            </div>
+        </div>
+        @*<div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" id="submitBtn">确认保存</button>
             </div>
-        </div>
+        </div>*@
     </div>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/wwwroot/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/Scripts/mzhconfig.js"></script>
-    <script src="~/wwwroot/js/cupload.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
-
-        var cuploadimg = new Cupload({
-            ele: '#cupload-img',
-            num: 1,
-            @if(bannerid > 0)
-            {
-                @:data:["@banner.img"]
-            }
-        });
-
         $(document).ready(function () {
-            $('input[type=radio][name=type]').change(function () {
-                if (this.value == '1') {
-                    $("#type-box").show();
-                }
-                else if (this.value == '3') {
-                    $("type-box").hide();
-                }
-            });
-
-            @if(bannerid>0&&banner.type == 1)
-            {
-                @:$("input[name='type'][value='1']").attr("checked", true);
-                @:$("#type-box").show();
-            }
-
+            //$('input[type=radio][name=type]').change(function () {
+            //    if (this.value == '1') {
+            //        $("#fullcut-box").show();
+            //        $("#discount-box").hide();
+            //    }
+            //    else if (this.value == '2') {
+            //        $("#fullcut-box").hide();
+            //        $("#discount-box").show();
+            //    }
+            //});
+            //$('input[type=radio][name=isuseexpiretime]').change(function () {
+            //    if (this.value == '1') {
+            //        $("#useexpiretime-box").show();
+            //        $("#nouseexpiretime-box").hide();
+            //    }
+            //    else if (this.value == '0') {
+            //        $("#useexpiretime-box").hide();
+            //        $("#nouseexpiretime-box").show();
+            //    }
+            //});
 
             $('#submitBtn').click(function () {
-                var bannerid = $("#bannerid").val()
-                //检验
-                if ($("#title").val() == '') {
-                    alert("轮播图标题不能为空");
+                //console.log($('input:radio[name="isuseexpiretime"]:checked').val())
+                var coupontypeid = $("#coupontypeid").val();
+                if (coupontypeid == 0) {
+                    alert("必须选择优惠券");
                     return;
                 }
-                if ($('input:radio[name="type"]:checked').val() == 1) {
-                    if ($("#url").val() == '') {
-                        alert("必须选择跳转商品");
-                        return;
-                    }
+                if ($("#maxtime").val() == '') {
+                    alert("拼团超时时间限制不能为空");
+                    return;
                 }
-
-                var showimg = '';
-                if (cuploadimg.imageInput.length == 0) {
-                    layer.alert("图片必须上传！");
-                    return false;
+                if ($("#maxtime").val() <= 0) {
+                    alert("拼团超时时间限制必须大于0");
+                    return;
                 }
-                if (cuploadimg.imageInput[cuploadimg.imageInput.length - 1].value.indexOf("boiledchicken") != -1) {
-                    showimg = cuploadimg.imageInput[cuploadimg.imageInput.length - 1].value;
-                } else {
-                    $.ajax({
-                        type: 'post',
-                        url: domain + '/Upload/Base64Str',
-                        data: { base64str: cuploadimg.imageInput[cuploadimg.imageInput.length - 1].value },
-                        async: false,
-                        success: function (res) {
-                            if (res.state == 1) {
-                                showimg = res.msg;
-                            } else {
-                                showloading(false);
-                                layer.alert("图片上传失败");
-                                return false;
-                            }
-                        }
-                    })
+                if ($("#groupprice").val() == '') {
+                    alert("拼团价不能为空");
+                    return;
                 }
-
+                if ($("#groupprice").val() <= 0) {
+                    alert("拼团价必须大于0");
+                    return;
+                }
+                if ($("#shopprice").val() == '') {
+                    alert("原价不能为空");
+                    return;
+                }
+                if ($("#shopprice").val() <= 0) {
+                    alert("原价必须大于0");
+                    return;
+                }
+                if ($("#needcount").val() == '') {
+                    alert("需要人数不能为空");
+                    return;
+                }
+                if ($("#needcount").val() <= 0) {
+                    alert("需要人数必须大于0");
+                    return;
+                }
 
                 requestdata = {
-                    "bannerid": bannerid,
-                    "bannerType": $('input:radio[name="type"]:checked').val(),
-                    "starttime": '1997-01-27',
-                    "endtime": '1997-01-27',
-                    "title": $("#title").val(),
-                    "img": showimg,
-                    "url": $("#url").val(),
-                    "displayorder": $("#displayorder").val()
+                    "groupinfoid": 0,
+                    "grouptype": 1,
+                    "groupoid": coupontypeid,
+                    "pid": 0,
+                    "starttime": "2020-12-04T11:24:59.7898714+08:00",
+                    "endtime": "2020-12-04T11:24:59.7898714+08:00",
+                    "groupprice": $("#groupprice").val(),
+                    "shopprice": $("#shopprice").val(),
+                    "needcount": $("#needcount").val(),
+                    "maxtime": $("#maxtime").val() * 60
                 }
                 console.log('requestdata')
                 console.log(requestdata)
+                //新增
                 $.ajax({
-                    url: domain + '/Banner/AddBanner',
+                    url: domain + '/Group/CreateGroupInfo',
                     data: requestdata,
                     dataType: 'json',
                     async: false,
@@ -181,7 +154,6 @@
                                 parent.layer.close(iframeIndex);
                                 parent.location.reload(); //刷新父页面
                             }
-
                         });
                     }
                 })

@@ -213,7 +213,16 @@ namespace Remoting
                             }
                             if (isfind) break;
                         }
-                        
+                        var couponTypeInfodes = "";
+                        if(groupInfo.couponTypeInfo.ct_type == 1)
+                        {
+                            couponTypeInfodes = $@" 满{Math.Round(groupInfo.couponTypeInfo.ct_fullmoney,2)}减{Math.Round(groupInfo.couponTypeInfo.ct_cutmoney,2)}";
+                        }
+                        else
+                        {
+                            couponTypeInfodes = $@" {(int)groupInfo.couponTypeInfo.ct_discount}折";
+                        }
+                        groupInfo.title = groupInfo.couponTypeInfo.ct_name + couponTypeInfodes;
                     }
                     return ResultModel.Success("", groupInfos);
                 }
@@ -221,6 +230,67 @@ namespace Remoting
                 {
                     Log.Error("GroupInfoList方法," + ex.ToString());
                     return ResultModel.Error(ex.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取首页拼团列表
+        /// </summary>
+        /// <returns></returns>
+        public LayuiTableApiResult GroupInfoListForAdmin()
+        {
+            using (brnshopEntities context = new brnshopEntities())
+            {
+                LayuiTableApiResult result = new LayuiTableApiResult();
+                
+                try
+                {
+                    string sql = $@"select * from bsp_groupinfos";
+                    List<GroupInfoModel> groupInfos = context.Database.SqlQuery<GroupInfoModel>(sql).ToList();
+                    var couponTypes = coupon.GetCouponTypeForGroup();
+                    foreach (var groupInfo in groupInfos)
+                    {
+                        groupInfo.couponTypeInfo = couponTypes.SingleOrDefault(t => t.ct_coupontypeid == groupInfo.groupoid);
+                        bool isfind = false;
+                        foreach (var products in ProductCache.ProductList)
+                        {
+
+                            foreach (var product in products.productInfos)
+                            {
+                                if (product.pid == groupInfo.couponTypeInfo.ct_pid)
+                                {
+                                    groupInfo.productInfo = product;
+                                    isfind = true;
+                                    break;
+                                }
+                            }
+                            if (isfind) break;
+                        }
+                        var couponTypeInfodes = "";
+                        if (groupInfo.couponTypeInfo.ct_type == 1)
+                        {
+                            couponTypeInfodes = $@" 满{Math.Round(groupInfo.couponTypeInfo.ct_fullmoney, 2)}减{Math.Round(groupInfo.couponTypeInfo.ct_cutmoney, 2)}";
+                        }
+                        else
+                        {
+                            couponTypeInfodes = $@" {(int)groupInfo.couponTypeInfo.ct_discount}折";
+                        }
+                        groupInfo.title = groupInfo.couponTypeInfo.ct_name + couponTypeInfodes;
+                    }
+
+                    result.code = 0;
+                    result.msg = "";
+                    result.count = groupInfos.Count;
+                    result.data = groupInfos;
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("GroupInfoList方法," + ex.ToString());
+                    result.code = 1;
+                    result.msg = "GroupInfoList方法," + ex.ToString();
+                    return result;
                 }
             }
         }
@@ -356,11 +426,39 @@ namespace Remoting
                                             order by bsp_groups.starttime desc";
                 DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
                 List<GroupModel> groups = dt.GetList<GroupModel>("").Distinct(new DistinctModel<GroupModel>()).ToList();
-
+                var couponTypes = coupon.GetCouponTypeForGroup();
                 foreach (var group in groups)
                 {
                     DataTable opdt = dt.Select($"groupid = {group.groupid}").CopyToDataTable();
                     group.details = opdt.GetList<GroupDetailModel>("").Distinct(new DistinctModel<GroupDetailModel>()).ToList();
+
+                    group.couponTypeInfo = couponTypes.SingleOrDefault(t => t.ct_coupontypeid == group.groupoid);
+
+                    bool isfind = false;
+                    foreach (var products in ProductCache.ProductList)
+                    {
+
+                        foreach (var product in products.productInfos)
+                        {
+                            if (product.pid == group.couponTypeInfo.ct_pid)
+                            {
+                                group.productInfo = product;
+                                isfind = true;
+                                break;
+                            }
+                        }
+                        if (isfind) break;
+                    }
+                    var couponTypeInfodes = "";
+                    if (group.couponTypeInfo.ct_type == 1)
+                    {
+                        couponTypeInfodes = $@" 满{Math.Round(group.couponTypeInfo.ct_fullmoney, 2)}减{Math.Round(group.couponTypeInfo.ct_cutmoney, 2)}";
+                    }
+                    else
+                    {
+                        couponTypeInfodes = $@" {(int)group.couponTypeInfo.ct_discount}折";
+                    }
+                    group.title = group.couponTypeInfo.ct_name + couponTypeInfodes;
                 }
 
                 return ResultModel.Success("成功", groups);

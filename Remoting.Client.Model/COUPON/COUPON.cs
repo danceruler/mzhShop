@@ -52,6 +52,15 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取用于拼团选择的优惠券
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowCouponTypeInfo> GetRecpientCouponForGroup()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 用户领用优惠券接口
         /// </summary>
         /// <param name="uid"></param>

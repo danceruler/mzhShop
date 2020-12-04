@@ -136,6 +136,58 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取用于拼团选择的优惠券
+        /// </summary>
+        /// <returns></returns>
+        public List<ShowCouponTypeInfo> GetRecpientCouponForGroup()
+        {
+            try
+            {
+                string sql = $@"SELECT bsp_coupontypes.coupontypeid ct_coupontypeid,
+                                   state ct_state,
+                                   name ct_name,
+                                   money ct_money,
+                                   count ct_count,
+                                   sendmode ct_sendmode,
+                                   getmode ct_getmode,
+                                   usemode ct_usemode,
+                                   userranklower ct_userranklower,
+                                   orderamountlower ct_orderamountlower,
+                                   limitcateid ct_limitcateid,
+                                   limitbrandid ct_limitbrandid,
+                                   limitproduct ct_limitproduct,
+                                   sendstarttime ct_sendstarttime,
+                                   sendendtime ct_sendendtime,
+                                   useexpiretime ct_useexpiretime,
+                                   usestarttime ct_usestarttime,
+                                   useendtime ct_useendtime,
+                                   type ct_type,
+                                   isstack ct_isstack,
+                                   fullmoney ct_fullmoney,
+                                   cutmoney ct_cutmoney,
+                                   discount ct_discount,
+                                   ISNULL(bsp_couponproducts.pid,0) ct_pid
+                            FROM bsp_coupontypes
+                            LEFT JOIN bsp_couponproducts ON bsp_couponproducts.coupontypeid = bsp_coupontypes.coupontypeid
+                            WHERE GETDATE() >= bsp_coupontypes.sendstarttime AND GETDATE() <= bsp_coupontypes.sendendtime
+                            ";
+                DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
+                List<ShowCouponTypeInfo> result = dt.GetList<ShowCouponTypeInfo>("");
+                result.ForEach(t => {
+                    t.t_ct_isstack = t.ct_isstack == 1 ? "可以叠加" : "不可以叠加";
+                    t.t_ct_type = EnumToText.ToText((CouponType)t.ct_type);
+                    t.t_ct_fullcut = t.ct_fullmoney.ToString() + '/' + t.ct_cutmoney.ToString();
+                });
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger._.Error(ex.ToString());
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 用户领用优惠券接口
         /// </summary>
         /// <param name="uid"></param>

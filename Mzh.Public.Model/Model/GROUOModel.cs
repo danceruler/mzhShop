@@ -54,6 +54,11 @@ namespace Mzh.Public.Model.Model
         /// </summary>
         public int maxtime { get; set; }
 
+
+        #region 用于前端展示的字段
+        public string title { get; set; }
+        #endregion
+
         public ShowProductInfo productInfo { get; set; }
         public ShowCouponTypeInfo couponTypeInfo { get; set; }
     }
@@ -128,10 +133,18 @@ namespace Mzh.Public.Model.Model
         /// 超时时间（s）
         /// </summary>
         public int maxtime { get; set; }
+
+        #region 用于前端展示的字段
+        public string title { get; set; }
+        #endregion
+
         /// <summary>
         /// 拼团明细
         /// </summary>
         public List<GroupDetailModel> details { get; set; }
+
+        public ShowProductInfo productInfo { get; set; }
+        public ShowCouponTypeInfo couponTypeInfo { get; set; }
     }
 
     /// <summary>

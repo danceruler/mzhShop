@@ -73,6 +73,12 @@
           "href": "Banner/Banner",
           "icon": "fa fa-indent",
           "target": "_self"
+        },
+        {
+          "title": "拼团管理",
+          "href": "Group/Index",
+          "icon": "fa fa-group",
+          "target": "_self"
         }
       ]
     }

@@ -65,6 +65,15 @@ namespace Remoting
         }
 
         /// <summary>
+        /// 获取首页拼团列表
+        /// </summary>
+        /// <returns></returns>
+        public LayuiTableApiResult GroupInfoListForAdmin()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 获取当前拼团活动正在进行的团
         /// </summary>
         /// <returns></returns>
@@ -81,6 +90,23 @@ namespace Remoting
         /// <param name="uid"></param>
         /// <returns></returns>
         public ResultModel PayGroup(int isstart,int gid,int uid,decimal totalfee)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取用户的拼团列表
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel GroupListByUid(int uid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 更新拼团状态
+        /// </summary>
+        public void UpdateGroupState()
         {
             throw new NotImplementedException();
         }

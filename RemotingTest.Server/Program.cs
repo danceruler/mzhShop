@@ -39,12 +39,14 @@ namespace RemotingTest.Server
             {
                 RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
             }
+
+
             Hello.InitAll();
             Task.Factory.StartNew(() =>
             {
                 while (true)
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(60000);
                     if (DateTime.Now > AppConfig.expiretime)
                     {
                         tcpChannel.StopListening(tcpChannel);

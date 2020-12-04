@@ -133,6 +133,7 @@
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BoxController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -389,6 +390,9 @@
     <Content Include="Views\Coupon\CouponAdd.cshtml" />
     <Content Include="Views\Banner\Banner.cshtml" />
     <Content Include="Views\Banner\BannerAdd.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\Add.cshtml" />
+    <Content Include="Views\Group\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

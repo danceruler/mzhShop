@@ -84,5 +84,15 @@ namespace WebApplication2.Controllers
             GROUP group = RemotingHelp.GetModelObject<GROUP>();
             return group.PayGroup(isstart, gid, uid, totalfee);
         }
+
+        /// <summary>
+        /// 获取用户的拼团列表
+        /// </summary>
+        /// <returns></returns>
+        public ResultModel GroupListByUid(int uid)
+        {
+            GROUP group = RemotingHelp.GetModelObject<GROUP>();
+            return group.GroupListByUid(uid);
+        }
     }
 }
