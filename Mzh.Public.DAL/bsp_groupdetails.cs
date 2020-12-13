@@ -12,7 +12,6 @@ namespace Mzh.Public.DAL
     using System;
     using System.Collections.Generic;
     
-    [Serializable]
     public partial class bsp_groupdetails
     {
         public int groupdetailid { get; set; }

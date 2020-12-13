@@ -43,6 +43,8 @@ namespace Remoting
             boxCache.Init();
             BannerCache bannerCache = new BannerCache();
             bannerCache.Init();
+            BusinessCache businessCache = new BusinessCache();
+            businessCache.InitBusinessCache();
         }
     }
 }

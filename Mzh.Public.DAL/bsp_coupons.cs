@@ -30,5 +30,6 @@ namespace Mzh.Public.DAL
         public string createip { get; set; }
         public Nullable<System.DateTime> expiretime { get; set; }
         public int isuse { get; set; }
+        public bool isforgroup { get; set; }
     }
 }

@@ -38,6 +38,13 @@ namespace Mzh.Public.Model.Model
                 if (t != null && tt != null) return t.groupid == tt.groupid ;
                 return false;
             }
+            else if (typeof(TModel) == typeof(BusinessModel))
+            {
+                BusinessModel t = x as BusinessModel;
+                BusinessModel tt = y as BusinessModel;
+                if (t != null && tt != null) return t.businessid == tt.businessid;
+                return false;
+            }
             return false;
         }
 

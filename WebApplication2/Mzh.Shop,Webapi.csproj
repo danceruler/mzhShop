@@ -165,6 +165,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\BoxController.cs" />
+    <Compile Include="Controllers\BusinessController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\GroupController.cs" />

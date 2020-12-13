@@ -200,6 +200,7 @@
           <Property Name="businessTimeStr" Type="nvarchar" MaxLength="100" />
           <Property Name="businessStart" Type="int" Nullable="false" />
           <Property Name="businessEnd" Type="int" Nullable="false" />
+          <Property Name="telphone" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="bsp_businessimgs">
           <Key>
@@ -282,6 +283,7 @@
           <Property Name="createip" Type="char" MaxLength="15" Nullable="false" />
           <Property Name="expiretime" Type="datetime" />
           <Property Name="isuse" Type="int" Nullable="false" />
+          <Property Name="isforgroup" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_coupontypes">
           <Key>
@@ -310,6 +312,7 @@
           <Property Name="fullmoney" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="cutmoney" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="discount" Type="float" Nullable="false" />
+          <Property Name="isforgroup" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_creditlogs">
           <Key>
@@ -1379,6 +1382,7 @@
           <Property Name="businessTimeStr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="businessStart" Type="Int32" Nullable="false" />
           <Property Name="businessEnd" Type="Int32" Nullable="false" />
+          <Property Name="telphone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_businessimgs">
           <Key>
@@ -1451,6 +1455,7 @@
           <Property Name="createip" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="expiretime" Type="DateTime" Precision="3" />
           <Property Name="isuse" Type="Int32" Nullable="false" />
+          <Property Name="isforgroup" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_coupontypes">
           <Key>
@@ -1479,6 +1484,7 @@
           <Property Name="fullmoney" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="cutmoney" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="discount" Type="Double" Nullable="false" />
+          <Property Name="isforgroup" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_creditlogs">
           <Key>
@@ -2589,6 +2595,7 @@
           <EntitySetMapping Name="bsp_businesses">
             <EntityTypeMapping TypeName="brnshopModel.bsp_businesses">
               <MappingFragment StoreEntitySet="bsp_businesses">
+                <ScalarProperty Name="telphone" ColumnName="telphone" />
                 <ScalarProperty Name="businessEnd" ColumnName="businessEnd" />
                 <ScalarProperty Name="businessStart" ColumnName="businessStart" />
                 <ScalarProperty Name="businessTimeStr" ColumnName="businessTimeStr" />
@@ -2663,6 +2670,7 @@
           <EntitySetMapping Name="bsp_coupons">
             <EntityTypeMapping TypeName="brnshopModel.bsp_coupons">
               <MappingFragment StoreEntitySet="bsp_coupons">
+                <ScalarProperty Name="isforgroup" ColumnName="isforgroup" />
                 <ScalarProperty Name="isuse" ColumnName="isuse" />
                 <ScalarProperty Name="expiretime" ColumnName="expiretime" />
                 <ScalarProperty Name="couponid" ColumnName="couponid" />
@@ -2685,6 +2693,7 @@
           <EntitySetMapping Name="bsp_coupontypes">
             <EntityTypeMapping TypeName="brnshopModel.bsp_coupontypes">
               <MappingFragment StoreEntitySet="bsp_coupontypes">
+                <ScalarProperty Name="isforgroup" ColumnName="isforgroup" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
                 <ScalarProperty Name="cutmoney" ColumnName="cutmoney" />
                 <ScalarProperty Name="fullmoney" ColumnName="fullmoney" />

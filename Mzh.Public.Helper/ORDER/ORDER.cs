@@ -36,7 +36,7 @@ namespace Remoting
                     bsp_orders neworder = new bsp_orders();
                     neworder.address = createModel.address == null?"": createModel.address;
                     neworder.addtime = DateTime.Now;
-                    neworder.besttime = createModel.besttime;
+                    neworder.besttime = createModel.besttime == DateTime.MinValue?DateTime.Now: createModel.besttime;
                     neworder.boxid = createModel.boxid;
                     neworder.buyerremark = createModel.buyerremark;
                     neworder.consignee = createModel.consignee == null?"":createModel.consignee;

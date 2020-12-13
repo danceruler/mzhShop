@@ -289,10 +289,6 @@
                     layer.alert("商品至少要有一个规格，并且已有属性必须有值！");
                     return false;
                 }
-
-
-
-                
                 var showimg = '';
                 var mainimgs = [];
                 var detailimgs = [];
@@ -350,6 +346,7 @@
                         })
                     }
                 }
+
                 for (var i = 0; i < cuploadprodetailimgs.imageList.children.length; i++) {
                     if ($(cuploadprodetailimgs.imageList.children[i]).children('.cupload-image-preview')[0].src.indexOf("shopapi") != -1) {
                         var newimg = {

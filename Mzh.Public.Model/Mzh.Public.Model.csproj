@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelState.cs" />
+    <Compile Include="Model\BusinessModel.cs" />
     <Compile Include="Model\CreateModel.cs" />
     <Compile Include="Model\DistinctModel.cs" />
     <Compile Include="Model\FileCacheModel.cs" />

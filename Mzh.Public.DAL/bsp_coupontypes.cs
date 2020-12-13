@@ -37,5 +37,6 @@ namespace Mzh.Public.DAL
         public decimal fullmoney { get; set; }
         public decimal cutmoney { get; set; }
         public double discount { get; set; }
+        public bool isforgroup { get; set; }
     }
 }

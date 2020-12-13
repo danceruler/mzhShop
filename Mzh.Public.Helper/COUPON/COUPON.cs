@@ -118,6 +118,7 @@ namespace Remoting
                             LEFT JOIN bsp_couponproducts ON bsp_couponproducts.coupontypeid = bsp_coupontypes.coupontypeid
                             WHERE GETDATE() >= bsp_coupontypes.sendstarttime AND GETDATE() <= bsp_coupontypes.sendendtime AND TEMP.coupontypeid IS NULL 
                                   and bsp_coupontypes.coupontypeid not in (select groupoid from bsp_groupinfos where starttime < getdate() and endtime > getdate())
+                                  AND bsp_coupontypes.isforgroup = 0
                             ";
                 DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
                 List<ShowCouponTypeInfo> result = dt.GetList<ShowCouponTypeInfo>("");
@@ -169,7 +170,7 @@ namespace Remoting
                                    ISNULL(bsp_couponproducts.pid,0) ct_pid
                             FROM bsp_coupontypes
                             LEFT JOIN bsp_couponproducts ON bsp_couponproducts.coupontypeid = bsp_coupontypes.coupontypeid
-                            WHERE GETDATE() >= bsp_coupontypes.sendstarttime AND GETDATE() <= bsp_coupontypes.sendendtime
+                            WHERE GETDATE() >= bsp_coupontypes.sendstarttime AND GETDATE() <= bsp_coupontypes.sendendtime AND bsp_coupontypes.isforgroup = 1
                             ";
                 DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
                 List<ShowCouponTypeInfo> result = dt.GetList<ShowCouponTypeInfo>("");
@@ -434,6 +435,7 @@ namespace Remoting
                         newcoupontype.usemode = 0;
                         newcoupontype.userranklower = 0;
                         newcoupontype.usestarttime = model.ct_useexpiretime == 1 ? model.ct_usestarttime : DateTime.Now;
+                        newcoupontype.isforgroup = model.ct_isforgroup;
                         context.bsp_coupontypes.Add(newcoupontype);
                         context.SaveChanges();
 

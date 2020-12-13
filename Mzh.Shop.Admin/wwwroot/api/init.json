@@ -79,6 +79,12 @@
           "href": "Group/Index",
           "icon": "fa fa-group",
           "target": "_self"
+        },
+        {
+          "title": "商户信息",
+          "href": "Business/Index",
+          "icon": "fa fa-group",
+          "target": "_self"
         }
       ]
     }

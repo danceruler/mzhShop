@@ -142,5 +142,9 @@ namespace Mzh.Public.Model.Model
         /// 优惠券关联产品（仅在优惠券为指定商品时有值）
         /// </summary>
         public int ct_pid { get; set; }
+        /// <summary>
+        /// 是否用于拼团
+        /// </summary>
+        public bool ct_isforgroup { get; set; }
     }
 }

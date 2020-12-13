@@ -69,6 +69,7 @@
     <Compile Include="BOX\BOX.cs" />
     <Compile Include="Cache\BannerCache.cs" />
     <Compile Include="Cache\BoxCache.cs" />
+    <Compile Include="Cache\BusinessCache.cs" />
     <Compile Include="Cache\FileCache.cs" />
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Cache\ProductCache.cs" />

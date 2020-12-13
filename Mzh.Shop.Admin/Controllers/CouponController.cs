@@ -25,6 +25,8 @@ namespace Mzh.Shop.Admin.Controllers
                 COUPON coupon = RemotingHelp.GetModelObject<COUPON>();
                 ViewBag.coupontype = (coupon.GetCouponType().data as List<ShowCouponTypeInfo>).SingleOrDefault(t => t.ct_coupontypeid == coupontypeid);
             }
+            ProductCache productCache = RemotingHelp.GetModelObject<ProductCache>();
+            ViewBag.products = productCache.GetNoRepeatProducts();
             return View();
         }
 

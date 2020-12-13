@@ -2,6 +2,7 @@
 @{
     int coupontypeid = ViewBag.coupontypeid;
     ShowCouponTypeInfo coupontype = ViewBag.coupontype as ShowCouponTypeInfo;
+    var products = ViewBag.products as List<ShowProductInfo>;
 }
 <!DOCTYPE html>
 <html>
@@ -104,6 +105,27 @@
             <div class="layui-input-block">
                 <input type="radio" name="isstack" value="1" title="是">是
                 <input type="radio" name="isstack" value="0" title="否" checked>否
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">是否用于拼团</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isforgroup" value="1" title="是">是
+                <input type="radio" name="isforgroup" value="0" title="否" checked>否
+            </div>
+        </div>
+        <div id="type-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">指定商品</label>
+                <div class="layui-input-block">
+                    <select name="pid" id="pid" lay-filter="aihao">
+                        <option value="0">无</option>
+                        @foreach (var p in products)
+                        {
+                            <option value="@p.pid">@p.name</option>
+                        }
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-form-item">
@@ -228,7 +250,8 @@
                         "ct_fullmoney": $("#fullmoney").val(),
                         "ct_cutmoney": $("#cutmoney").val(),
                         "ct_discount": $("#discount").val(),
-                        "ct_pid": 0
+                        "ct_pid": $("#pid").val(),
+                        "ct_isforgroup": $('input:radio[name="isforgroup"]:checked').val() == '1' ? true : false
                     }
                     console.log('requestdata')
                     console.log(requestdata)

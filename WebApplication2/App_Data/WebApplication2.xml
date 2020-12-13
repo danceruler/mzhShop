@@ -558,6 +558,12 @@
             <param name="uid"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication2.Controllers.GroupController.GroupListByUid(System.Int32)">
+            <summary>
+            获取用户的拼团列表
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication2.Controllers.OrderController.CreatOrder(Mzh.Public.Model.Model.CreateOrderModel)">
             <summary>
             创建订单
