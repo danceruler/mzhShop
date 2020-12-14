@@ -44,7 +44,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("CreateGroupInfo方法," + ex.ToString());
+                    Logger._.Error("CreateGroupInfo方法," + ex.ToString());
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -68,7 +68,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("DeleteGroupInfo方法," + ex.ToString());
+                    Logger._.Error("DeleteGroupInfo方法," + ex.ToString());
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -175,7 +175,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("JoinGroup方法," + ex.ToString());
+                    Logger._.Error("JoinGroup方法," + ex.ToString());
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -228,7 +228,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("GroupInfoList方法," + ex.ToString());
+                    Logger._.Error("GroupInfoList方法," + ex.ToString());
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -287,7 +287,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("GroupInfoList方法," + ex.ToString());
+                    Logger._.Error("GroupInfoList方法," + ex.ToString());
                     result.code = 1;
                     result.msg = "GroupInfoList方法," + ex.ToString();
                     return result;
@@ -328,7 +328,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("GroupInfoList方法," + ex.ToString());
+                    Logger._.Error("GroupInfoList方法," + ex.ToString());
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -388,7 +388,7 @@ namespace Remoting
             }
             catch(Exception ex)
             {
-                Log.Error("PayGroup方法," + ex.ToString());
+                Logger._.Error("PayGroup方法," + ex.ToString());
                 return ResultModel.Error(ex.ToString());
             }
         }
@@ -466,7 +466,7 @@ namespace Remoting
             }
             catch (Exception ex)
             {
-                Log.Error("GroupListByUid方法," + ex.ToString());
+                Logger._.Error("GroupListByUid方法," + ex.ToString());
                 return ResultModel.Error(ex.ToString());
             }
         }
@@ -506,5 +506,7 @@ namespace Remoting
                 }
             }
         }
+
+
     }
 }

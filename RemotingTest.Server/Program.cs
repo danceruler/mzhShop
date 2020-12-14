@@ -40,7 +40,6 @@ namespace RemotingTest.Server
                 RemotingConfiguration.RegisterWellKnownServiceType(type, type.Name, WellKnownObjectMode.SingleCall);
             }
 
-
             Hello.InitAll();
             Task.Factory.StartNew(() =>
             {

@@ -1,5 +1,6 @@
 ﻿using Mzh.Public.Model;
 using Mzh.Public.Model.Model;
+using Mzh.Shop.Admin.Unitiy;
 using Remoting;
 using Remoting.Client.Model;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace Mzh.Shop.Admin.Controllers
 {
+    [LoginFilter]
     public class OrderController : Controller
     {
         /// <summary>
@@ -58,6 +60,10 @@ namespace Mzh.Shop.Admin.Controllers
         /// <returns></returns>
         public ActionResult Statistics()
         {
+            ORDER order = RemotingHelp.GetModelObject<ORDER>();
+            ViewBag.TodayStat = order.GetDayStatistics();
+            ViewBag.WeekStat = order.GetWeekStatistics();
+            ViewBag.MonthStat = order.GetMonthStatistics();
             return View();
         }
 

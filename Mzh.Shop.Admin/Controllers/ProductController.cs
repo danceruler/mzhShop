@@ -1,4 +1,5 @@
 ﻿using Mzh.Public.Model.Model;
+using Mzh.Shop.Admin.Unitiy;
 using Remoting;
 using Remoting.Client.Model;
 using System;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Mzh.Shop.Admin.Controllers
 {
+    [LoginFilter]
     public class ProductController : Controller
     {
         public ActionResult ProductType()

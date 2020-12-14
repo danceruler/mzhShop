@@ -49,6 +49,15 @@ namespace Mzh.Public.Model.Model
         /// 对比平均营业额差值
         /// </summary>
         public decimal TurnOverByAverage { get; set; }
+        /// <summary>
+        /// 对比昨天订单量的差值
+        /// </summary>
+        public decimal OrderCountByYestoday { get; set; }
+        /// <summary>
+        /// 对比平均订单量差值
+        /// </summary>
+        public decimal OrderCountByAverage { get; set; }
+
     }
 
     /// <summary>

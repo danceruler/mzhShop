@@ -302,17 +302,22 @@ namespace Remoting
                 var yestodaydt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(yestodayStatSql));
                 var yestodayStats = yestodaydt.GetList<OrderStatistic>("");
                 model.TurnOverByYestoday = 0;
+                model.OrderCountByYestoday = 0;
                 if (yestodayStats.Count > 0)
                 {
                     model.TurnOverByYestoday = model.TurnOver - yestodayStats[0].finishordersum;
+                    model.OrderCountByYestoday = model.FinishOrderCount - yestodayStats[0].finishordercount;
                 }
+                
 
-                var avgHistorySql = $@"select avg(finishordersum) avgfinishordersum from bsp_orderstatistics where type = 0 and time < '{beginTimeStr}'";
+                var avgHistorySql = $@"select avg(finishordersum) avgfinishordersum,avg(finishordercount) avgfinishordercount from bsp_orderstatistics where type = 0 and time < '{beginTimeStr}'";
                 var avgHistorydt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(avgHistorySql));
                 model.TurnOverByAverage = 0;
+                model.OrderCountByAverage = 0;
                 if (avgHistorydt != null&& avgHistorydt.Rows.Count > 0)
                 {
                     model.TurnOverByAverage = model.TurnOver - decimal.Parse(avgHistorydt.Rows[0]["avgfinishordersum"].ToString());
+                    model.OrderCountByAverage = model.FinishOrderCount - int.Parse(avgHistorydt.Rows[0]["avgfinishordercount"].ToString());
                 }
                 return model;
             }
@@ -325,8 +330,8 @@ namespace Remoting
         public WeekStatisticsModel GetWeekStatistics()
         {
             WeekStatisticsModel model = new WeekStatisticsModel();
-            DateTime beginTime = DateTime.Now.Date;
-            DateTime endTime = beginTime.AddDays(1);
+            DateTime beginTime = DateTime.Now.AddDays(-6).Date;
+            DateTime endTime = DateTime.Now.Date;
             var weekStat = new OrderStatistic();
             GetBaseStatistics(beginTime, endTime,1, model,ref weekStat);
             //获取其他统计信息
@@ -340,8 +345,8 @@ namespace Remoting
         public MonthStatisticsModel GetMonthStatistics()
         {
             MonthStatisticsModel model = new MonthStatisticsModel();
-            DateTime beginTime = DateTime.Now.Date;
-            DateTime endTime = beginTime.AddDays(1);
+            DateTime beginTime = DateTime.Now.AddMonths(-1).AddDays(1).Date;
+            DateTime endTime = DateTime.Now.Date;
             var monthStat = new OrderStatistic();
             GetBaseStatistics(beginTime, endTime, 2, model, ref monthStat);
             //获取其他统计信息
@@ -695,7 +700,7 @@ namespace Remoting
         {
             var beginTimeStr = beginTime.ToString("yyyy-MM-dd");
             var endTimeStr = endTime.ToString("yyyy-MM-dd");
-            string sql = $@"SELECT * FROM bsp_orderstatistics where time >= '{beginTimeStr}' and time <'{endTimeStr}' and type = {type}";
+            string sql = $@"SELECT * FROM bsp_orderstatistics where time >= '{beginTimeStr}' and time <='{endTimeStr}' and type = {type}";
             DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
             List<OrderStatistic> orderStatisticses = dt.GetList<OrderStatistic>("");
             if(orderStatisticses.Count > 0)
@@ -717,6 +722,79 @@ namespace Remoting
                 shopstat.TypeName = shopstat.OrderType.ToText();
                 model.OrderTypeStatistics.Add(shipstat);
                 model.OrderTypeStatistics.Add(shopstat);
+
+
+                model.OrderCountByTimeStatistics = new List<OrderCountByTimeStatistic>();
+                string ORDERsql = "";
+                var etime = DateTime.Now;
+                if (type == 0)
+                {
+                    etime = orderStatisticses[0].time.Date.AddDays(1);
+                    ORDERsql = $@"SELECT DATEPART(hh,paytime) time, SUM(bsp_orders.payfee) payfee,COUNT(oid) count
+                                FROM bsp_orders 
+                                WHERE paytime IS NOT NULL AND paytime BETWEEN '{orderStatisticses[0].time}' AND '{etime}'
+                                GROUP BY DATEPART(hh,paytime)";
+                    var ORDERdt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(ORDERsql));
+                    for(var i = 0; i <= 23; i++)
+                    {
+                        var ORDERdrs = ORDERdt.Select($@"time = {i}");
+                        if (ORDERdrs.Length > 0)
+                        {
+                            model.OrderCountByTimeStatistics.Add(new OrderCountByTimeStatistic()
+                            {
+                                Amount = decimal.Parse(ORDERdrs[0]["payfee"].ToString()),
+                                Count = int.Parse(ORDERdrs[0]["count"].ToString()),
+                                Time = DateTime.Now.AddHours(i),
+                                TimeStr = i+":00"
+                            });
+                        }
+                        else
+                        {
+                            model.OrderCountByTimeStatistics.Add(new OrderCountByTimeStatistic()
+                            {
+                                Amount = 0,
+                                Count = 0,
+                                Time = DateTime.Now.AddHours(i),
+                                TimeStr = i + ":00"
+                            });
+                        }
+                    }
+                }
+                if(type == 1||type == 2)
+                {
+                    etime = type == 1?orderStatisticses[0].time.Date.AddDays(7): orderStatisticses[0].time.Date.AddMonths(1);
+                    ORDERsql = $@"SELECT CONVERT(varchar(100), paytime, 23) time, SUM(bsp_orders.payfee) payfee,COUNT(oid) count
+                                FROM bsp_orders 
+                                WHERE paytime IS NOT NULL AND paytime BETWEEN '{orderStatisticses[0].time}' AND '{etime}'
+                                GROUP BY CONVERT(varchar(100), paytime, 23)";
+                    var ORDERdt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(ORDERsql));
+                    for (var i = orderStatisticses[0].time; i < etime; i = i.AddDays(1))
+                    {
+                        var format_i = i.ToString("yyyy-MM-dd");
+                        var ORDERdrs = ORDERdt.Select($@"time = '{format_i}'");
+                        if (ORDERdrs.Length > 0)
+                        {
+                            model.OrderCountByTimeStatistics.Add(new OrderCountByTimeStatistic()
+                            {
+                                Amount = decimal.Parse(ORDERdrs[0]["payfee"].ToString()),
+                                Count = int.Parse(ORDERdrs[0]["count"].ToString()),
+                                Time = i,
+                                TimeStr = ORDERdrs[0]["time"].ToString()
+                            });
+                        }
+                        else
+                        {
+                            model.OrderCountByTimeStatistics.Add(new OrderCountByTimeStatistic()
+                            {
+                                Amount = 0,
+                                Count = 0,
+                                Time = i,
+                                TimeStr = i.ToString("yyyy-MM-dd")
+                            });
+                        }
+                    }
+                }
+
             }
         }
 
