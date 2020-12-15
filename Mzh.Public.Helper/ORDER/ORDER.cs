@@ -497,6 +497,7 @@ namespace Remoting
                 var notifydata = XMLHelper.FromXml(notifyxml);
                 if (notifydata["result_code"].ToString() == "SUCCESS")
                 {
+                    string transaction_id = notifydata["transaction_id"].ToString();
                     string out_trade_no = notifydata["out_trade_no"].ToString();
                     string[] out_trade_no_array = out_trade_no.Split('a');
                     int isstart = int.Parse(out_trade_no_array[0].ToString());
@@ -511,7 +512,7 @@ namespace Remoting
                         DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
                         if(dt != null && dt.Rows.Count == 0)
                         {
-                            Group.StartGroup(gid, uid);
+                            Group.StartGroup(gid, uid, out_trade_no, transaction_id);
                         }
                     }
                     else
@@ -520,7 +521,7 @@ namespace Remoting
                         DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
                         if (dt != null && dt.Rows.Count == 0)
                         {
-                            Group.JoinGroup(gid, uid);
+                            Group.JoinGroup(gid, uid, out_trade_no, transaction_id);
                         }
                         
                     }

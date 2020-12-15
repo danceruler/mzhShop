@@ -29,5 +29,7 @@ namespace Mzh.Public.DAL
         public int failtype { get; set; }
         public int maxtime { get; set; }
         public int groupinfoid { get; set; }
+        public string outtradeno { get; set; }
+        public string transaction_id { get; set; }
     }
 }

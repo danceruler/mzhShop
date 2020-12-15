@@ -78,7 +78,7 @@ namespace Remoting
         /// 用户开团（支付回调时调用）
         /// </summary>
         /// <returns></returns>
-        public ResultModel StartGroup(int groupInfoId, int uid)
+        public ResultModel StartGroup(int groupInfoId, int uid,string outtradeno,string transaction_id)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
@@ -111,6 +111,8 @@ namespace Remoting
                     newGroupetail.uid = uid;
                     newGroupetail.isgetcoupon = false;
                     newGroupetail.paytime = DateTime.Parse("1997-01-27");
+                    newGroupetail.transaction_id = transaction_id;
+                    newGroupetail.outtradeno = outtradeno;
                     context.bsp_groupdetails.Add(newGroupetail);
                     context.SaveChanges();
 
@@ -130,7 +132,7 @@ namespace Remoting
         /// 用户参团（支付回调时调用）
         /// </summary>
         /// <returns></returns>
-        public ResultModel JoinGroup(int GroupId,int uid)
+        public ResultModel JoinGroup(int GroupId,int uid, string outtradeno, string transaction_id)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
@@ -162,6 +164,8 @@ namespace Remoting
                     newGroupetail.uid = uid;
                     newGroupetail.isgetcoupon = false;
                     newGroupetail.paytime = DateTime.Parse("1997-01-27");
+                    newGroupetail.transaction_id = transaction_id;
+                    newGroupetail.outtradeno = outtradeno;
                     if (Group.needcount <= Group.nowcount)
                     {
                         coupon.RecpientCoupon(newGroupetail.uid, Group.groupoid);
@@ -419,7 +423,9 @@ namespace Remoting
                                              bsp_groupdetails.groupid gd_groupid,
                                              bsp_groupdetails.uid gd_uid,
                                              bsp_groupdetails.sno gd_sno,
-                                             bsp_groupdetails.paytime gd_paytime
+                                             bsp_groupdetails.paytime gd_paytime,
+                                             bsp_groupdetails.outtradeno gd_outtradeno,
+                                             bsp_groupdetails.transaction_id gd_transaction_id
                                             from bsp_groups
                                             join bsp_groupdetails on bsp_groupdetails.groupid = bsp_groups.groupid
                                             where bsp_groups.groupid IN (SELECT groupid FROM dbo.bsp_groupdetails WHERE uid = {uid})
@@ -437,7 +443,6 @@ namespace Remoting
                     bool isfind = false;
                     foreach (var products in ProductCache.ProductList)
                     {
-
                         foreach (var product in products.productInfos)
                         {
                             if (product.pid == group.couponTypeInfo.ct_pid)
@@ -506,7 +511,5 @@ namespace Remoting
                 }
             }
         }
-
-
     }
 }

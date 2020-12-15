@@ -173,5 +173,13 @@ namespace Mzh.Public.Model.Model
         /// 支付时间（参与时间）
         /// </summary>
         public Nullable<System.DateTime> gd_paytime { get; set; }
+        /// <summary>
+        /// 商户订单号
+        /// </summary>
+        public string gd_outtradeno { get; set; }
+        /// <summary>
+        /// 微信订单号
+        /// </summary>
+        public string gd_transaction_id { get; set; }
     }
 }

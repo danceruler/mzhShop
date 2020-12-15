@@ -20,5 +20,7 @@ namespace Mzh.Public.DAL
         public int sno { get; set; }
         public Nullable<System.DateTime> paytime { get; set; }
         public Nullable<bool> isgetcoupon { get; set; }
+        public string outtradeno { get; set; }
+        public string transaction_id { get; set; }
     }
 }

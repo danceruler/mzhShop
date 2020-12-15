@@ -469,6 +469,8 @@
           <Property Name="sno" Type="int" Nullable="false" />
           <Property Name="paytime" Type="datetime" />
           <Property Name="isgetcoupon" Type="bit" />
+          <Property Name="outtradeno" Type="nvarchar" MaxLength="200" />
+          <Property Name="transaction_id" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="bsp_groupinfos">
           <Key>
@@ -503,6 +505,8 @@
           <Property Name="failtype" Type="int" Nullable="false" />
           <Property Name="maxtime" Type="int" Nullable="false" />
           <Property Name="groupinfoid" Type="int" Nullable="false" />
+          <Property Name="outtradeno" Type="nvarchar" MaxLength="200" />
+          <Property Name="transaction_id" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="bsp_helps">
           <Key>
@@ -2412,6 +2416,8 @@
           <Property Name="sno" Type="Int32" Nullable="false" />
           <Property Name="paytime" Type="DateTime" Precision="3" />
           <Property Name="isgetcoupon" Type="Boolean" />
+          <Property Name="outtradeno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="transaction_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="bsp_groups">
           <Key>
@@ -2432,6 +2438,8 @@
           <Property Name="failtype" Type="Int32" Nullable="false" />
           <Property Name="maxtime" Type="Int32" Nullable="false" />
           <Property Name="groupinfoid" Type="Int32" Nullable="false" />
+          <Property Name="outtradeno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="transaction_id" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3613,6 +3621,8 @@
           <EntitySetMapping Name="bsp_groupdetails">
             <EntityTypeMapping TypeName="brnshopModel.bsp_groupdetails">
               <MappingFragment StoreEntitySet="bsp_groupdetails">
+                <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
+                <ScalarProperty Name="outtradeno" ColumnName="outtradeno" />
                 <ScalarProperty Name="isgetcoupon" ColumnName="isgetcoupon" />
                 <ScalarProperty Name="paytime" ColumnName="paytime" />
                 <ScalarProperty Name="sno" ColumnName="sno" />
@@ -3625,6 +3635,8 @@
           <EntitySetMapping Name="bsp_groups">
             <EntityTypeMapping TypeName="brnshopModel.bsp_groups">
               <MappingFragment StoreEntitySet="bsp_groups">
+                <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
+                <ScalarProperty Name="outtradeno" ColumnName="outtradeno" />
                 <ScalarProperty Name="groupinfoid" ColumnName="groupinfoid" />
                 <ScalarProperty Name="maxtime" ColumnName="maxtime" />
                 <ScalarProperty Name="failtype" ColumnName="failtype" />
