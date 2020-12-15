@@ -47,13 +47,26 @@ namespace Remoting
                             ORDER BY displayorder";
             SqlCommand cmd = new SqlCommand(sql);
             DataTable dt = SqlManager.FillDataTable(AppConfig.ConnectionString, cmd);
-            banners = dt.GetList<ShowBannerInfo>("");
-            banners.ForEach(t =>
+            banners.Clear();
+            banners.Add(new ShowBannerInfo()
+            {
+                displayorder = 0,
+                endtime = DateTime.Now.AddDays(1000),
+                id = 0,
+                img = "https://www.boiledchicken.top/File/GetUrl?objectname=GyHP1608074879.png",
+                isshow = 1,
+                type = (int)BannerType.OnlyShow
+            }); ;
+            var banners2 = dt.GetList<ShowBannerInfo>("");
+            banners2.ForEach(t =>
             {
                 t.ttype = ((BannerType)t.type).ToText();
                 t.tstarttime = t.starttime.ToString("yyyy-MM-dd");
                 t.tendtime = t.endtime.ToString("yyyy-MM-dd");
             });
+            banners.AddRange(banners);
+
+
         }
 
         /// <summary>
