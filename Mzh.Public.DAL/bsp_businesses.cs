@@ -27,5 +27,7 @@ namespace Mzh.Public.DAL
         public int businessStart { get; set; }
         public int businessEnd { get; set; }
         public string telphone { get; set; }
+        public decimal avgconsume { get; set; }
+        public string specialserver { get; set; }
     }
 }

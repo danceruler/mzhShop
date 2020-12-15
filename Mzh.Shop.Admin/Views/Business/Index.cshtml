@@ -26,162 +26,202 @@
                 </div>*@
             @if (businessModel.businessid == 0)
             {
-                <form class="layui-form" action="">
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">商户名称</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="name" id="name" placeholder="" value="" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item" id="attribute-div">
-                        <label class="layui-form-label">商户地址</label>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商户名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="address" id="address" placeholder="" value="" class="layui-input">
+                            <input type="text" name="name" id="name" placeholder="" value="" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item" id="attribute-div">
-                        <label class="layui-form-label">联系方式</label>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">商户地址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="address" id="address" placeholder="" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">联系方式</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="telphone" id="telphone" placeholder="" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">简介</label>
+                    <div class="layui-input-inline">
+                        <textarea name="description" id="description" lay-verify="required" placeholder="" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">人均消费</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="avgconsume" id="avgconsume" placeholder="" value="0" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">经度</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="telphone" id="telphone" placeholder="" value="" class="layui-input">
+                            <input type="number" name="longitude" id="longitude" value="0" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item" id="attribute-div">
-                        <label class="layui-form-label">简介</label>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">纬度</label>
                         <div class="layui-input-inline">
-                            <textarea name="description" id="description" lay-verify="required" placeholder="" class="layui-textarea"></textarea>
+                            <input type="number" name="latitude" id="latitude" value="0" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">开始营业时间</label>
-                            @*<div class="layui-input-inline">
-                                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
-                                </div>*@
-                        </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="st_hour" id="st_hour" lay-verify="required" autocomplete="off" value="8" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">时</label>
-                        </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="st_minute" id="st_minute" lay-verify="required" autocomplete="off" value="0" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">分</label>
-                        </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始营业时间</label>
+                        @*<div class="layui-input-inline">
+                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>*@
                     </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">结束营业时间</label>
-                            @*<div class="layui-input-inline">
-                                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
-                                </div>*@
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="radio" name="st_hour" id="st_hour" lay-verify="required" autocomplete="off" value="8" class="layui-input">
                         </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="end_hour" id="end_hour" lay-verify="required" autocomplete="off" value="8" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">时</label>
-                        </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="end_minute" id="end_minute" lay-verify="required" autocomplete="off" value="0" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">分</label>
-                        </div>
+                        <label class="layui-form-label">时</label>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">商品详情图</label>
-                        <div class="layui-input-block">
-                            <div id="cupload-promainimgs"></div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="number" name="st_minute" id="st_minute" lay-verify="required" autocomplete="off" value="0" class="layui-input">
                         </div>
+                        <label class="layui-form-label">分</label>
                     </div>
-                    <div class="layui-form-item" style="margin-top:20px">
-                        <div class="layui-input-block">
-                            <button class="layui-btn addproduct" lay-submit="" lay-filter="demo1">保存</button>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束营业时间</label>
+                        @*<div class="layui-input-inline">
+                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>*@
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="number" name="end_hour" id="end_hour" lay-verify="required" autocomplete="off" value="8" class="layui-input">
                         </div>
+                        <label class="layui-form-label">时</label>
                     </div>
-                </form>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="number" name="end_minute" id="end_minute" lay-verify="required" autocomplete="off" value="0" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">分</label>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品详情图</label>
+                    <div class="layui-input-block">
+                        <div id="cupload-promainimgs"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top:20px">
+                    <div class="layui-input-block">
+                        <button class="layui-btn addproduct" lay-submit="" lay-filter="demo1">保存</button>
+                    </div>
+                </div>
+            </form>
             }
             else
             {
-                <form class="layui-form" action="">
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">商户名称</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="name" id="name" placeholder="" value="@businessModel.name" class="layui-input">
-                            </div>
-                        </div>
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">商户名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" id="name" placeholder="" value="@businessModel.name" class="layui-input">
                     </div>
-                    <div class="layui-form-item" id="attribute-div">
-                        <label class="layui-form-label">商户地址</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="address" id="address" placeholder="" value="@businessModel.address" class="layui-input">
-                        </div>
+                </div>
+            </div>
+            <div class="layui-form-item" id="attribute-div">
+                <label class="layui-form-label">商户地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="address" id="address" placeholder="" value="@businessModel.address" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" id="attribute-div">
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="telphone" id="telphone" placeholder="" value="@businessModel.telphone" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" id="attribute-div">
+                <label class="layui-form-label">简介</label>
+                <div class="layui-input-inline">
+                    <textarea name="description" id="description" lay-verify="required" placeholder="" class="layui-textarea">@businessModel.description</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item" id="attribute-div">
+                <label class="layui-form-label">人均消费</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="avgconsume" id="avgconsume" placeholder="" value="@businessModel.avgconsume" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">经度</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="longitude" id="longitude" value="@businessModel.longitude" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-form-item" id="attribute-div">
-                        <label class="layui-form-label">联系方式</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="telphone" id="telphone" placeholder="" value="@businessModel.telphone" class="layui-input">
-                        </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">纬度</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="latitude" id="latitude" value="@businessModel.latitude" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-form-item" id="attribute-div">
-                        <label class="layui-form-label">简介</label>
-                        <div class="layui-input-inline">
-                            <textarea name="description" id="description" lay-verify="required" placeholder="" class="layui-textarea">@businessModel.description</textarea>
-                        </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">开始营业时间</label>
+                    @*<div class="layui-input-inline">
+                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>*@
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="number" name="st_hour" id="st_hour" lay-verify="required" autocomplete="off" value="@(businessModel.businessStart/60)" class="layui-input">
                     </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">开始营业时间</label>
-                            @*<div class="layui-input-inline">
-                                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
-                                </div>*@
-                        </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="st_hour" id="st_hour" lay-verify="required" autocomplete="off" value="@(businessModel.businessStart/60)" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">时</label>
-                        </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="st_minute" id="st_minute" lay-verify="required" autocomplete="off" value="@(businessModel.businessStart%60)" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">分</label>
-                        </div>
+                    <label class="layui-form-label">时</label>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="number" name="st_minute" id="st_minute" lay-verify="required" autocomplete="off" value="@(businessModel.businessStart%60)" class="layui-input">
                     </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">结束营业时间</label>
-                            @*<div class="layui-input-inline">
-                                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
-                                </div>*@
-                        </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="end_hour" id="end_hour" lay-verify="required" autocomplete="off" value="@(businessModel.businessEnd/60)" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">时</label>
-                        </div>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" name="end_minute" id="end_minute" lay-verify="required" autocomplete="off" value="@(businessModel.businessEnd%60)" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">分</label>
-                        </div>
+                    <label class="layui-form-label">分</label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">结束营业时间</label>
+                    @*<div class="layui-input-inline">
+                    <input type="number" name="shopprice" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>*@
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="number" name="end_hour" id="end_hour" lay-verify="required" autocomplete="off" value="@(businessModel.businessEnd/60)" class="layui-input">
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">商品详情图</label>
-                        <div class="layui-input-block">
-                            <div id="cupload-promainimgs"></div>
-                        </div>
+                    <label class="layui-form-label">时</label>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="number" name="end_minute" id="end_minute" lay-verify="required" autocomplete="off" value="@(businessModel.businessEnd%60)" class="layui-input">
                     </div>
-                </form>
+                    <label class="layui-form-label">分</label>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品详情图</label>
+                <div class="layui-input-block">
+                    <div id="cupload-promainimgs"></div>
+                </div>
+            </div>
+        </form>
             }
             <div class="layui-input-block">
                 <button class="layui-btn save" lay-submit="" lay-filter="demo1">保存</button>
@@ -322,6 +362,9 @@
                           "businessStart": parseInt($("#st_hour").val())*60+parseInt($("#st_minute").val()),
                           "businessEnd": parseInt($("#end_hour").val())*60+parseInt($("#end_minute").val()),
                           "telphone": $("#telphone").val(),
+                    "avgconsume": $("#avgconsume").val(),
+                    "latitude": $("#latitude").val(),
+                    "longitude": $("#longitude").val(),
                           "imgs": mainimgs
                         }
 

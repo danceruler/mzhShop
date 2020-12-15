@@ -58,6 +58,10 @@ namespace Remoting
                         bsp_Businesses.description = businessModel.description;
                         bsp_Businesses.name = businessModel.name;
                         bsp_Businesses.telphone = businessModel.telphone;
+                        bsp_Businesses.avgconsume = businessModel.avgconsume;
+                        bsp_Businesses.specialserver = businessModel.specialserver;
+                        bsp_Businesses.latitude = businessModel.latitude;
+                        bsp_Businesses.longitude = businessModel.longitude;
                         context.bsp_businesses.Add(bsp_Businesses);
                         context.SaveChanges();
                         foreach (var img in businessModel.imgs)
@@ -79,6 +83,10 @@ namespace Remoting
                         bsp_Businesses.description = businessModel.description;
                         bsp_Businesses.name = businessModel.name;
                         bsp_Businesses.telphone = businessModel.telphone;
+                        bsp_Businesses.avgconsume = businessModel.avgconsume;
+                        bsp_Businesses.specialserver = businessModel.specialserver;
+                        bsp_Businesses.latitude = businessModel.latitude;
+                        bsp_Businesses.longitude = businessModel.longitude;
                         context.SaveChanges();
 
                         var imgs = context.bsp_businessimgs.Where(t => t.businessid == bsp_Businesses.businessid);

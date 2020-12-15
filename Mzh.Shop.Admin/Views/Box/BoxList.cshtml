@@ -17,7 +17,8 @@
                                 </div>
                                 <div class="panel-content">
                                     <h1 class="no-margins">@box.name</h1>
-                                    <div class="stat-percent font-bold text-gray">@box.phone</div>
+                                    <div class="stat-percent font-bold text-gray">@(string.IsNullOrWhiteSpace(box.phone)?"": $@"联系方式：{box.phone}")</div>
+                                    <div class="stat-percent font-bold text-gray">@(string.IsNullOrWhiteSpace(box.username)?"": $@"客户姓名：{box.username}")</div>
                                     <small>@(box.booktime == null?"": box.booktime.Value.ToString("yyyy-MM-dd"))</small>
                                 </div>
                             </div>
@@ -37,7 +38,8 @@
                                 </div>
                                 <div class="panel-content">
                                     <h1 class="no-margins">@box.name</h1>
-                                    <div class="stat-percent font-bold text-gray">@box.phone</div>
+                                    <div class="stat-percent font-bold text-gray">@(string.IsNullOrWhiteSpace(box.phone)?"": $@"联系方式：{box.phone}")</div>
+                                    <div class="stat-percent font-bold text-gray">@(string.IsNullOrWhiteSpace(box.username)?"": $@"客户姓名：{box.username}")</div>
                                     <small>@(box.booktime == null?"": box.booktime.Value.ToString("yyyy-MM-dd"))</small>
                                 </div>
                             </div>

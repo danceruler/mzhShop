@@ -35,7 +35,7 @@ namespace Remoting
         {
             string sql = $@"SELECT * FROM bsp_boxes ORDER BY bsp_boxes.code";
             DataTable boxdt = SqlManager.FillDataTable(AppConfig.ConnectionString, new SqlCommand(sql));
-            boxes = boxdt.GetList<bsp_boxes>(null);
+            boxes = boxdt.GetList<bsp_boxes>("");
         }
     }
 }

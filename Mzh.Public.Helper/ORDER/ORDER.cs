@@ -115,7 +115,7 @@ namespace Remoting
                     if((neworder.type == (int)OrderType.InShop || neworder.type == (int)OrderType.Order) && neworder.boxid > 0)
                     {
                         var box = context.bsp_boxes.SingleOrDefault(t => t.boxid == neworder.boxid);
-                        if(box.state != (int)BoxState.Empty)
+                        if(box.state != (int)BoxState.Empty && box.type == 1)
                         {
                             tran.Rollback();
                             return ResultModel.Fail("该包厢已被占用，请重新选择包厢");
@@ -125,6 +125,8 @@ namespace Remoting
                         box.phone = neworder.mobile;
                         box.state = neworder.type == (int)OrderType.InShop ? (int)BoxState.Use : (int)BoxState.Book;
                         box.uid = neworder.uid;
+                        box.username = neworder.consignee;
+                        box.phone = neworder.mobile;
                         context.SaveChanges();
                     }
                     #endregion
@@ -290,10 +292,10 @@ namespace Remoting
                 DateTime endTime = beginTime.AddDays(1);
                 var todayStat = new OrderStatistic();
                 GetBaseStatistics(beginTime, endTime,0, model,ref todayStat);
-                if(todayStat.id == 0)
-                {
-                    return null;
-                }
+                //if(todayStat.id == 0)
+                //{
+                //    return model;
+                //}
                 //获取其他统计信息
                 var yestoday = DateTime.Now.AddDays(-1).Date;
                 var yestodayStr = yestoday.ToString("yyyy-MM-dd");

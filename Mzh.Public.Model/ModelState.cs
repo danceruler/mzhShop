@@ -61,7 +61,7 @@ namespace Mzh.Public.Model
     }
 
     /// <summary>
-    /// 包厢状态
+    /// 包厢餐桌状态
     /// </summary>
     public enum BoxState
     {

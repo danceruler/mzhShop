@@ -35,6 +35,11 @@ namespace Remoting
                     box.name = name;
                     box.price = price;
                     box.bookprice = bookprice;
+                    if(state == BoxState.Empty)
+                    {
+                        box.username = "";
+                        box.phone = "";
+                    }
                     context.SaveChanges();
 
                     tran.Commit();
@@ -55,8 +60,9 @@ namespace Remoting
         /// </summary>
         /// <param name="code"></param>
         /// <param name="name"></param>
+        /// <param name="type">1.包厢 2.餐桌</param>
         /// <returns></returns>
-        public ResultModel AddBox(string code, string name, decimal price,decimal bookprice)
+        public ResultModel AddBox(string code, string name, decimal price,decimal bookprice,int type)
         {
             using (brnshopEntities context = new brnshopEntities())
             {
@@ -77,6 +83,7 @@ namespace Remoting
                     newbox.uid = 0;
                     newbox.price = price;
                     newbox.bookprice = bookprice;
+                    newbox.type = type;
                     context.bsp_boxes.Add(newbox);
                     context.SaveChanges();
 

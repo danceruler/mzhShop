@@ -385,11 +385,13 @@
                             var countArrary = [];
                             var turnoverArrary = [];
                             var avgmoneyArrary = [];
-                            for (var i = 0; i < res.OrderCountByTimeStatistics.length; i++) {
-                                xAxisArray.push(res.OrderCountByTimeStatistics[i].TimeStr);
-                                countArrary.push(res.OrderCountByTimeStatistics[i].Count);
-                                turnoverArrary.push(res.OrderCountByTimeStatistics[i].Amount);
-                                avgmoneyArrary.push(res.OrderCountByTimeStatistics[i].Count == 0 ? 0 : res.OrderCountByTimeStatistics[i].Amount / res.OrderCountByTimeStatistics[i].Count);
+                            if (res.OrderCountByTimeStatistics != null) {
+                                for (var i = 0; i < res.OrderCountByTimeStatistics.length; i++) {
+                                    xAxisArray.push(res.OrderCountByTimeStatistics[i].TimeStr);
+                                    countArrary.push(res.OrderCountByTimeStatistics[i].Count);
+                                    turnoverArrary.push(res.OrderCountByTimeStatistics[i].Amount);
+                                    avgmoneyArrary.push(res.OrderCountByTimeStatistics[i].Count == 0 ? 0 : res.OrderCountByTimeStatistics[i].Amount / res.OrderCountByTimeStatistics[i].Count);
+                                }
                             }
 
                             optionRecords = {
@@ -457,12 +459,15 @@
                             echartsRecords.setOption(optionRecords);
 
                             var typeArray = [];
-                            for (var i = 0; i < res.OrderTypeStatistics.length; i++) {
-                                var typeobj = {
-                                    value: res.OrderTypeStatistics[i].SUM, name: res.OrderTypeStatistics[i].TypeName
-                                };
-                                typeArray.push(typeobj);
+                            if (res.OrderTypeStatistics != null) {
+                                for (var i = 0; i < res.OrderTypeStatistics.length; i++) {
+                                    var typeobj = {
+                                        value: res.OrderTypeStatistics[i].SUM, name: res.OrderTypeStatistics[i].TypeName
+                                    };
+                                    typeArray.push(typeobj);
+                                }
                             }
+                            
                             console.log(typeArray);
                             var optionPies = {
                                 title: {

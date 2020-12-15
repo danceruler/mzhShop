@@ -22,6 +22,8 @@ namespace Mzh.Public.Model.Model
         public int businessStart { get; set; }
         public int businessEnd { get; set; }
         public string telphone { get; set; }
+        public decimal avgconsume { get; set; }
+        public string specialserver { get; set; }
         public List<BusinessImgModel> imgs { get; set; }
     }
     [Serializable]

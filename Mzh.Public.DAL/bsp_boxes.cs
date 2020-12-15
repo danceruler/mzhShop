@@ -26,5 +26,6 @@ namespace Mzh.Public.DAL
         public string username { get; set; }
         public Nullable<decimal> price { get; set; }
         public Nullable<decimal> bookprice { get; set; }
+        public int type { get; set; }
     }
 }
