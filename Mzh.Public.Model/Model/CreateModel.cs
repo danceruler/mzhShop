@@ -139,6 +139,7 @@ namespace Mzh.Public.Model.Model
         public decimal costprice { get; set; }
         public byte isbest { get; set; }
         public byte ishot { get; set; }
+        public int rmddisplayorder { get; set; }
         public byte isnew { get; set; }
         public int displayorder { get; set; }
         public int weight { get; set; }

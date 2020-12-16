@@ -237,6 +237,7 @@ namespace Remoting
                     newpro.startseckilltime = model.startseckilltime;
                     newpro.endseckilltime = model.endseckilltime;
                     newpro.seckillprice = model.seckillprice;
+                    newpro.rmddisplayorder = model.rmddisplayorder;
                     context.bsp_products.Add(newpro);
                     context.SaveChanges();
 
@@ -501,6 +502,7 @@ namespace Remoting
                     pro.displayorder = model.displayorder;
                     pro.isbest = model.isbest;
                     pro.ishot = model.ishot;
+                    pro.rmddisplayorder = model.rmddisplayorder;
                     pro.isnew = model.isnew;
                     pro.isfullcut = model.isfullcut;
                     pro.marketprice = model.marketprice;

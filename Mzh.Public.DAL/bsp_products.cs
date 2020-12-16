@@ -47,5 +47,6 @@ namespace Mzh.Public.DAL
         public Nullable<System.DateTime> startseckilltime { get; set; }
         public Nullable<System.DateTime> endseckilltime { get; set; }
         public decimal seckillprice { get; set; }
+        public int rmddisplayorder { get; set; }
     }
 }

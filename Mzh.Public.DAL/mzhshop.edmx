@@ -896,6 +896,7 @@
           <Property Name="startseckilltime" Type="datetime" />
           <Property Name="endseckilltime" Type="datetime" />
           <Property Name="seckillprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="rmddisplayorder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -1934,6 +1935,7 @@
           <Property Name="startseckilltime" Type="DateTime" Precision="3" />
           <Property Name="endseckilltime" Type="DateTime" Precision="3" />
           <Property Name="seckillprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="rmddisplayorder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -3172,6 +3174,7 @@
           <EntitySetMapping Name="bsp_products">
             <EntityTypeMapping TypeName="brnshopModel.bsp_products">
               <MappingFragment StoreEntitySet="bsp_products">
+                <ScalarProperty Name="rmddisplayorder" ColumnName="rmddisplayorder" />
                 <ScalarProperty Name="seckillprice" ColumnName="seckillprice" />
                 <ScalarProperty Name="endseckilltime" ColumnName="endseckilltime" />
                 <ScalarProperty Name="startseckilltime" ColumnName="startseckilltime" />
