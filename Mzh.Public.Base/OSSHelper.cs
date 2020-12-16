@@ -53,7 +53,7 @@ namespace Mzh.Public.Base
             }
             catch (Exception ex)
             {
-                Logger._.Error(ex.ToString());
+                Logger._.Error(ex);
                 return false;
             }
         }

@@ -111,7 +111,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error("AddOrUpdateBusiness"+ex.ToString());
+                    Logger._.Error("AddOrUpdateBusiness",ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }

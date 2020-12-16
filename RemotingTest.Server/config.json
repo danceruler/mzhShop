@@ -3,10 +3,10 @@
     "tcpport": 8088,
     "httpport": 8089
   },
-  "connectionString": "EpgzVe0c8ngeOfaqM5kWRjVNQL5qC8lOiy5i4SSt/znj6ELDvL0DuTCfqCFfaqCQ1UnkYM9RKo33v15UwlZWDAZntGWRBwpN",
+  "connectionString": "EpgzVe0c8nipQCExGXGyAKkpYPva9sFU/SktCDwdY3Mq5qHA3YkpitQp+PdI8rmMTjRnK7ZPORO4IOhNdHCB4+VRQOVSP65L",
   "clientIDs": {
     "WebApi": "rBtEzEKB+4MV/ZW73guTLg==",
     "WebAdmin": "3DlFwS8VgBbbiIzOdEXF5g=="
   },
-  "ee": "xXvX42Un7VqEI3jg468A0LFfiboLf4W2"
+  "ee": "BLoRiJy/0076xXj0M2UrtQ=="
 }

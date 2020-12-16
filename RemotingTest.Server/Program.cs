@@ -92,7 +92,7 @@ namespace RemotingTest.Server
             }
             catch(Exception ex)
             {
-                Logger._.Error("定时任务启动失败，错误原因：" + ex.ToString());
+                Logger._.Error("定时任务启动失败，错误原因：",ex);
                 Console.WriteLine("定时任务启动失败");
             }
         }
@@ -101,7 +101,7 @@ namespace RemotingTest.Server
         {
             try
             {
-                WebSocketHelper.Init("ws://127.0.0.1:6868");
+                WebSocketHelper.Init("ws://0.0.0.0:8003");
                 WebSocketHelper.wsServer.Start(socket =>
                 {
                     socket.OnOpen = () =>
@@ -128,7 +128,7 @@ namespace RemotingTest.Server
                 }
             }catch(Exception ex)
             {
-                Logger._.Error("websoket服务启动失败，错误原因：" + ex.ToString());
+                Logger._.Error("websoket服务启动失败，错误原因：", ex);
                 Console.WriteLine("websoket服务启动失败");
             }
             

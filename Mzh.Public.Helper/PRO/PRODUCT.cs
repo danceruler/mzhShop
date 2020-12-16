@@ -71,7 +71,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -120,7 +120,7 @@ namespace Remoting
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -158,7 +158,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -185,7 +185,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -234,6 +234,9 @@ namespace Remoting
                     newpro.weight = model.weight;
                     newpro.psn = "";
                     newpro.isdelete = 0;
+                    newpro.startseckilltime = model.startseckilltime;
+                    newpro.endseckilltime = model.endseckilltime;
+                    newpro.seckillprice = model.seckillprice;
                     context.bsp_products.Add(newpro);
                     context.SaveChanges();
 
@@ -377,7 +380,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -462,7 +465,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -506,7 +509,9 @@ namespace Remoting
                     pro.showimg = model.showimg;
                     pro.shopprice = model.shopprice;
                     pro.weight = model.weight;
-                    
+                    pro.startseckilltime = model.startseckilltime;
+                    pro.endseckilltime = model.endseckilltime;
+                    pro.seckillprice = model.seckillprice;
                     context.SaveChanges();
 
                     //编辑商品分类信息
@@ -695,7 +700,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -723,7 +728,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }

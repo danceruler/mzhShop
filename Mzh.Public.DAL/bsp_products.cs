@@ -44,5 +44,8 @@ namespace Mzh.Public.DAL
         public decimal packprice { get; set; }
         public int stock { get; set; }
         public int isdelete { get; set; }
+        public Nullable<System.DateTime> startseckilltime { get; set; }
+        public Nullable<System.DateTime> endseckilltime { get; set; }
+        public decimal seckillprice { get; set; }
     }
 }

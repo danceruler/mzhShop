@@ -47,7 +47,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error();
                 }
             }
@@ -77,7 +77,7 @@ namespace Remoting
                     return ResultModel.Success("", user2ShowUser(user));
                 }catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error("数据库操作异常");
                 }
             }

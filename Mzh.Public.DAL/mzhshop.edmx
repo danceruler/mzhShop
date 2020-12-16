@@ -893,6 +893,9 @@
           <Property Name="packprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="stock" Type="int" Nullable="false" />
           <Property Name="isdelete" Type="int" Nullable="false" />
+          <Property Name="startseckilltime" Type="datetime" />
+          <Property Name="endseckilltime" Type="datetime" />
+          <Property Name="seckillprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -1928,6 +1931,9 @@
           <Property Name="packprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="stock" Type="Int32" Nullable="false" />
           <Property Name="isdelete" Type="Int32" Nullable="false" />
+          <Property Name="startseckilltime" Type="DateTime" Precision="3" />
+          <Property Name="endseckilltime" Type="DateTime" Precision="3" />
+          <Property Name="seckillprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -3166,6 +3172,9 @@
           <EntitySetMapping Name="bsp_products">
             <EntityTypeMapping TypeName="brnshopModel.bsp_products">
               <MappingFragment StoreEntitySet="bsp_products">
+                <ScalarProperty Name="seckillprice" ColumnName="seckillprice" />
+                <ScalarProperty Name="endseckilltime" ColumnName="endseckilltime" />
+                <ScalarProperty Name="startseckilltime" ColumnName="startseckilltime" />
                 <ScalarProperty Name="isdelete" ColumnName="isdelete" />
                 <ScalarProperty Name="stock" ColumnName="stock" />
                 <ScalarProperty Name="packprice" ColumnName="packprice" />

@@ -34,7 +34,7 @@ namespace Mzh.Public.Base
                 }
             }catch(Exception ex)
             {
-                Logger._.Error(ex.ToString());
+                Logger._.Error(ex);
                 return null;
             }
             
@@ -173,7 +173,7 @@ namespace Mzh.Public.Base
             }
             catch (Exception exception)
             {
-                Logger._.Error(exception.ToString());
+                Logger._.Error(exception);
                 return null;
             }
         }
@@ -407,7 +407,7 @@ namespace Mzh.Public.Base
             {
                 if (useTransaction && transaction != null)
                     transaction.Rollback();
-                Logger._.Error("错误语句：" + command.CommandText + "\r\n" + ex.Message);
+                Logger._.Error("错误语句：" + command.CommandText,ex);
                 return false;
             }
         }
@@ -571,7 +571,7 @@ namespace Mzh.Public.Base
                 catch (Exception e)
                 {
                     tx.Rollback();
-                    Logger._.Error("错误语句："+ strsql+"\r\n"+e.Message);
+                    Logger._.Error("错误语句："+ strsql,e);
                     throw e;
                 }
                 finally

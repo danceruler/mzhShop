@@ -150,12 +150,12 @@ namespace Mzh.Public.Base
             //var b = data.CheckSign(WxPayData.SIGN_TYPE_MD5);
             //data.MakeSign(WxPayData.SIGN_TYPE_MD5);
             var a = data.ToXml();
-            Logger._.Info("请求下单接口请求数据:" + data.ToJson());
+            Logger._.Info("拼团请求下单接口请求数据:" + data.ToJson());
             //WxPayData result = WxPayApi.UnifiedOrder(data);//调用统一下单接口
 
             var response = HttpHelper.HttpPost(unifiedorderUrl, a);
             var responseDic = XMLHelper.FromXml(response);
-            Logger._.Info("请求下单接口返回数据:" + response);
+            Logger._.Info("拼团请求下单接口返回数据:" + response);
             //HttpService.Post(res)
             //if(result.GetValue("return_code").ToString() == "SUCCESS"&& result.GetValue("result_code").ToString() == "SUCCESS")
             //{

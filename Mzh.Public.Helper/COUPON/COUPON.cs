@@ -131,7 +131,7 @@ namespace Remoting
             }
             catch (Exception ex)
             {
-                Logger._.Error(ex.ToString());
+                Logger._.Error(ex);
                 return null;
             }
         }
@@ -183,7 +183,7 @@ namespace Remoting
             }
             catch (Exception ex)
             {
-                Logger._.Error(ex.ToString());
+                Logger._.Error(ex);
                 return null;
             }
         }
@@ -234,7 +234,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error();
                 }
             }
@@ -306,7 +306,7 @@ namespace Remoting
             }
             catch (Exception ex)
             {
-                Logger._.Error(ex.ToString());
+                Logger._.Error(ex);
                 return null;
             }
         }
@@ -361,7 +361,7 @@ namespace Remoting
             }
             catch (Exception ex)
             {
-                Logger._.Error(ex.ToString());
+                Logger._.Error(ex);
                 return null;
             }
         }
@@ -391,7 +391,7 @@ namespace Remoting
                 catch(Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error();
                 }
             }
@@ -454,7 +454,7 @@ namespace Remoting
                 catch(Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error();
                 }
             }

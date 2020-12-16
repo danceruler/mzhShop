@@ -146,6 +146,18 @@ namespace Mzh.Public.Model.Model
         public string description { get; set; }
         public Nullable<int> isfullcut { get; set; }
         public decimal packprice { get; set; }
+        /// <summary>
+        /// 秒杀开始时间
+        /// </summary>
+        public DateTime? startseckilltime { get; set; }
+        /// <summary>
+        /// 秒杀结束时间
+        /// </summary>
+        public DateTime? endseckilltime { get; set; }
+        /// <summary>
+        /// 秒杀价
+        /// </summary>
+        public decimal seckillprice { get; set; }
         public List<ProductImgModel> mainImgs { get; set; }
         public List<ProductImgModel> detailImgs { get; set; }
         public List<AttributeInfo> skuInfos { get; set; }

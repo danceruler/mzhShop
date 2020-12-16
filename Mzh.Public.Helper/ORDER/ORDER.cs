@@ -177,7 +177,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString()+ex.StackTrace);
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error();
                 }
@@ -475,7 +475,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return $@"<xml>
                                   <return_code><![CDATA[FAIL]]></return_code>
@@ -540,7 +540,7 @@ namespace Remoting
             }
             catch (Exception ex)
             {
-                Logger._.Error("GroupPayNotify,"+ex.ToString());
+                Logger._.Error("GroupPayNotify,",ex);
                 return $@"<xml>
                                   <return_code><![CDATA[FAIL]]></return_code>
                                   <return_msg><![CDATA[数据操作失败]]></return_msg>
@@ -572,7 +572,7 @@ namespace Remoting
 
                 }catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -610,7 +610,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -644,7 +644,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -685,7 +685,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -941,7 +941,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -982,7 +982,7 @@ namespace Remoting
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error("更新订单状态任务执行失败："+ ex.ToString() + ex.StackTrace);
+                    Logger._.Error("更新订单状态任务执行失败：", ex);
                 }
             }
         }

@@ -170,9 +170,10 @@
                 });
             });
 
-            ws = new WebSocket("ws://127.0.0.1:6868");
+            ws = new WebSocket("ws://47.94.5.152:8003");
             ws.onopen = function () {
-                //ws.send('websocekt测试');
+                console.log('yes')
+                ws.send('websocekt测试');
             };
             ws.onmessage = async function (e) {
                 if (lastopendialog != 0) {
