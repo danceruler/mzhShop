@@ -315,6 +315,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>mzhshop.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.config" />
     <None Include="mzhshop.edmx.diagram">
       <DependentUpon>mzhshop.edmx</DependentUpon>
     </None>
