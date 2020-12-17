@@ -214,6 +214,30 @@ namespace Mzh.Public.Model.Model
         /// 堂食订单总金额（完成）
         /// </summary>
         public decimal shopordersum { get; set; }
+        /// <summary>
+        /// 预定订单数量(完成)
+        /// </summary>
+        public int orderordercount { get; set; }
+        /// <summary>
+        /// 预定订单总金额(完成)
+        /// </summary>
+        public decimal orderordersum { get; set; }
+        /// <summary>
+        /// 拼团订单数量(完成)
+        /// </summary>
+        public int groupordercount { get; set; }
+        /// <summary>
+        /// 拼团订单总金额(完成)
+        /// </summary>
+        public decimal groupordersum { get; set; }
+        /// <summary>
+        /// 秒杀订单数量(完成)
+        /// </summary>
+        public int seckillcount { get; set; }
+        /// <summary>
+        /// 秒杀订单总金额(完成)
+        /// </summary>
+        public decimal seckillsum { get; set; }
     }
 
 }

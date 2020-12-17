@@ -197,6 +197,10 @@ namespace Mzh.Public.Model
                     return "外卖";
                 case OrderType.Order:
                     return "预定";
+                case OrderType.GROUP:
+                    return "拼团";
+                case OrderType.SECKILL:
+                    return "秒杀";
                 default:
                     return "";
             }

@@ -38,6 +38,11 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
+        public ActionResult Test()
+        {
+            return View();
+        }
+
         public ActionResult PostLogin(string username,string md5psw)
         {
             ///登陆成功

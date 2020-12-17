@@ -115,7 +115,7 @@ namespace Remoting
                     newGroupetail.outtradeno = outtradeno;
                     context.bsp_groupdetails.Add(newGroupetail);
                     context.SaveChanges();
-
+                    ORDER.AddStatistics(true, newGroup, newGroupetail, context);
                     tran.Commit();
                     return ResultModel.Success("开团成功");
                 }
@@ -174,6 +174,7 @@ namespace Remoting
                     context.bsp_groupdetails.Add(newGroupetail);
                     context.SaveChanges();
 
+                    ORDER.AddStatistics(true, Group, newGroupetail, context);
                     tran.Commit();
                     return ResultModel.Success("参团成功");
                 }

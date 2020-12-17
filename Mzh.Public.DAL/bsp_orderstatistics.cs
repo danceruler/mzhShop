@@ -28,5 +28,11 @@ namespace Mzh.Public.DAL
         public decimal shipordersum { get; set; }
         public int shopordercount { get; set; }
         public decimal shopordersum { get; set; }
+        public int orderordercount { get; set; }
+        public decimal orderordersum { get; set; }
+        public int groupordercount { get; set; }
+        public decimal groupordersum { get; set; }
+        public int seckillcount { get; set; }
+        public decimal seckillsum { get; set; }
     }
 }
