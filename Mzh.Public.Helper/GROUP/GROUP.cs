@@ -419,6 +419,7 @@ namespace Remoting
                                              bsp_groups.isfail ,
                                              bsp_groups.failtype ,
                                              bsp_groups.maxtime,
+                                             bsp_groups.groupinfoid,
 		                                     bsp_groupdetails.groupdetailid gd_groupdetailid,
                                              bsp_groupdetails.groupid gd_groupid,
                                              bsp_groupdetails.uid gd_uid,

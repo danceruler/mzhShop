@@ -6,6 +6,12 @@
         { 1,"有客" },
         { 2,"已预定" },
     };
+
+    Dictionary<int, string> typedic = new Dictionary<int, string>()
+    {
+        { 1,"包厢" },
+        { 2,"餐桌" }
+    };
 }
 <!DOCTYPE html>
 <html>
@@ -64,6 +70,23 @@
                     <label class="layui-form-label">预定费</label>
                     <div class="layui-input-inline">
                         <input type="number" name="bookprice" id="bookprice" placeholder="" value="@ViewBag.bookprice" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="attribute-div">
+                    <label class="layui-form-label">包厢类型</label>
+                    <div class="layui-input-inline">
+                        <select name="type" id="type">
+                            @if (ViewBag.type == 1)
+                            {
+                                <option value="@ViewBag.type" selected>@typedic[(int)ViewBag.type]</option>
+                                <option value="2">@typedic[2]</option>
+                            }
+                            else
+                            {
+                                <option value="1">@typedic[1]</option>
+                                <option value="@ViewBag.type" selected>@typedic[(int)ViewBag.type]</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -142,6 +165,7 @@
                             name: $("#boxname").val(),
                             price: $("#price").val(),
                             bookprice: $("#bookprice").val(),
+                            type:$("#type").val()
                         },
                         async: false,
                         success: function (res) {

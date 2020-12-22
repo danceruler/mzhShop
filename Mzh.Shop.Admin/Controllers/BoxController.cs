@@ -26,7 +26,7 @@ namespace Mzh.Shop.Admin.Controllers
             return View();
         }
 
-        public ActionResult BoxDetail(int boxid, string code, string name, int state, decimal price,decimal bookprice)
+        public ActionResult BoxDetail(int boxid, string code, string name, int state, decimal price,decimal bookprice,int type)
         {
             ViewBag.boxid = boxid;
             ViewBag.code = code;
@@ -34,6 +34,7 @@ namespace Mzh.Shop.Admin.Controllers
             ViewBag.state = state;
             ViewBag.price = price;
             ViewBag.bookprice = bookprice;
+            ViewBag.type = type;
             return View();
         }
 
@@ -62,11 +63,11 @@ namespace Mzh.Shop.Admin.Controllers
                 );
         }
 
-        public ActionResult AddBox(string code, string name, decimal price, decimal bookprice)
+        public ActionResult AddBox(string code, string name, decimal price, decimal bookprice,int type)
         {
             BOX box = RemotingHelp.GetModelObject<BOX>();
             return Json(
-                box.AddBox(code, name, price, bookprice),
+                box.AddBox(code, name, price, bookprice, type),
                 JsonRequestBehavior.AllowGet
                 );
         }

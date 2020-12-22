@@ -64,7 +64,7 @@ namespace Remoting
                 t.tstarttime = t.starttime.ToString("yyyy-MM-dd");
                 t.tendtime = t.endtime.ToString("yyyy-MM-dd");
             });
-            banners.AddRange(banners);
+            banners.AddRange(banners2);
 
 
         }

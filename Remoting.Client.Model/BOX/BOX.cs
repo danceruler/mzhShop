@@ -28,7 +28,7 @@ namespace Remoting
         /// <param name="code"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ResultModel AddBox(string code, string name, decimal price, decimal bookprice)
+        public ResultModel AddBox(string code, string name, decimal price, decimal bookprice,int type)
         {
             throw new NotImplementedException();
         }
