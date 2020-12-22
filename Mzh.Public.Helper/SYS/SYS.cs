@@ -55,7 +55,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error();
                 }
             }

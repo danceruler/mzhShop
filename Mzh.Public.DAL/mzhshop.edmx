@@ -770,6 +770,12 @@
           <Property Name="shipordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="shopordercount" Type="int" Nullable="false" />
           <Property Name="shopordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="orderordercount" Type="int" Nullable="false" />
+          <Property Name="orderordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="groupordercount" Type="int" Nullable="false" />
+          <Property Name="groupordersum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="seckillcount" Type="int" Nullable="false" />
+          <Property Name="seckillsum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productattributes">
           <Key>
@@ -893,6 +899,10 @@
           <Property Name="packprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="stock" Type="int" Nullable="false" />
           <Property Name="isdelete" Type="int" Nullable="false" />
+          <Property Name="startseckilltime" Type="datetime" />
+          <Property Name="endseckilltime" Type="datetime" />
+          <Property Name="seckillprice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="rmddisplayorder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -1928,6 +1938,10 @@
           <Property Name="packprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="stock" Type="Int32" Nullable="false" />
           <Property Name="isdelete" Type="Int32" Nullable="false" />
+          <Property Name="startseckilltime" Type="DateTime" Precision="3" />
+          <Property Name="endseckilltime" Type="DateTime" Precision="3" />
+          <Property Name="seckillprice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="rmddisplayorder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="bsp_productskus">
           <Key>
@@ -2374,6 +2388,12 @@
           <Property Name="shipordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="shopordercount" Type="Int32" Nullable="false" />
           <Property Name="shopordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="orderordercount" Type="Int32" Nullable="false" />
+          <Property Name="orderordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="groupordercount" Type="Int32" Nullable="false" />
+          <Property Name="groupordersum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="seckillcount" Type="Int32" Nullable="false" />
+          <Property Name="seckillsum" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="bsp_orderprepays">
           <Key>
@@ -3166,6 +3186,10 @@
           <EntitySetMapping Name="bsp_products">
             <EntityTypeMapping TypeName="brnshopModel.bsp_products">
               <MappingFragment StoreEntitySet="bsp_products">
+                <ScalarProperty Name="rmddisplayorder" ColumnName="rmddisplayorder" />
+                <ScalarProperty Name="seckillprice" ColumnName="seckillprice" />
+                <ScalarProperty Name="endseckilltime" ColumnName="endseckilltime" />
+                <ScalarProperty Name="startseckilltime" ColumnName="startseckilltime" />
                 <ScalarProperty Name="isdelete" ColumnName="isdelete" />
                 <ScalarProperty Name="stock" ColumnName="stock" />
                 <ScalarProperty Name="packprice" ColumnName="packprice" />
@@ -3571,6 +3595,12 @@
           <EntitySetMapping Name="bsp_orderstatistics">
             <EntityTypeMapping TypeName="brnshopModel.bsp_orderstatistics">
               <MappingFragment StoreEntitySet="bsp_orderstatistics">
+                <ScalarProperty Name="seckillsum" ColumnName="seckillsum" />
+                <ScalarProperty Name="seckillcount" ColumnName="seckillcount" />
+                <ScalarProperty Name="groupordersum" ColumnName="groupordersum" />
+                <ScalarProperty Name="groupordercount" ColumnName="groupordercount" />
+                <ScalarProperty Name="orderordersum" ColumnName="orderordersum" />
+                <ScalarProperty Name="orderordercount" ColumnName="orderordercount" />
                 <ScalarProperty Name="shopordersum" ColumnName="shopordersum" />
                 <ScalarProperty Name="shopordercount" ColumnName="shopordercount" />
                 <ScalarProperty Name="shipordersum" ColumnName="shipordersum" />

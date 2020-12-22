@@ -125,20 +125,41 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">是否热销商品</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="ishot" value="1" title="是" @(ProductInfo.ishot == 1 ? "checked" : "")>
-                        <input type="radio" name="ishot" value="0" title="否" @(ProductInfo.ishot == 0 ? "checked" : "")>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否热销商品</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="ishot" value="1" title="是" @(ProductInfo.ishot == 1 ? "checked" : "")>
+                            <input type="radio" name="ishot" value="0" title="否" @(ProductInfo.ishot == 0 ? "checked" : "")>
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">是否新上商品</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="isnew" value="1" title="是" @(ProductInfo.isnew == 1 ? "checked" : "")>
-                        <input type="radio" name="isnew" value="0" title="否" @(ProductInfo.isnew == 0 ? "checked" : "")>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">推荐排序号</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="rmddisplayorder" autocomplete="off" value="@ProductInfo.rmddisplayorder" class="layui-input">
+                        </div>
                     </div>
                 </div>
 
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">秒杀开始时间</label>
+                        <div class="layui-input-inline">
+                            <input type="datetime" name="startseckilltime" id="startseckilltime" placeholder="yyyy-MM-dd HH:mm" value="@(ProductInfo.startseckilltime == null?"":ProductInfo.startseckilltime.Value.ToString("yyyy-MM-dd HH:mm"))" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">秒杀结束时间</label>
+                        <div class="layui-input-inline">
+                            <input type="datetime" name="endseckilltime" id="endseckilltime" placeholder="yyyy-MM-dd HH:mm" value="@(ProductInfo.endseckilltime == null?"":ProductInfo.endseckilltime.Value.ToString("yyyy-MM-dd HH:mm"))" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">秒杀价</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="seckillprice" autocomplete="off" value="@(ProductInfo.seckillprice == 0?"":ProductInfo.seckillprice.ToString())" class="layui-input">
+                        </div>
+                    </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品规格</label>
                     <div class="layui-input-block">
@@ -256,11 +277,16 @@
                 , tableSelect = layui.tableSelect;
             //日期
             laydate.render({
-                elem: '#date'
+                elem: '#startseckilltime',
+                type: 'datetime',
+                format: 'yyyy-MM-dd HH:mm'
             });
             laydate.render({
-                elem: '#date1'
+                elem: '#endseckilltime',
+                type: 'datetime',
+                format: 'yyyy-MM-dd HH:mm'
             });
+
 
             //创建一个编辑器
             var editIndex = layedit.build('LAY_demo_editor');
@@ -291,6 +317,21 @@
 
             //监听提交
             form.on('submit(demo1)', function (data) {
+                console.log(data.field.seckillprice)
+                if ((data.field.startseckilltime != '' && data.field.endseckilltime == '') || (data.field.startseckilltime == '' && data.field.endseckilltime != '')) {
+                    layer.alert("必须同时指定秒杀开始和结束时间");
+                    return false;
+                }
+                if (data.field.startseckilltime != '' && data.field.endseckilltime != '') {
+                    if (data.field.seckillprice == undefined) {
+                        layer.alert("必须填写秒杀价");
+                        return false;
+                    }
+                    if (data.field.seckillprice <= 0) {
+                        layer.alert("秒杀价不能小于等于0");
+                        return false;
+                    }
+                }
 
                 var skuinfos = GetSkuJson();
                 if (skuinfos == false) {
@@ -408,7 +449,11 @@
                     "packprice": data.field.packprice,
                     "mainImgs": mainimgs,
                     "detailImgs": detailimgs,
-                    "skuInfos": skuinfos
+                    "skuInfos": skuinfos,
+                    "startseckilltime": data.field.startseckilltime,
+                    "endseckilltime": data.field.endseckilltime,
+                    "seckillprice": data.field.seckillprice,
+                    "rmddisplayorder": data.field.rmddisplayorder
                 }
                 console.log(submitdata);
                 showloading(true)

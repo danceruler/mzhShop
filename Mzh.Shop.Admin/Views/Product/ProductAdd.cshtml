@@ -46,7 +46,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品类别</label>
                     <div class="layui-input-inline">
-                        <input type="text" readonly name="cateids" lay-verify="required" placeholder=""  autocomplete="off" class="layui-input" id="demo" data-tag="" value="" ts-selected="">
+                        <input type="text" readonly name="cateids" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" id="demo" data-tag="" value="" ts-selected="">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -127,20 +127,47 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">是否热销商品</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="ishot" value="1" title="是">
-                        <input type="radio" name="ishot" value="0" title="否" checked="">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否推荐</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="ishot" value="1" title="是">
+                            <input type="radio" name="ishot" value="0" title="否" checked="">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">推荐排序号</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="rmddisplayorder" autocomplete="off" value="0" class="layui-input">
+                        </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                @*<div class="layui-form-item">
                     <label class="layui-form-label">是否新上商品</label>
                     <div class="layui-input-block">
                         <input type="radio" name="isnew" value="1" title="是" checked="">
                         <input type="radio" name="isnew" value="0" title="否">
                     </div>
+                </div>*@
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">秒杀开始时间</label>
+                        <div class="layui-input-inline">
+                            <input type="datetime" name="startseckilltime" id="startseckilltime" placeholder="yyyy-MM-dd HH:mm" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">秒杀结束时间</label>
+                        <div class="layui-input-inline">
+                            <input type="datetime" name="endseckilltime" id="endseckilltime" placeholder="yyyy-MM-dd HH:mm" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">秒杀价</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="seckillprice" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
                 </div>
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品规格</label>
                     <div class="layui-input-block">
@@ -247,11 +274,16 @@
                 , tableSelect = layui.tableSelect;
             //日期
             laydate.render({
-                elem: '#date'
+                elem: '#startseckilltime',
+                type: 'datetime',
+                format:'yyyy-MM-dd HH:mm'
             });
             laydate.render({
-                elem: '#date1'
+                elem: '#endseckilltime',
+                type: 'datetime',
+                format: 'yyyy-MM-dd HH:mm'
             });
+            
 
             //创建一个编辑器
             var editIndex = layedit.build('LAY_demo_editor');
@@ -282,6 +314,22 @@
 
             //监听提交
             form.on('submit(demo1)', function (data) {
+                console.log(data.field.seckillprice)
+                if ((data.field.startseckilltime != '' && data.field.endseckilltime == '') || (data.field.startseckilltime == '' && data.field.endseckilltime != '')) {
+                    layer.alert("必须同时指定秒杀开始和结束时间");
+                    return false;
+                }
+                if (data.field.startseckilltime != '' && data.field.endseckilltime != '') {
+                    if (data.field.seckillprice == undefined) {
+                        layer.alert("必须填写秒杀价");
+                        return false;
+                    }
+                    if (data.field.seckillprice <= 0) {
+                        layer.alert("秒杀价不能小于等于0");
+                        return false;
+                    }
+                }
+
 
                 var skuinfos = GetSkuJson();
                 console.log(skuinfos)
@@ -390,7 +438,6 @@
                     "costprice": 0,
                     "isbest": data.field.isbest,
                     "ishot": data.field.ishot,
-                    "isnew": data.field.isnew,
                     "displayorder": data.field.displayorder,
                     "weight": data.field.weight,
                     "showimg": showimg,
@@ -399,7 +446,11 @@
                     "packprice": data.field.packprice,
                     "mainImgs": mainimgs,
                     "detailImgs": detailimgs,
-                    "skuInfos": skuinfos
+                    "skuInfos": skuinfos,
+                    "startseckilltime": data.field.startseckilltime,
+                    "endseckilltime": data.field.endseckilltime,
+                    "seckillprice": data.field.seckillprice,
+                    "rmddisplayorder": data.field.rmddisplayorder
                 }
 
                 showloading(true)

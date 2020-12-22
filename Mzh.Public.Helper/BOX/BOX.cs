@@ -49,7 +49,7 @@ namespace Remoting
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -93,7 +93,7 @@ namespace Remoting
                 }catch(Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }
@@ -126,7 +126,7 @@ namespace Remoting
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     return ResultModel.Error(ex.ToString());
                 }
             }

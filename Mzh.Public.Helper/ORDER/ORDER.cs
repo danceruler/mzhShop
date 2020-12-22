@@ -177,7 +177,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString()+ex.StackTrace);
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error();
                 }
@@ -475,7 +475,7 @@ namespace Remoting
                 }
                 catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return $@"<xml>
                                   <return_code><![CDATA[FAIL]]></return_code>
@@ -540,7 +540,7 @@ namespace Remoting
             }
             catch (Exception ex)
             {
-                Logger._.Error("GroupPayNotify,"+ex.ToString());
+                Logger._.Error("GroupPayNotify,",ex);
                 return $@"<xml>
                                   <return_code><![CDATA[FAIL]]></return_code>
                                   <return_msg><![CDATA[数据操作失败]]></return_msg>
@@ -572,7 +572,7 @@ namespace Remoting
 
                 }catch(Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -610,7 +610,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -644,7 +644,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -685,7 +685,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -723,8 +723,26 @@ namespace Remoting
                 shopstat.SUM = orderStatistic.shopordersum;
                 shopstat.OrderType = OrderType.InShop;
                 shopstat.TypeName = shopstat.OrderType.ToText();
+                OrderTypeStatistic orderstat = new OrderTypeStatistic();
+                orderstat.Count = orderStatistic.orderordercount;
+                orderstat.SUM = orderStatistic.orderordersum;
+                orderstat.OrderType = OrderType.Order;
+                orderstat.TypeName = orderstat.OrderType.ToText();
+                OrderTypeStatistic groupstat = new OrderTypeStatistic();
+                groupstat.Count = orderStatistic.groupordercount;
+                groupstat.SUM = orderStatistic.groupordersum;
+                groupstat.OrderType = OrderType.GROUP;
+                groupstat.TypeName = groupstat.OrderType.ToText();
+                OrderTypeStatistic seckillstat = new OrderTypeStatistic();
+                seckillstat.Count = orderStatistic.seckillcount;
+                seckillstat.SUM = orderStatistic.seckillsum;
+                seckillstat.OrderType = OrderType.SECKILL;
+                seckillstat.TypeName = seckillstat.OrderType.ToText();
                 model.OrderTypeStatistics.Add(shipstat);
                 model.OrderTypeStatistics.Add(shopstat);
+                model.OrderTypeStatistics.Add(orderstat);
+                model.OrderTypeStatistics.Add(groupstat);
+                model.OrderTypeStatistics.Add(seckillstat);
 
 
                 model.OrderCountByTimeStatistics = new List<OrderCountByTimeStatistic>();
@@ -839,10 +857,16 @@ namespace Remoting
             {
                 todayStat.finishordercount += 1;
                 todayStat.finishordersum += order.payfee;
-                todayStat.shipordercount += order.type == (int)OrderType.InShop ? 0 : 1;
-                todayStat.shipordersum += order.type == (int)OrderType.InShop ? 0 : order.payfee;
+                todayStat.shipordercount += order.type == (int)OrderType.Ship ? 1 : 0;
+                todayStat.shipordersum += order.type == (int)OrderType.Ship ? order.payfee : 0;
                 todayStat.shopordercount += order.type == (int)OrderType.InShop ? 1 : 0;
                 todayStat.shopordersum += order.type == (int)OrderType.InShop ? order.payfee : 0;
+                todayStat.orderordercount += order.type == (int)OrderType.Order ? 1 : 0;
+                todayStat.orderordersum += order.type == (int)OrderType.Order ? order.payfee : 0;
+                //todayStat.groupordercount += order.type == (int)OrderType.GROUP ? 1 : 0;
+                //todayStat.groupordersum += order.type == (int)OrderType.GROUP ? order.payfee : 0;
+                todayStat.seckillcount += order.type == (int)OrderType.SECKILL ? 1 : 0;
+                todayStat.seckillsum += order.type == (int)OrderType.SECKILL ? order.payfee : 0;
             }
             context.SaveChanges();
 
@@ -876,10 +900,16 @@ namespace Remoting
             {
                 weekStat.finishordercount += 1;
                 weekStat.finishordersum += order.payfee;
-                weekStat.shipordercount += order.type == (int)OrderType.InShop ? 0 : 1;
-                weekStat.shipordersum += order.type == (int)OrderType.InShop ? 0 : order.payfee;
+                weekStat.shipordercount += order.type == (int)OrderType.Ship ? 1 : 0;
+                weekStat.shipordersum += order.type == (int)OrderType.Ship ? order.payfee : 0;
                 weekStat.shopordercount += order.type == (int)OrderType.InShop ? 1 : 0;
                 weekStat.shopordersum += order.type == (int)OrderType.InShop ? order.payfee : 0;
+                weekStat.orderordercount += order.type == (int)OrderType.Order ? 1 : 0;
+                weekStat.orderordersum += order.type == (int)OrderType.Order ? order.payfee : 0;
+                //weekStat.groupordercount += order.type == (int)OrderType.GROUP ? 1 : 0;
+                //weekStat.groupordersum += order.type == (int)OrderType.GROUP ? order.payfee : 0;
+                weekStat.seckillcount += order.type == (int)OrderType.SECKILL ? 1 : 0;
+                weekStat.seckillsum += order.type == (int)OrderType.SECKILL ? order.payfee : 0;
             }
             context.SaveChanges();
 
@@ -913,10 +943,131 @@ namespace Remoting
             {
                 monthStat.finishordercount += 1;
                 monthStat.finishordersum += order.payfee;
-                monthStat.shipordercount += order.type == (int)OrderType.InShop ? 0 : 1;
-                monthStat.shipordersum += order.type == (int)OrderType.InShop ? 0 : order.payfee;
+                monthStat.shipordercount += order.type == (int)OrderType.Ship ? 1 : 0;
+                monthStat.shipordersum += order.type == (int)OrderType.Ship ? order.payfee : 0;
                 monthStat.shopordercount += order.type == (int)OrderType.InShop ? 1 : 0;
                 monthStat.shopordersum += order.type == (int)OrderType.InShop ? order.payfee : 0;
+                monthStat.orderordercount += order.type == (int)OrderType.Order ? 1 : 0;
+                monthStat.orderordersum += order.type == (int)OrderType.Order ? order.payfee : 0;
+                //weekStat.groupordercount += order.type == (int)OrderType.GROUP ? 1 : 0;
+                //weekStat.groupordersum += order.type == (int)OrderType.GROUP ? order.payfee : 0;
+                monthStat.seckillcount += order.type == (int)OrderType.SECKILL ? 1 : 0;
+                monthStat.seckillsum += order.type == (int)OrderType.SECKILL ? order.payfee : 0;
+
+            }
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        /// 写入统计数据
+        /// </summary>
+        /// <param name="isfinish">创建订单为false，支付完成为true</param>
+        /// <param name="sum">订单金额</param>
+        /// <param name="ordertime">订单创建日期</param>
+        public static void AddStatistics(bool isfinish,bsp_groups group, bsp_groupdetails groupdetail, brnshopEntities context)
+        {
+            //日统计
+            var todaytimeStr = groupdetail.paytime.Value.Date.ToString("yyyy-MM-dd");
+            var todayStat = context.bsp_orderstatistics.Where(t => t.type == 0 && t.timestr == todaytimeStr).SingleOrDefault();
+            if (todayStat == null)
+            {
+                todayStat = new bsp_orderstatistics();
+                todayStat.type = 0;
+                todayStat.time = groupdetail.paytime.Value.Date;
+                todayStat.timestr = todaytimeStr;
+                todayStat.ordercount = 0;
+                todayStat.ordersum = 0;
+                todayStat.finishordercount = 0;
+                todayStat.finishordersum = 0;
+                todayStat.ordercountavg = 0;
+                todayStat.ordersumavg = 0;
+                todayStat.shipordercount = 0;
+                todayStat.shipordersum = 0;
+                todayStat.shopordercount = 0;
+                todayStat.shopordersum = 0;
+                context.bsp_orderstatistics.Add(todayStat);
+            }
+            if (!isfinish)
+            {
+                todayStat.ordercount += 1;
+                todayStat.ordersum += group.groupprice;
+            }
+            else
+            {
+                todayStat.finishordercount += 1;
+                todayStat.finishordersum += group.groupprice;
+                todayStat.groupordercount += 1;
+                todayStat.groupordersum += group.groupprice;
+            }
+            context.SaveChanges();
+
+            //周统计
+            var MondayStr = groupdetail.paytime.Value.MonDay().ToString("yyyy-MM-dd");
+            var weekStat = context.bsp_orderstatistics.Where(t => t.type == 1 && t.timestr == MondayStr).SingleOrDefault();
+            if (weekStat == null)
+            {
+                weekStat = new bsp_orderstatistics();
+                weekStat.type = 1;
+                weekStat.time = groupdetail.paytime.Value.MonDay();
+                weekStat.timestr = MondayStr;
+                weekStat.ordercount = 0;
+                weekStat.ordersum = 0;
+                weekStat.finishordercount = 0;
+                weekStat.finishordersum = 0;
+                weekStat.ordercountavg = 0;
+                weekStat.ordersumavg = 0;
+                weekStat.shipordercount = 0;
+                weekStat.shipordersum = 0;
+                weekStat.shopordercount = 0;
+                weekStat.shopordersum = 0;
+                context.bsp_orderstatistics.Add(weekStat);
+            }
+            if (!isfinish)
+            {
+                weekStat.ordercount += 1;
+                weekStat.ordersum += group.groupprice;
+            }
+            else
+            {
+                weekStat.finishordercount += 1;
+                weekStat.finishordersum += group.groupprice;
+                weekStat.groupordercount += 1;
+                weekStat.groupordersum += group.groupprice;
+            }
+            context.SaveChanges();
+
+            //月统计
+            var monthDayStr = groupdetail.paytime.Value.FirstInMonth().ToString("yyyy-MM-dd");
+            var monthStat = context.bsp_orderstatistics.Where(t => t.type == 2 && t.timestr == monthDayStr).SingleOrDefault();
+            if (monthStat == null)
+            {
+                monthStat = new bsp_orderstatistics();
+                monthStat.type = 2;
+                monthStat.time = groupdetail.paytime.Value.FirstInMonth();
+                monthStat.timestr = monthDayStr;
+                monthStat.ordercount = 0;
+                monthStat.ordersum = 0;
+                monthStat.finishordercount = 0;
+                monthStat.finishordersum = 0;
+                monthStat.ordercountavg = 0;
+                monthStat.ordersumavg = 0;
+                monthStat.shipordercount = 0;
+                monthStat.shipordersum = 0;
+                monthStat.shopordercount = 0;
+                monthStat.shopordersum = 0;
+                context.bsp_orderstatistics.Add(monthStat);
+            }
+            if (!isfinish)
+            {
+                monthStat.ordercount += 1;
+                monthStat.ordersum += group.groupprice;
+            }
+            else
+            {
+                monthStat.finishordercount += 1;
+                monthStat.finishordersum += group.groupprice;
+                monthStat.groupordercount += 1;
+                monthStat.groupordersum += group.groupprice;
             }
             context.SaveChanges();
         }
@@ -941,7 +1092,7 @@ namespace Remoting
                 }
                 catch (Exception ex)
                 {
-                    Logger._.Error(ex.ToString());
+                    Logger._.Error(ex);
                     tran.Rollback();
                     return ResultModel.Error(ex.ToString());
                 }
@@ -982,7 +1133,7 @@ namespace Remoting
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    Logger._.Error("更新订单状态任务执行失败："+ ex.ToString() + ex.StackTrace);
+                    Logger._.Error("更新订单状态任务执行失败：", ex);
                 }
             }
         }

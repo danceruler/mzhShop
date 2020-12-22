@@ -125,7 +125,19 @@ namespace Mzh.Public.Model.Model
         /// 库存
         /// </summary>
         public int stock { get; set; }
-
+        /// <summary>
+        /// 秒杀开始时间
+        /// </summary>
+        public DateTime? startseckilltime { get; set; }
+        /// <summary>
+        /// 秒杀结束时间
+        /// </summary>
+        public DateTime? endseckilltime { get; set; }
+        /// <summary>
+        /// 秒杀价
+        /// </summary>
+        public decimal seckillprice { get; set; }
+        public int rmddisplayorder { get; set; }
 
         /// <summary>
         /// 规格数量（为1时不需要选规格）

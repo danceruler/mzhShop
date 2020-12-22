@@ -79,9 +79,15 @@ namespace Mzh.Public.Base
             _logger.Error(msg);
         }
 
+
+        public void Error(Exception ex)
+        {
+            _logger.Error(ex.ToString()+"\r\n"+ex.StackTrace);
+        }
+
         public void Error(string msg, Exception err)
         {
-            _logger.Error(err, msg);
+            _logger.Error(msg+"\r\n"+ err.ToString() + "\r\n" + err.StackTrace);
         }
         #endregion
 
